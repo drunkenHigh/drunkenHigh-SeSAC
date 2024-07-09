@@ -1,0 +1,20 @@
+/* 웹폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;900&family=Source+Code+Pro:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* 
+    웹 폰트 
+    font-family: 'Noto Sans KR', sans-serif;
+    font-family: "Noto Sans", sans-serif;
+*/
+
+:root {
+    --mainColor : #F2C230;
+    --darkColor : #F29B30;
+    --darkColor2 : #D9601A;
+    --lightColor : #EEE4A8;
+    --lightColor2 : #EED077;
+    --mainWidth : 1280px;
+    --sm : 640px;
+    --lg : 1024px;
+}
