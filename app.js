@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const router = require('./routes/Rusers');
-const { sequelize } = require('./models');
+const {sequelize}= require('./models')
 const PORT = 8000;
 
 app.set('view engine', 'ejs');
