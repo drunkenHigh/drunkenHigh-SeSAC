@@ -1,22 +1,13 @@
 const express = require('express');
-const controller = require('../controller/Cusers');
-const controller_rcp = require('../controller/Crecipes');
+const controller = require('../controller/Crecipes');
 const router = express.Router();
 
 
-// get / user
-router.get('/', controller.main);
 
-// get /user/signup
-router.get('/user', controller.getMyprofile);
+// get /recipes
+router.get('/recipes', controller.getRecipe);
 
-// post /user/signup
-router.post('/signup', controller.postSignup);
-
-// // get /user/signin
-// router.get('/signin', controller.getSignin);
-
-// // post /user/signin
+// post /user/signin
 // router.post('/signin', controller.postSignin);
 
 // // post /user/profile

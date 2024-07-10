@@ -2,12 +2,9 @@
 exports.main = (req,res) => {
     res.render('index');
 }
-// mypage
-exports.myProfile = (req,res) => {
-    res.render('myProfile');
-}
 
 
+<<<<<<< HEAD
 // 회원가입 ? 
 exports.users = (req,res) => {
     res.render('users');
@@ -61,3 +58,5 @@ exports.deleteRecipe= async(req,res)=>{
             res.status(500).send('Internal Server Error');
         }
     }
+=======
+>>>>>>> daac2f2641ff3dba476409aa1a02b7575e68c10a
