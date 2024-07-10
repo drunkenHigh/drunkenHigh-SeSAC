@@ -1,4 +1,15 @@
+const Sequelize = require("sequelize"); // sequelize 패키지를 불러옴
 
+const config = require(__dirname + "/../config/config.js")// db 연결 정보
+const db = {}; // 빈 객체
+
+const sequelize = new Sequelize(
+    config.database,
+    config.username,
+    config.password,
+    config
+
+); // sequelize 객체
 // 모델 불러오기
 const RECIPESMODEL = require("./Mrecipe")(sequelize, Sequelize);
 const RECIPE_IMG_MODEL = require("./Mrecipe")(sequelize, Sequelize);
@@ -24,6 +35,4 @@ db.Sequelize = Sequelize;
 db.Recipes = RECIPESMODEL;
 db.Users= USERSMODEL;
 db.Recipe_Img = RECIPE_IMG_MODEL;
-
-module.exports = db;
 
