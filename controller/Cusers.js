@@ -3,6 +3,16 @@
 */
 const { users } = require('../models/Muser')
 
+<<<<<<< HEAD
+const USERMODEL = require('../models/Muser');
+
+
+exports.main = (req, res) => {
+    console.log("GET / MAIN")
+    res.render('index');
+}
+=======
+>>>>>>> c58a600a39f71a9482b760f6b38a00753dfd4c74
 
 
         exports.getUsers = (req, res) => {

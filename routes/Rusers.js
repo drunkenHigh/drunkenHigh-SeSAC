@@ -1,5 +1,10 @@
 const express = require('express');
+<<<<<<< HEAD
+const controller = require('../controller/Cusers');
+const controller_rcp = require('../controller/Crecipes');
+=======
 const {getUsers,postUsers,main} = require('../controller/Cusers');
+>>>>>>> c58a600a39f71a9482b760f6b38a00753dfd4c74
 const router = express.Router();
 
 
