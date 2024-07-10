@@ -3,6 +3,7 @@
     box-shadow: 0 2px 3px var(--mainColor);
     width: 100%;
     height: 60px;
+    position: fixed;
 }
 
 #header header {
@@ -101,6 +102,9 @@
 main {
     max-width: var(--mainWidth);
     min-height: 100vh;
+    position: relative;
+    top: 60px;
+    margin: 0 auto;
 }
 
 
