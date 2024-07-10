@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+
 const router = require('./routes/Rusers');
 const {sequelize}= require('./models')
 const PORT = 8000;
@@ -34,6 +35,7 @@ const dbPw = process.env.DATABASE_PW;
 //     console.log(`Database name: ${dbName}, Database Password: ${dbPw}`);
 // })
 
+
 // --- sequelize 사용시
 // sequelize   
 //     // force: true = 서버 실행때마다 테이블을 재생성
@@ -48,3 +50,18 @@ const dbPw = process.env.DATABASE_PW;
 //     .catch((err) => {
 //         console.error(err)
 //     });
+
+sequelize   
+    // force: true = 서버 실행때마다 테이블을 재생성
+    // force: false = 서버 실행때마다 테이블이 없으면 생성
+    .sync({ force: false })
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log('Database connected!');
+            console.log(`Server running in PORT: ${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.error(err)
+    });
+

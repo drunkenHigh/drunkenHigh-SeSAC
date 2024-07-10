@@ -1,4 +1,6 @@
+
 const {Recipes, Recipe_Img, Users} = require('../models/Mindex');
+
 
 // main page
 exports.main = (req,res) => {
@@ -30,6 +32,3 @@ exports.recipeList = async (req, res)=>{
         res.status(500).send('Internal Server Error');
     }
 }
-
-
-
