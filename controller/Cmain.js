@@ -14,16 +14,16 @@ exports.users = (req,res) => {
 }
 
 // 회원 추가 
-exports.postRegisterUser(req,res) => {
+exports.postRegisterUser = (req,res) => {
 
 }
 
 // 회원 정보 수정 
-exports.patchUser(req,res) => {
+exports.patchUser = (req,res) => {
 
 }
 // 회원 삭제 
-exports.deleteUser(req,res) => {
+exports.deleteUser = (req,res) => {
 
 }
 
