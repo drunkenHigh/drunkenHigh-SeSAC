@@ -1,12 +1,8 @@
 const express = require('express');
 const app = express();
-<<<<<<< HEAD
-const router = require('./routes/Rindex');
-const { sequelize } = require('./models');
-=======
+
 const router = require('./routes/Rusers');
 const {sequelize}= require('./models')
->>>>>>> c58a600a39f71a9482b760f6b38a00753dfd4c74
 const PORT = 8000;
 
 app.set('view engine', 'ejs');
@@ -39,10 +35,22 @@ const dbPw = process.env.DATABASE_PW;
 //     console.log(`Database name: ${dbName}, Database Password: ${dbPw}`);
 // })
 
-<<<<<<< HEAD
+
 // --- sequelize 사용시
-=======
->>>>>>> c58a600a39f71a9482b760f6b38a00753dfd4c74
+// sequelize   
+//     // force: true = 서버 실행때마다 테이블을 재생성
+//     // force: false = 서버 실행때마다 테이블이 없으면 생성
+//     .sync({ force: false })
+//     .then(() => {
+//         app.listen(PORT, () => {
+//             console.log('Database connected!');
+//             console.log(`Server running in PORT: ${PORT}`);
+//         });
+//     })
+//     .catch((err) => {
+//         console.error(err)
+//     });
+
 sequelize   
     // force: true = 서버 실행때마다 테이블을 재생성
     // force: false = 서버 실행때마다 테이블이 없으면 생성
@@ -56,3 +64,4 @@ sequelize
     .catch((err) => {
         console.error(err)
     });
+
