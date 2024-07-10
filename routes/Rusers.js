@@ -1,26 +1,27 @@
 const express = require('express');
+<<<<<<< HEAD
 const controller = require('../controller/Cusers');
 const controller_rcp = require('../controller/Crecipes');
+=======
+const {getUsers,postUsers,main} = require('../controller/Cusers');
+>>>>>>> c58a600a39f71a9482b760f6b38a00753dfd4c74
 const router = express.Router();
 
 
-// get / user
-router.get('/', controller.main);
+// get /user/register
+router.get('/users/register', getUsers);
 
-// get /user/signup
-router.get('/user', controller.getMyprofile);
+// post /user/register
+router.post('/users/register', postUsers);
 
-// post /user/signup
-router.post('/signup', controller.postSignup);
+// // get /user/login
+// router.get('/users/login', controller.getLogin);
 
-// // get /user/signin
-// router.get('/signin', controller.getSignin);
-
-// // post /user/signin
-// router.post('/signin', controller.postSignin);
+// // post /user/login
+// router.post('/users/login', controller.postLogin);
 
 // // post /user/profile
-// router.post('/profile', controller.getUser);
+//  router.post('/profile', controller.getUsers);
 
 // // patch /user/profile/edit
 // router.patch('/profile/edit', controller.updateUser);

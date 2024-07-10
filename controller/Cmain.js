@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // main page
 exports.main = (req,res) => {
     res.render('index');
@@ -60,3 +61,10 @@ exports.deleteRecipe= async(req,res)=>{
     }
 =======
 >>>>>>> daac2f2641ff3dba476409aa1a02b7575e68c10a
+=======
+
+    exports.main = (req,res) => {
+        res.render('index');
+    }
+
+>>>>>>> c58a600a39f71a9482b760f6b38a00753dfd4c74
