@@ -13,9 +13,9 @@ const RECIPESMODEL = (sequelize, DataTypes) =>{
             allowNull : false,
             autoIncrement :true,
         },
-        user_id :{
+        user_num :{
             // USER_ID VARCHAR(50) NOT NULL,
-            type:DataTypes.STRING(50),
+            type:DataTypes.INTEGER,
             allowNull:false,
         },
         title:{
@@ -70,7 +70,8 @@ const RECIPE_IMG_MODEL = (sequelize, DataTypes) =>{
         },
         recipe_num :{
             // RECIPE_NUM INT NOT NULL ,
-            type:DataTypes.INT,
+            // type:DataTypes.INT - 240711 integer 형태로 변경,
+            type:DataTypes.INTEGER,
             allowNull:false,
         },
         image_url:{

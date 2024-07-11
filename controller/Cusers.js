@@ -4,11 +4,11 @@
 const { users } = require('../models/Muser')
 
 
+    exports.getUsers = (req, res) => {
 
-        exports.getUsers = (req, res) => {
-            console.log("GET / MAIN")
-            res.render('users');
-        }
+       
+        
+    }
 
     exports.postUsers = async (req, res) => {
     try {

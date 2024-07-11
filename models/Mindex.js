@@ -1,37 +1,56 @@
-const Sequelize = require("sequelize"); // sequelize 패키지를 불러옴
-const config = require(__dirname + "/../config/config.js")["development"]; // db 연결 정보
-const db = {}; // 빈 객체
+// models/Mindex.js
+
+const Sequelize = require('sequelize');
+const config = require(__dirname + '/../config/config.js');
 const sequelize = new Sequelize(
     config.database,
     config.username,
     config.password,
-    config
+    {
+        dialect: 'mysql',
+        host: config.host,
+        port: config.port,
+        // 기타 설정
+    }
+);
 
 
-); // sequelize 객체
-// 모델 불러오기
-const RECIPESMODEL = require("./Mrecipe")(sequelize, Sequelize);
-const RECIPE_IMG_MODEL = require("./Mrecipe")(sequelize, Sequelize);
-const USERSMODEL = require('./Muser')(sequelize, Sequelize);
 
 
-// 모델간 관계 연결
-// RECIPES <-> RECIPE_IMG 1:N 관계 연결
-RECIPESMODEL.hasMany(RECIPE_IMG_MODEL,{
-    // recipe_img 테이블에서 'recipe_num' fk 생성
-    foreignKey : 'recipe_num',
-    // recipe 테이블에서 참조될 키는 'recipe_num'
-    sourceKey: 'recipe_num'
-});
-RECIPE_IMG_MODEL.belongsTo(RECIPESMODEL,{
-    // recipe_img 테이블에 'user_id' fk 생성
-    foreignKey:'user_id',
-    // 참조하게 될 recipe 의 키는 'user_id'
-    targetKey:'user_id'
-});
+const db = {};
+
+// 모델 정의 파일 불러오기
+const RecipesModel = require('./Mrecipe')(sequelize, Sequelize);
+// const RecipeImgModel = require('./Mrecipe_img')(sequelize, Sequelize); // RecipeImgModel 주석 처리
+
+const UsersModel = require('./Muser')(sequelize, Sequelize); // PascalCase로 모델 이름 수정
+
+async function getUsers() {
+    try {
+        const users = await UsersModel.findAll();
+        console.log(users);
+    } catch (error) {
+        console.error('Error fetching users:', error);
+    }
+}
+
+getUsers();
+// 모델 간 관계 설정
+// RECIPES <-> RECIPE_IMG 1:N 관계 설정
+// RecipesModel.hasMany(RecipeImgModel, {
+//     foreignKey: 'recipe_num',
+//     sourceKey: 'recipe_num'
+// });
+// RecipeImgModel.belongsTo(RecipesModel, {
+//     foreignKey: 'recipe_num',
+//     targetKey: 'recipe_num'
+// });
+
+// Sequelize 인스턴스와 모델들을 db 객체에 할당
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
-db.Recipes = RECIPESMODEL;
-db.Users= USERSMODEL;
-db.Recipe_Img = RECIPE_IMG_MODEL;
+db.Recipes = RecipesModel;
+// db.RecipeImg = RecipeImgModel; // RecipeImgModel 주석 처리
+db.Users = UsersModel;
+
 module.exports = db;
