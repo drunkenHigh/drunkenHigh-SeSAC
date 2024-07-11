@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cookieParser = require('cookie-parser');
 
 const router = require('./routes/Rindex');
 const { sequelize } = require('./models');
@@ -11,6 +12,7 @@ app.set('views', './views');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/public', express.static(__dirname + '/static'));
+app.use(cookieParser());
 
 
 app.use('/', router);
