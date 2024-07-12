@@ -4,3 +4,4 @@
 **/.env.developer
 **/.env.production
 **/package-lock.json
+.DS_Store

@@ -27,13 +27,14 @@ if(ageCookie){
 } 
 
 // 쿠키 설정
-async function setCookie(e){
-    const cookieValue = e.target.value;
-    console.log(cookieValue);
+async function setCookie(){
+    const form = document.forms['age']
+    const cookieValue = form.adult.value
     try {
         const cookieAxios = await axios({
             method : 'get',
-            url : '/setCookie'
+            url : '/',
+            params : {isAdult : cookieValue}
         })
 
         if(cookieValue === 'yes'){
