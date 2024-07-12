@@ -139,7 +139,9 @@ const writeRecipe = async (recipeObj) => {
 //import * as FormData from 'form_data';
 const formData = new FormData();
 const saveButton = document.querySelector('#save-button');
+
 saveButton.addEventListener('click', () => {
+    console.log('click btn', saveButton);
         // recipe 제목을 저장
         const recipeTitle = document.querySelector('#recipe-title').value;
         // 주재료 저장
