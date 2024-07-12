@@ -57,5 +57,3 @@ const RecipesModel = (sequelize, DataTypes) =>{
 }
 
 module.exports=RecipesModel;
-
-
