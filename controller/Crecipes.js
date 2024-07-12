@@ -71,20 +71,32 @@ exports.postRecipe = (req,res) => {
     res.render('recipeWrite');
 }
 
-// 레시피 수정
-exports.patchRecipe = (req,res) => {
-    res.render('view-detail-test');
+   // 레시피 수정
+   exports.patchRecipe = async (req,res) => {
+    try{
+        const {recipe_num} = req.params;
+        const updatedRecipe = await Recipes.update(
+            {title},
+            {content},
+            {main_ingredient},
+            {main_ing_detail},
+            {sub_ingredient},
+            {where: {recipe_num}}
+        );
+        res.json(updatedRecipe);
+    }catch(error){
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
 }
-
 // 레시피 삭제
 exports.deleteRecipe = async(req,res)=>{
         try {
-            const {player_id} = req.params;
-            const isDeleted = await Player.destroy({
-                where : {player_id}
+            const {recipe_num} = req.params;
+            const isDeleted = await Recipes.destroy({
+                where : {recipe_num}
             });
-            console.log(isDeleted); // 삭제되면 1 , 삭제실패시 0 
-    
+            console.log(isDeleted); // 삭제되면 1 , 삭제실패시 0
             if(isDeleted){
                 return res.send(true);
             }else{
