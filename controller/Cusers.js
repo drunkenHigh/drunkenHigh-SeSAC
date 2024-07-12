@@ -1,6 +1,9 @@
 
 const { users } = require('../models/Muser')
-
+exports.getUsers = (req, res) => {
+    console.log("GET / MAIN")
+    res.render('users');
+}
 
 
     //로그인 

@@ -1,40 +1,38 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const router = require('./routes/Rusers');
-const { sequelize } = require('./models/Mindex');
+const cookieParser = require('cookie-parser');
+const router = require("./routes/Rindex");
+const { sequelize } = require("./models/Mindex");
 const PORT = 8000;
-
-// view engine 설정
-app.set('view engine', 'ejs');
-app.set('views', './views');
-
-// Body parser 설정
+app.set("view engine", "ejs");
+app.set("views", "./views");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-
-// 정적 파일 서빙 설정
-app.use('/public', express.static(__dirname + '/static'));
-
-// 라우터 설정
-app.use('/', router);
-
-// 환경 변수 설정
-const path = require('path');
-const dotenv = require('dotenv');
-const cookieParser = require('cookie-parser');
-
+app.use("/public", express.static(__dirname + "/static"));
+app.use(cookieParser());
+app.use("/", router);
+const path = require("path");
+const dotenv = require("dotenv");
 dotenv.config({
-    path: path.resolve(__dirname, '.env')
-});  // 기본 .env 파일 로드
-
+  path: path.resolve(__dirname, ".env"),
+}); // default .env file
 dotenv.config({
-    path: path.resolve(__dirname, `.env.${process.env.NODE_ENV}`),
-    override: true,
-});  // NODE_ENV에 따라 환경 변수 덮어씌우기
-
-// Sequelize로 데이터베이스 연결
-sequelize.sync({ force: false })
+  // NODE_ENV 따라서 적절한 .env 파일을 로드
+  path: path.resolve(__dirname, `.env.${process.env.NODE_ENV}`),
+  override: true,
+}); // load env file depending on NODE_ENV
+const port = process.env.PORT;
+const dbName = process.env.DATABASE_NAME;
+const dbPw = process.env.DATABASE_PW;
+// app.listen(port, () => {
+//   console.log(`Server running...PORT: ${port}`);
+//   console.log(`Database name: ${dbName}, Database Password: ${dbPw}`);
+// });
+// --- sequelize 사용시
+// force: true = 서버 실행때마다 테이블을 재생성
+// force: false = 서버 실행때마다 테이블이 없으면 생성
+sequelize
+    .sync({ force: false })
     .then(() => {
         app.listen(PORT, () => {
             console.log('Database connected!');
@@ -42,5 +40,5 @@ sequelize.sync({ force: false })
         });
     })
     .catch((err) => {
-        console.error('Unable to connect to the database:', err);
+        console.error(err)
     });
