@@ -14,6 +14,7 @@ const sequelize = new Sequelize(
 const RECIPESMODEL = require("./Mrecipe")(sequelize, Sequelize);
 const RECIPE_IMG_MODEL = require("./Mrecipe")(sequelize, Sequelize);
 const USERSMODEL = require('./Muser')(sequelize, Sequelize);
+const LikesModel = require('./Mlikes')(sequelize, Sequelize);
 
 
 // 모델간 관계 연결
@@ -35,4 +36,5 @@ db.Sequelize = Sequelize;
 db.Recipes = RECIPESMODEL;
 db.Users= USERSMODEL;
 db.Recipe_Img = RECIPE_IMG_MODEL;
+db.Likes = LikesModel;
 
