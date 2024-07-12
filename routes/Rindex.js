@@ -4,8 +4,8 @@ const express = require('express');
 const router=express.Router();
 
 router.get('/',controller.main);
-router.get('/recipes',controller.getRecipe);
-router.post('/write',controller.postRecipe);
+router.get('/recipes',controller_rcp.getRecipe);
+router.post('/write',controller_rcp.postRecipe);
 
 
 module.exports = router;
