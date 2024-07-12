@@ -11,11 +11,11 @@ dotenv.config({
 })
 
 const config = {
-    "username": process.env.DATABASE_USER,
-    "password": process.env.DATABASE_PW,
-    "database": process.env.DATABASE_NAME,
-    "host": process.env.DATABASE_HOST,
-    "dialect": process.env.DIALECT
-}
+    username: process.env.DATABASE_USER || 'sesac',
+    password: process.env.DATABASE_PW || '1234',
+    database: process.env.DATABASE_NAME || 'sesac_project1',
+    host: process.env.DATABASE_HOST || 'localhost',
+    dialect: process.env.DIALECT || 'mysql',
+};
 
-module.exports = config;    
+module.exports = config;

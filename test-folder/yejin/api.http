@@ -1,0 +1,37 @@
+@server = http://localhost:8000
+@recipe_num = 1
+
+### 전체 선수 조회
+GET {{server}}/recipes
+
+### id로 특정 선수 조회
+GET {{server}}/recipes/recipe_id={{recipe_num}}
+
+### 선수 추가 
+POST {{server}}/recipes
+Content-Type: application/json ; charset=UTF-8
+//위아래 한줄 띄워야한다.
+// json 타입으로 주고 받겠다고 했으니, "":"" 타입으로 지정해야한다.
+
+{
+    "name" : "손흥민",
+    "age" : 31,
+    "team_id":2
+}
+
+### 특정 선수의 소속 팀 변경
+//UPDATE `Player` SET `team_id`=?,`updatedAt`=? WHERE `recipe_num` = ?
+PATCH {{server}}/recipes/{{recipe_num}}/team
+Content-Type: application/json ; charset=UTF-8
+
+{
+    "team_id" :2  
+}
+
+### 특정 선수 방출(삭제)
+DELETE {{server}}/recipes/{{recipe_num}}
+
+
+
+
+

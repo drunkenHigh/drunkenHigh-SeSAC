@@ -1,0 +1,120 @@
+/* 헤더 */
+#header {
+    box-shadow: 0 2px 3px var(--mainColor);
+    width: 100%;
+    height: 60px;
+    position: fixed;
+}
+
+#header header {
+    position: relative;
+    max-width: var(--mainWidth);
+    margin: 0 auto;
+    height: 100%;
+    overflow: hidden;
+}
+
+.header__title {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+}
+
+.header__title a {
+    display: flex;
+    align-items: center;
+}
+
+.header__title .title__img {
+    width: 50px;
+    height: 50px;
+}
+
+.header__title .title__text {
+    width: 375px;
+    height: 60px;
+}
+
+.header__title .title__text #text {
+    font-size: 80px;
+    font-weight: 900;
+    text-shadow: var(--darkColor2) -1px -1px 0px, 
+    var(--darkColor2) 1px -1px 0px, 
+    var(--darkColor2) -1px 1px 0px, 
+    var(--darkColor2) 1px 1px 0px, 
+    var(--darkColor2) -1px 0px 0px, 
+    var(--darkColor2) 0px -1px 0px,
+    var(--darkColor2) 1px 0px 0px,
+    var(--darkColor2) 0px 1px 0px, 
+    var(--darkColor2) 0px 2.3px 0px;
+}
+
+
+.header__title .water-fill {
+    animation: wave 0.7s infinite linear, 
+               fill-up 10s infinite ease-out alternate;
+  }
+
+
+@keyframes wave {
+    0% { x: -400px; }
+    100% { x: 0; }
+}
+
+
+@keyframes fill-up {
+    0% {
+        height: 0;
+        y: 130px;
+    }
+    100% {
+        height: 120px;
+        y: 0px;
+    }
+}
+
+.header__nav {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.header__nav ul {
+    display: flex;
+    gap: 0 25px;
+}
+
+.header__nav span {
+    color : var(--mainColor);
+    font-size: 20px;
+}
+
+.header__nav a:hover span {
+    color : var(--darkColor);
+    transition: color .4s;
+}
+
+
+/* 메인 */
+main {
+    max-width: var(--mainWidth);
+    min-height: 100vh;
+    position: relative;
+    top: 60px;
+    margin: 0 auto;
+}
+
+
+/* 푸터 */
+#footer {
+    width: 100%;
+    height: 60px;
+    background-color: #333;
+}
+
+#footer footer {
+    max-width: var(--mainWidth);
+}

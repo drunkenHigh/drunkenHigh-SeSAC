@@ -8,7 +8,8 @@ show databases;
 use sesac_project1;
 -- 테이블 생성
 CREATE TABLE USERS (
-	USER_ID VARCHAR(50) primary key,
+	USER_NUM INT auto_increment primary key,
+	USER_ID VARCHAR(50) NOT NULL,
     USER_NAME VARCHAR(50) NOT NULL,
     PROFILE_IMG VARCHAR(255) NULL,
     USER_PW VARCHAR(255) NOT NULL,
@@ -16,14 +17,16 @@ CREATE TABLE USERS (
 );
 CREATE TABLE RECIPES(
 	RECIPE_NUM INT auto_increment primary key,
-    USER_ID VARCHAR(50) NOT NULL,
+    USER_NUM  INT NOT NULL,
     TITLE TEXT NOT NULL,
     CONTENT TEXT NOT NULL,
     LIKES_COUNT INT NOT NULL,
     MAIN_INGREDIENT VARCHAR(50) NOT NULL,
     MAIN_ING_DETAIL TEXT NULL,
     SUB_INGREDIENT TEXT NULL,
-    foreign key (USER_ID) references USERS(USER_ID) on update cascade on delete cascade
+    createAt datetime default now(),
+    updateAt datetime default now(),
+    foreign key (USER_NUM) references users(USER_NUM) on update cascade on delete cascade
 );
 CREATE TABLE RECIPE_IMG(
 	IMAGE_NUM INT auto_increment primary key,
