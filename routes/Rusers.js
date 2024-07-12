@@ -1,21 +1,23 @@
 const express = require('express');
 const {getUsers, postUsers, getLogin, postLogin,postLogout} = require('../controller/Cusers');
 const router = express.Router();
+const getFileUpload= require('../middleware/uploadProfile')
+
 
 
 // get /user/register
-router.get('/users/register', getUsers);
+router.get('/register', getUsers);
 // post /user/register
-router.post('/users/register', postUsers);
+router.post('/register', postUsers);
 
 // get /user/login
-router.get('/users/login', getLogin);
+router.get('/login', getLogin);
 
 // post /user/login
-router.post('/users/login', postLogin);
+router.post('/login', postLogin);
 
 //post /user/logout
-router.post('users/logout',postLogout)
+router.post('/logout',postLogout)
 
 
 
