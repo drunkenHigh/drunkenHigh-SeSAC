@@ -40,7 +40,7 @@
                     </div>
                     <div class="md:w-2/3">
                         <!-- <input class="form-input block w-full focus:bg-white" id="recipe-title" type="text" value="<%=rcpInfo.title%>" required> -->
-                        <div><%= rcpInfo.title%></div>
+                        <span><%= rcpInfo.title %></span>
                         <!-- <p class="py-2 text-sm text-gray-600">독창적인 제목을 적어주세요</p> -->
                     </div>
                 </div>
@@ -50,14 +50,10 @@
                         <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-select">
                             주재료
                         </label>
+                        
                     </div>
                     <div class="md:w-2/3">
-                        <select name="mainIngredient" class="form-select block w-full focus:bg-white" required>
-                            <option value="default">-</option>
-                            <option value="vodka">보드카</option>
-                            <option value="soju">소주</option>
-                            <option value="whiskey">위스키</option>
-                        </select>
+                        <span><%= rcpInfo.main_ingredient %></span>
 
                         <!-- <p class="py-2 text-sm text-gray-600">하이볼의 주재료를 선택해주세요</p> -->
                     </div>
@@ -80,11 +76,12 @@
                         <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="sub-ing-detail">
                             부재료
                         </label>
+                        <span><%= rcpInfo.main_ing_detail %></span>
                     </div>
                     <div class="md:w-2/3">
                         <textarea class="form-textarea block w-full focus:bg-white" id="sub-ing-detail" value="" rows="2"></textarea>
-                        <p class="py-2 text-sm text-gray-600">다른 재료는 쉽표로 구분해주세요</p>
-                        <p class="py-0 text-sm text-gray-600">예시: 라임, 탄산수, 시럽</p>
+                        <span><%= rcpInfo.sub_ingredient_detail %></span>
+                        
                     </div>
                 </div>
 

@@ -3,7 +3,7 @@ const { Recipes, Users, Recipe_Img } = require('../models/Mindex');
 
 // main page
 exports.main = (req,res) => {
-    res.render('index');
+    res.render('index-test');
 }
 
 // 모든 레시피 가져오기 (이미지, 제목, 작성자)

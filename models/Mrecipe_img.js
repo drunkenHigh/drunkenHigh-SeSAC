@@ -10,7 +10,6 @@ const Recipe_Img_Model = (sequelize, DataTypes) =>{
             primaryKey : true,
             allowNull : false,
             autoIncrement :true,
-
         },
         recipe_num :{
             // RECIPE_NUM INT NOT NULL (fk) ,

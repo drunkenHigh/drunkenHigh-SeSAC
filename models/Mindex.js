@@ -68,6 +68,20 @@ Recipe_Img_Model.belongsTo(RecipesModel, {
   targetKey: "recipe_num",
 });
 
+// 좋아요
+LikesModel.belongsTo(UsersModel, {
+  foreignKey: 'user_num'
+});
+LikesModel.belongsTo(RecipesModel, {
+  foreignKey: 'recipe_num'
+});
+UsersModel.hasMany(LikesModel, {
+  foreignKey: 'user_num'
+});
+RecipesModel.hasMany(LikesModel, {
+  foreignKey: 'recipe_num'
+});
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
