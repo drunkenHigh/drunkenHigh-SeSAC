@@ -12,6 +12,7 @@ app.set('views', './views');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+
 // 정적 파일 서빙 설정
 app.use('/public', express.static(__dirname + '/static'));
 
@@ -21,6 +22,7 @@ app.use('/', router);
 // 환경 변수 설정
 const path = require('path');
 const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
 
 dotenv.config({
     path: path.resolve(__dirname, '.env')
