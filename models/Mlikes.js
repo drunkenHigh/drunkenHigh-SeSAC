@@ -1,19 +1,19 @@
-// 좋아요 모델 정의
-const LikesModel = (sequelize, DataTypes)=>{
+// Likes 모델 정의
+const LikesModel = (sequelize, DataTypes) => {
     const Likes = sequelize.define(
         'Likes',
         {
-            like_num:{
+            like_num: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
                 allowNull: false,
                 autoIncrement: true,
             },
-            user_num:{
+            user_num: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
-            recipe_num:{
+            recipe_num: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
@@ -21,6 +21,12 @@ const LikesModel = (sequelize, DataTypes)=>{
         {
             freezeTableName: true,
             timestamps: false,
+            indexes: [
+                {
+                    unique: true,
+                    fields: ['user_num', 'recipe_num']
+                }
+            ]
         }
     );
     return Likes;
