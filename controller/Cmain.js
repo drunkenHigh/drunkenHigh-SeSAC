@@ -1,8 +1,10 @@
 // 모델 가져오기
 const { Recipes, Users, Recipe_Img } = require('../models/Mindex');
+const { setCookie } = require('./Ccookie');
 
 // main page
 exports.main = (req,res) => {
+    setCookie(req, res);
     res.render('index');
 }
 

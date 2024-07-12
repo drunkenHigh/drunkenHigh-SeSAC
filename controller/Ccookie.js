@@ -8,6 +8,5 @@ exports.setCookie = (req, res) => {
     } else {
         res.cookie('age', false, cookieConfig);
     }
-
-    res.send('Set Cookie!');
+    // res.send('Set Cookie!');
 };
