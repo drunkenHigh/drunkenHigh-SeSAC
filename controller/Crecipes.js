@@ -1,7 +1,7 @@
 const RecipesModel = require('../models/Mrecipe');
 const {Recipes,Recipe_Img,Users }= require('../models/Mindex');
 
-// get /recipes?recipe_id=1 레시피 상세보기 페이지 예진
+// get /recipes?recipe_id=1 레시피 상세보기 페이지
 // select * from where rcp_id=?
 exports.getRecipe = async(req,res) => {
     try {
@@ -21,8 +21,30 @@ exports.getRecipe = async(req,res) => {
             }
             ],
         });
-        res.json(recipe);
-        // res.send(`Recipe with ID: ${recipe}`);
+        // res.json(recipe);
+        res.render('view-detail-test',{title:'레시피 상세페이지',rcpInfo:req.query})
+        //rcpInfo :req.query =
+        /*
+        
+  "recipe_num": 1,
+  "user_num": 1,
+  "title": "레몬 짐빔 레시피",
+  "content": "1. 우선 재료를 준비한다.",
+  "likes_count": 5,
+  "main_ingredient": "하이볼",
+  "main_ing_detail": "짐빔_버본 토닉워터",
+  "sub_ingredient_detail": "콜라 물",
+  "user": {
+    "user_id": "user"
+  },
+  "Recipe_Imgs": [
+    {
+      "image_url": "/uploads/recipe/1_img1.png"
+    }
+  ]
+}
+        */
+        
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
@@ -42,18 +64,6 @@ app.get('/getForm',(req,res)=>{
 })
 
 */
-// select * from table
-//recipe 상세조회
-// exports.getRecipeView = async (req,res) => {
-    
-//     try {
-//         const RECIPES = await RECIPES.findAll(); //findAll : select * from 
-//         res.json(RECIPES);
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).send('Internal Server Error');
-//     }
-// }
 
 // 레시피 작성
 exports.postRecipe = (req,res) => {

@@ -88,7 +88,6 @@ CREATE TABLE RECIPE_IMG(
 	IMAGE_NUM INT auto_increment primary key,
     RECIPE_NUM INT NOT NULL ,
     IMAGE_URL VARCHAR(255) ,
-    MAIN_IMG INT default '0',
     foreign key(RECIPE_NUM) references RECIPES(RECIPE_NUM) on update cascade on delete cascade
 );
 
@@ -108,13 +107,10 @@ insert into recipe_img (recipe_num,image_url) values (4,'uploads/recipe/default_
 alter table recipes change SUB_INGREDIENT sub_ingredient_detail text;
 alter table recipe_img modify image_url varchar(255); 
 update recipe_img set image_url='/uploads/recipe/3_img1.png' where recipe_num=3;
-alter table recipe_img add column MAIN_IMG INT default '0';
 
-show tables;
 desc recipe_img;
 select * from users;
 select * from recipes;
-desc recipes;
 select * from recipe_img;
 
 create table test_table (
@@ -126,7 +122,3 @@ create table test_table (
 drop table test_table;
 select * from test_table;
 insert into test_table (recipe_num,user_num) values(1,1);
-
-
-SELECT `Recipes`.`recipe_num`, `Recipes`.`user_num`, `Recipes`.`title`, `Recipes`.`content`, `Recipes`.`likes_count`, `Recipes`.`main_ingredient`, `Recipes`.`main_ing_detail`, `Recipes`.`sub_ingredient_detail`, `user`.`user_num` AS `user.user_num`, 
-`user`.`user_id` AS `user.user_id`, `Recipe_Imgs`.`image_num` AS `Recipe_Imgs.image_num`, `Recipe_Imgs`.`image_url` AS `Recipe_Imgs.image_url` FROM `Recipes` AS `Recipes` LEFT OUTER JOIN `users` AS `user` ON `Recipes`.`user_num` = `user`.`user_num` LEFT OUTER JOIN `Recipe_Img` AS `Recipe_Imgs` ON `Recipes`.`recipe_num` = `Recipe_Imgs`.`recipe_num` WHERE `Recipes`.`recipe_num` = '2';
