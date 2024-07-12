@@ -2,6 +2,8 @@ const registerMsg = document.querySelectorAll('.register-msg');
 const registerBtn = $('.register__btn');
 let registerForm = document.forms['register']
 let regiterFormInput = registerForm.querySelectorAll('.register-inputbx input')
+const registerFileInput = document.querySelector('.register__filebx input')
+
 // 회원가입 통과여부 담을 변수
 let pass = true;
 
@@ -43,9 +45,12 @@ regiterFormInput.forEach(ele=>{
             }
         } else if(inputId === 'birthday'){
             let year =  this.value.slice(0,4);
+            let month = this.value.slice(4,6);
+            let day = this.value.slice(6,8)
             let thisYear = new Date().getFullYear()
 
-            if(!this.checkValidity() || isNaN(this.value) || this.value.length < 8 ||year < 1910){
+            if(!this.checkValidity() || isNaN(this.value) || 
+            this.value.length < 8 || year < 1910 || month < '01' || month > 12 || day < '01' || day > 32 ){
                 pass = false
                 sendMsg(3, '8자리로 생년월일을 입력해주세요')
             } else if(thisYear - year < 19) {
@@ -114,3 +119,23 @@ function valRegExp(value, input) { // value : 검사할 값 / input : 인풋태�
 
     return reg.test(value);
 }
+
+// 파일 체크 함수 -> 작성중
+function fileCheck(obj) {
+    pathPoint = obj.value.lastIndexOf('.');
+    filePoint = obj.value.substring(pathPoint+1, obj.length);
+    fileType = filePoint.toLowerCase();
+    if(fileType == 'jpg' || fileType == 'jpeg' || fileType == 'png') return true;
+    else return false;
+}
+
+// 파일 체크
+registerFileInput.addEventListener('change', function(){
+    console.log(this);
+    if(fileCheck(this)){
+        // 백엔드랑 연결해서 프사 바꾸는거로 해야함
+    } else {
+        alert('이미지 파일만 올려주세요');
+        this.value = '';
+    }
+})

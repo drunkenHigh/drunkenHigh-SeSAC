@@ -32,7 +32,7 @@ router.get("/write", controller.getRecipeWrite);
 router.post("/write",  controller.postRecipeWrite);
 
 // patch /recipes?recipe_id=
-router.patch('/recipes?recipe_id=', controller.patchRecipe);
+router.patch('/:recipe_num', controller_rcp.patchRecipe);
 
 // delete /recipes?recipe_id=
 router.delete('/recipes?recipe_id=', controller.deleteRecipe);
