@@ -27,10 +27,11 @@ CREATE TABLE RECIPES(
     SUB_INGREDIENT TEXT NULL,
     foreign key (USER_ID) references USERS(USER_ID) on update cascade on delete cascade
 );
-CREATE TABLE Recipe_Img(
+CREATE TABLE RECIPE_IMG(
 	IMAGE_NUM INT auto_increment primary key,
     RECIPE_NUM INT NOT NULL ,
     IMAGE_URL VARCHAR(255) ,
+    MAIN_IMG INT default '0',
     foreign key(RECIPE_NUM) references RECIPES(RECIPE_NUM) on update cascade on delete cascade
 );
 -- sesac 계정 생성
@@ -116,6 +117,7 @@ select * from users;
 select * from recipes;
 desc recipes;
 select * from recipe_img;
+select * from likes;
 
 create table test_table (
 `recipe_num` int NOT NULL primary key AUTO_INCREMENT,
