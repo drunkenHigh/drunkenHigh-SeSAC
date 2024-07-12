@@ -71,16 +71,18 @@ exports.postRecipe = (req,res) => {
     res.render('recipeWrite');
 }
 
-   // 레시피 수정
-   exports.patchRecipe = async (req,res) => {
+// 레시피 수정
+exports.patchRecipe = async (req,res) => {
     try{
         const {recipe_num} = req.params;
+
         const updatedRecipe = await Recipes.update(
             {title},
             {content},
             {main_ingredient},
             {main_ing_detail},
             {sub_ingredient},
+
             {where: {recipe_num}}
         );
         res.json(updatedRecipe);
@@ -89,6 +91,7 @@ exports.postRecipe = (req,res) => {
         res.status(500).send('Internal Server Error');
     }
 }
+
 // 레시피 삭제
 exports.deleteRecipe = async(req,res)=>{
         try {
@@ -96,7 +99,8 @@ exports.deleteRecipe = async(req,res)=>{
             const isDeleted = await Recipes.destroy({
                 where : {recipe_num}
             });
-            console.log(isDeleted); // 삭제되면 1 , 삭제실패시 0
+            console.log(isDeleted); // 삭제되면 1 , 삭제실패시 0 
+    
             if(isDeleted){
                 return res.send(true);
             }else{

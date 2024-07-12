@@ -5,7 +5,7 @@
 .register__container {
     margin: 0 auto;
     width: 50vw;
-    padding-bottom: 40px;
+    padding: 60px 0;
 
 }
 
@@ -14,7 +14,7 @@
     font-size: 26px;
     font-weight: bold;
     color: var(--darkColor);
-    margin: 40px 0;
+    margin-bottom: 40px;
     width: 100%;
 }
 
