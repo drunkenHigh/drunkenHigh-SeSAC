@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/public/css/register.css">
 </head>
 <body>
     <%- include('./partials/header.ejs') %>
@@ -47,16 +48,17 @@
                 </div>
                 <div class="register-inputbx">
                     <label for="birthday">생년월일<span>(필수)</span></label>
-                    <input type="text" name="birthday" id="birthday" required placeholder="생년월일 8자리" minlength="8" maxlength="8">
+                    <input type="text" name="birthday" id="birthday" required placeholder="생년월일 8자리 (ex. 20000101)" minlength="8" maxlength="8">
                     <div class="register-msg"></div>
                 </div>
                 <div class="register__filebx">
                     <span>프로필 사진<b>(선택)</b></span>
                     <div class="filebx-img">
                         <figure>
-                            <img src="./user.jpg" alt="프로필사진">
+                            <img src="public/img/user.jpg" alt="프로필사진">
                         </figure>
                         <label for="profile_img">프로필 사진 올리기</label>
+                        <span>5MB 이하의 .jpeg, .jpg, .png 파일만 올려주세요</span>
                     </div>
                     <input type="file" name="profile_img" id="profile_img" accept="image/jpg, image/jpeg, image/png">
                 </div>
