@@ -2,7 +2,9 @@
 const { Recipes, Users, Recipe_Img } = require('../models/Mindex');
 
 // main page
-exports.main = (req,res) => {
+exports.main = async (req,res) => {
+    setCookie(req, res);
+    // await this.getRecipeList(req, res);
     res.render('index');
 }
 

@@ -9,5 +9,4 @@ router.get('/',controller.main);
 router.get('/recipes',controller_rcp.getRecipe);
 router.post('/write',controller_rcp.postRecipe);
 
-
 module.exports = router;

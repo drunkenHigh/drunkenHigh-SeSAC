@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
+
 const cookieParser = require('cookie-parser');
 const router = require("./routes/Rindex");
+const router_user = require('./routes/Rusers');
 const { sequelize } = require("./models/Mindex");
 const path = require("path");
 const dotenv = require("dotenv");
@@ -10,9 +12,13 @@ app.set("view engine", "ejs");
 app.set("views", "./views");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 app.use("/public", express.static(__dirname + "/static"));
+app.use("/upload", express.static(__dirname + "/upload"));
 app.use(cookieParser());
+
 app.use("/", router);
+app.use('/users', router_user);
 
 
 dotenv.config({

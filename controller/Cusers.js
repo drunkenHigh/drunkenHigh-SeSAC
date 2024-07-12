@@ -1,15 +1,12 @@
 
 const { users } = require('../models/Muser')
-exports.getUsers = (req, res) => {
-    console.log("GET / MAIN")
-    res.render('users');
-}
+
 
 
     //로그인 
      exports.getLogin = async (req, res) => {
 
-       res.render('/')
+       res.render('user')
     
     }
 
@@ -28,17 +25,27 @@ exports.getUsers = (req, res) => {
             }
         })
 
-        if(login) {
+       
+        if(login.user_id !== user_id){
+         
+            return res.status(404),json('등록 되지 않은 사용자 입니다.')
 
-            req.session.user_id = login.user_id
-            req.session.user_pw= login.user_pw
+        } 
 
-            res.json("로그인 성공")
+        if(login.user_pw !== user_pw){
+         
+            return res.status(404),json('비밀번호를 다시 확인해 주세요.')
 
-        }else{
-
-            res.status(404).json('로그인 실패')
         }
+
+        req.session.login = {
+            
+            user_id : login.user_id,
+            user_pw: login.user_pw
+
+        }
+
+        res.json('로그인 성공')
         
        } catch (error) {
         console.error(error);
@@ -60,12 +67,24 @@ exports.getUsers = (req, res) => {
 
 
 
-    //회원가입
+    //회원가입(GET)
     exports.getUsers = async (req, res) => {
-      
-        try {
-            const { user_id } = req.body;
 
+        res.render('register')
+      
+    };
+
+
+
+    //회원가입(POST)
+    exports.postUsers = async (req, res) => {
+          
+        try {
+
+            console.log(req.body)
+            const {user_id, user_name, user_pw,birth_day,profile_img} = req.body;
+
+           // 중복된 사용자 아이디 확인
             const existUser = await users.findOne({
                
                 where: {
@@ -73,38 +92,41 @@ exports.getUsers = (req, res) => {
                 }
             });
 
-            // 사용자 아이디가 이미 존재하는 경우
             if (existUser) {
                 return res.status(400).json('중복된 아이디 입니다.' );
             }
 
-            // 사용자 아이디가 존재하지 않는 경우 (중복되지 않은 경우)
-            return res.status(200).json('사용 가능한 아이디 입니다.');
+            if (!isValidPassword(user_pw)) {
+            return res.status(400).json('비밀번호는 대소문자, 특수문자, 숫자 포함하여 최소 8자 이상이어야 합니다.');
+            }
 
-          } catch (error) {
-            console.error(error);
-            res.status(500).send('Internal Server Error');
-         }
-    };
+            if (!isValidBirthday(birth_day)) {
+            return res.status(400).json('올바른 생일 형식이 아닙니다. (예: YYYY-MM-DD)');
+             }
 
 
-            exports.postUsers = async (req, res) => {
+
+            //회원 생성
+            const newUser = await users.create({
+                user_id, user_name, profile_img, user_pw, birth_day
+            });
+
+            res.json(newUser);
+
+            res.send('myprofile',{
+
+                user_name: req.body.user_name,
+                profile_img: profile_img,
+                birth_day:birth_day
+            })
+
           
-                try {
 
-                console.log(req.body)
-
-                const {user_id, user_name, user_pw,birth_day,profile_img} = req.body;
-            
-                const newUser = await users.create({
-                    user_id, user_name, profile_img, user_pw, birth_day
-                });
-
-                res.json(newUser);
 
             } catch (error) {
                 console.error(error);
                 res.status(500).send('Internal Server Error');
             }
+            
 
-        }
+    }
