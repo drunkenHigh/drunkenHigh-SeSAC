@@ -1,14 +1,7 @@
 const express = require("express");
 const app = express();
-<<<<<<< HEAD
-
-const cookieParser = require('cookie-parser');
-const router = require("./routes/Rindex");
-const router_user = require('./routes/Rusers');
-=======
 const router = require("./routes/Rindex");
 const router_rcp = require("./routes/Rrecipe");
->>>>>>> 0068d43e0a8fada8c17fece78021c1e91daaaf51
 const { sequelize } = require("./models/Mindex");
 const path = require("path");
 const dotenv = require("dotenv");
@@ -23,16 +16,6 @@ app.set("views", "./views");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-<<<<<<< HEAD
-
-app.use("/public", express.static(__dirname + "/static"));
-app.use("/upload", express.static(__dirname + "/upload"));
-app.use(cookieParser());
-
-app.use("/", router);
-app.use('/users', router_user);
-=======
->>>>>>> 0068d43e0a8fada8c17fece78021c1e91daaaf51
 
 app.use("/", router);
 app.use('/recipe', router_rcp);
