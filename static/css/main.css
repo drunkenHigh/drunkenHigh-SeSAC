@@ -1,3 +1,79 @@
 @import url(./common/reset.css);
 @import url(./common/core.css);
 @import url(./common/common.css);
+
+
+/* 하이볼 리스트 */
+
+.list-title {
+    font-size: min(3.4vw, 36px);
+    font-weight: 900;
+    color : var(--darkColor2);
+    padding : 20px 0 10px 20px;
+}
+
+/* 카테고리 버튼 */
+.category-btn {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 60%;
+    margin: 0 auto;
+    gap: 0 20px;
+}
+
+.category-btn li {
+    width: 70px;
+}
+
+.category-btn li .btn-bx {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px 0;
+    cursor: pointer;
+}
+
+.category-btn li .category-title {
+    font-size: 12px;
+}
+
+.category-btn li figure {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: #000;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+}
+
+.category-btn li img {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    object-fit: cover;
+}
+
+/* 레시피 목록 */
+.recipe-lists {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: min(2vw, 50px);
+    grid-row-gap: min(1.5vw, 15px);
+    width: 100%;
+}
+
+.recipe-lists figure {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.recipe-lists img {
+    width: 100%;
+}

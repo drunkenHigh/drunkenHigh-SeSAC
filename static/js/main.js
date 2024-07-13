@@ -1,5 +1,7 @@
 const recommendList = document.querySelector('.recommend-container ul')
 const recipeCategory = document.querySelector('.recipe-category .category-btn')
+let ingredientArray = ['all', 'whiskey', 'vodka', 'soju', 'sake', 'etc']
+const recipeLists = document.querySelector('.recipe-lists')
 
 // 추천 리스트 렌더링 함수
 async function recommendRender() {
@@ -12,7 +14,6 @@ async function recommendRender() {
 
 // 카테고리 버튼 만드는 함수
 function makeCategoryBtn(){
-    let ingredientArray = ['all', 'whiskey', 'vodka', 'soju', 'sake', 'etc']
     let hcode =``;
     let ingredientKr
     let categoryBtnColor;
@@ -33,12 +34,12 @@ function makeCategoryBtn(){
         }
         hcode += 
         `<li>
-            <a href='/${ele}'>
+            <div class="btn-bx" title=${ele}>
                 <figure style='background-color : ${categoryBtnColor}'>
-                    <img src='/public/img/${ele}.png' alt='category icon' />
+                    <img src='./public/img/${ele}.png' alt='${ingredientKr}'/>
                 </figure>
                 <p class="category-title">${ingredientKr}</p>
-            </a>       
+            </div>       
         </li>`
     })
 
@@ -47,12 +48,52 @@ function makeCategoryBtn(){
 
 makeCategoryBtn();
 
+const recipeBtn = document.querySelectorAll('.category-btn li')
 
-// 전체 목록 조회 함수
-async function getRecipeList() {
+recipeBtn.forEach(ele=>{
+    ele.onclick = (e) => {
+        e.preventDefault();
+        const btnTitle = ele.querySelector('.category-title').innerText;
+        getRecipeList(btnTitle)
+    }
+})
+
+
+// 레시피 목록 조회 함수
+async function getRecipeList(ingredient) {
     try{
+        console.log(ingredient);
+        const getRecipeAxios = await axios({
+            method : 'get',
+            url : `/${ingredient}`,
+        })
+        const recipeData = getRecipeAxios.data
+        // 더보기 기능을 위한 함수
+        
+        let hcode = ``;    
+        recipeData.forEach(ele => {
+            console.log(ele);
+            hcode += 
+            `<li>
+              <a href="/recipes?recipe_id=${ele.recipe_num}">
+                <figure>
+                  <img src="${ele.recipe_img}" alt="레시피이미지" class="recipe-list__img" />          
+                </figure>
+                <p class="receipe__title">${ele.title}</p>
+                <p class="receipe__writer">${ele.user_name}</p>
+              </a>
+            </li>`
+        })
+        recipeLists.innerHTML = hcode;        
 
     }catch(err){
-
+        console.error(err);
     }
+}
+
+// 더보기 기능을 위한 함수
+function showMoreList(){
+    const MAXCOUNT = 8;
+    let start = 0;
+    let cnt = 1;
 }
