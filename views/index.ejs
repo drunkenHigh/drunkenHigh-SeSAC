@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <%- include('include/include', { title : 'DRUNKEN HIGH' }) %>
     <link rel="stylesheet" href="/public/css/main.css">
 </head>
 <body>
@@ -11,50 +9,85 @@
     <%- include('./partials/header.ejs') %>
     <main>
         <section class="main__recommend">
-            <h2 class="recommend-title"></h2>
-            <div class="recommend-container">
-                <ul>
-                    <li>
-                        <a href="/recipes?recipe_id=">
-                            <figure>
-                                <img src="" alt="" class="recommed__img">
-                                <figcaption class="recommend__text">
-                                    <p class="receipe__title"></p>
-                                    <p class="receipe__writer"></p>
-                                </figcaption>
-                            </figure>
-                        </a>
-                    </li>
-                </ul>
+          <h2 class="recommend-title"></h2>
+          <div class="recommend-container">
+            <!-- first swiper -->
+            <div class="recommend-firstSwiper">
+              <ul class="">
+                <li>
+                  <a href="/">
+                    <figure>
+                      <!-- <img src="./test/1.jpg" alt="하이볼" class="recommed__img" /> -->
+                      <figcaption class="recommend__text">
+                        <p class="receipe__title"></p>
+                        <p class="receipe__writer"></p>
+                      </figcaption>
+                    </figure>
+                  </a>
+                </li>
+              </ul>
             </div>
+            <!-- second swiper -->
+            <div class="recommend-secondSwiper">
+              <ul class="">
+                <li>
+                  <a href="/">
+                    <figure>
+                      <!-- <img src="./test/1.jpg" alt="하이볼" class="recommed__img" /> -->
+                      <figcaption class="recommend__text">
+                        <p class="receipe__title"></p>
+                        <p class="receipe__writer"></p>
+                      </figcaption>
+                    </figure>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <!-- third swiper -->
+            <div class="recommend-thirdSwiper">
+              <ul class="">
+                <li>
+                  <a href="/">
+                    <figure>
+                      <!-- <img src="./test/1.jpg" alt="하이볼" class="recommed__img" /> -->
+                      <figcaption class="recommend__text">
+                        <p class="receipe__title"></p>
+                        <p class="receipe__writer"></p>
+                      </figcaption>
+                    </figure>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </section>
         <section class="main__list">
-            <nav class="recipe-category">
-                <ul>
-                    <li>
-                        <a href="/cat">
-                            <img src="/public/img/all.png" alt="카테고리 아이콘">
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <div class="recipe-list__container">
-                <ul>
-                    <li>
-                        <a href="/recipes?recipe_num=">
-                            <figure>
-                                <img src="" alt="" class="recipe-list__img">
-                                <figcaption class="recipe-list__text">
-                                    <p class="receipe__title"></p>
-                                    <p class="receipe__writer"></p>
-                                </figcaption>
-                            </figure>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+          <h2 class="list-title">레시피 모음</h2>
+          <nav class="recipe-category">
+            <ul class="category-btn">   
+            </ul>
+          </nav>
+          <div class="recipe-list__container">
+            <ul class="recipe-lists">
+              <% for(let i = 0; i < 8 ; i++){ %>
+                  <li>
+                      <a href="/recipes?recipe_id=<%= recipeLists[i].dataValues.recipe_num%>">
+                          <figure>
+                          <img src="<%= recipeLists[i].dataValues.recipe_img %>" alt="레시피이미지" class="recipe-list__img" />          
+                          </figure>
+                          <p class="receipe__title"><%= recipeLists[i].dataValues.title %></p>
+                          <p class="receipe__writer"><%= recipeLists[i].dataValues.user_name %></p>
+                      </a>
+                  </li>
+              <%}%> 
+            </ul>
+          </div>
+          <div class="recipe-morebtn">
+              <button>더보기</button>
+          </div>
         </section>
     </main>
     <%- include('./partials/footer.ejs') %>
+    <script src="/public/js/main.js"></script>
 </body>
 </html>
