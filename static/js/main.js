@@ -1,16 +1,39 @@
 const recommendList = document.querySelector('.recommend-container ul')
 const recipeCategory = document.querySelector('.recipe-category .category-btn')
-let ingredientArray = ['all', 'whiskey', 'vodka', 'soju', 'sake', 'etc']
 const recipeLists = document.querySelector('.recipe-lists')
+const recipeMoreBtnBx = document.querySelector('.recipe-morebtn')
 
-// 추천 리스트 렌더링 함수
-async function recommendRender() {
-    let hcode;
+// 카테고리 버튼용 배열
+let ingredientArray = ['all', 'whiskey', 'vodka', 'soju', 'sake', 'etc']
 
-    for(let i = 0; i <= 10 ; i++){
-        
-    }
-}
+// 더보기 기능을 위한 변수 설정
+const MAXCOUNT = 8;
+let start = 0;
+let cnt = 1;
+
+// 추천 리스트 스와이퍼
+let leftSwiper = new Swiper('.recommendSwiper .recommend-leftSwiper', {
+    loop : true,
+    slidePerView : 1
+})
+let centerSwiper = new Swiper('.recommendSwiper .recommend-centerSwiper', {
+    loop : true,
+    pagination : {
+        el : '.swiper-pagination',
+        type : 'progressbar'
+    }, 
+    navation : {
+        nextEl : '.swiper-btnGroup .swiper-button-next',
+        prevEl : '.swiper-btnGroup .swiper-button-prev'
+    },
+    slidePerView : 1
+})
+let rightSwiper = new Swiper('.recommendSwiper .recommend-rightSwiper', {
+    loop : true,
+    slidePerView : 1
+})
+
+
 
 // 카테고리 버튼 만드는 함수
 function makeCategoryBtn(){
@@ -36,7 +59,7 @@ function makeCategoryBtn(){
         `<li>
             <div class="btn-bx" title=${ele}>
                 <figure style='background-color : ${categoryBtnColor}'>
-                    <img src='./public/img/${ele}.png' alt='${ingredientKr}'/>
+                    <img src='/public/img/${ele}.png' alt='${ingredientKr}'/>
                 </figure>
                 <p class="category-title">${ingredientKr}</p>
             </div>       
@@ -51,49 +74,97 @@ makeCategoryBtn();
 const recipeBtn = document.querySelectorAll('.category-btn li')
 
 recipeBtn.forEach(ele=>{
-    ele.onclick = (e) => {
+    ele.onclick = async (e) => {
         e.preventDefault();
+        start = 0;
         const btnTitle = ele.querySelector('.category-title').innerText;
-        getRecipeList(btnTitle)
+        // 초기화 
+        recipeLists.innerHTML = '';
+        recipeMoreBtnBx.innerHTML = `<button class="morebtn2 morebtn">더보기</bottion>`
+        await getRecipeList(btnTitle)
     }
 })
+
 
 
 // 레시피 목록 조회 함수
 async function getRecipeList(ingredient) {
     try{
-        console.log(ingredient);
         const getRecipeAxios = await axios({
             method : 'get',
             url : `/${ingredient}`,
         })
-        const recipeData = getRecipeAxios.data
-        // 더보기 기능을 위한 함수
-        
-        let hcode = ``;    
-        recipeData.forEach(ele => {
-            console.log(ele);
-            hcode += 
-            `<li>
-              <a href="/recipes?recipe_id=${ele.recipe_num}">
-                <figure>
-                  <img src="${ele.recipe_img}" alt="레시피이미지" class="recipe-list__img" />          
-                </figure>
-                <p class="receipe__title">${ele.title}</p>
-                <p class="receipe__writer">${ele.user_name}</p>
-              </a>
-            </li>`
+        const recipeData = getRecipeAxios.data;
+        // let hcode = '';
+        renderRecipeLists(recipeData.slice(start, start + MAXCOUNT));
+        let recipeMoreBtn = recipeMoreBtnBx.querySelector('.morebtn2')
+
+        recipeMoreBtn.addEventListener('click', ()=>{
+            if(recipeData.length > MAXCOUNT) {
+                start += MAXCOUNT;
+                renderRecipeLists(recipeData.slice(start, start + MAXCOUNT));
+                // 더보기 버튼 처리
+                if(start + MAXCOUNT >= recipeData.length) {
+                    recipeMoreBtn.style.display = 'none'
+                } else {
+                    recipeMoreBtn.style.display = 'block'
+                }
+            }
         })
-        recipeLists.innerHTML = hcode;        
+
+        // 더보기 버튼 처리
+        if(start + MAXCOUNT >= recipeData.length) {
+            recipeMoreBtn.style.display = 'none'
+        } else {
+            recipeMoreBtn.style.display = 'block'
+        }
 
     }catch(err){
         console.error(err);
     }
 }
 
-// 더보기 기능을 위한 함수
-function showMoreList(){
-    const MAXCOUNT = 8;
-    let start = 0;
-    let cnt = 1;
+
+function renderRecipeLists(recipes){
+    let hcode = ``;
+    recipes.forEach(recipe=>{
+        hcode += 
+            `<li>
+              <a href="/recipes?recipe_id=${recipe.recipe_num}">
+                <figure>
+                  <img src="${recipe.recipe_img}" alt="레시피이미지" class="recipe-list__img" />          
+                </figure>
+                <p class="receipe__title">${recipe.title}</p>
+                <p class="receipe__writer">${recipe.user_name}</p>
+              </a>
+            </li>`
+    })
+    
+    recipeLists.innerHTML += hcode;
 }
+
+
+// 메인페이지에서 더보기 버튼 클릭 시 목록 더 나오기
+const recipeMoreBtn = recipeMoreBtnBx.querySelector('.morebtn1')
+recipeMoreBtn.addEventListener('click', async ()=>{
+    try {
+        const btnAxios = await axios({
+            method : 'get',
+            url : '/전체'
+        })
+        const moreData = btnAxios.data
+        if(moreData.length > MAXCOUNT) {
+            start += MAXCOUNT;
+            renderRecipeLists(moreData.slice(start, start + MAXCOUNT));
+            // 더보기 버튼 처리
+            if(start + MAXCOUNT >= moreData.length) {
+                recipeMoreBtn.style.display = 'none'
+            } else {
+                recipeMoreBtn.style.display = 'block'
+            }
+        }
+    }catch(err){
+        console.error(err);
+    }
+})
+
