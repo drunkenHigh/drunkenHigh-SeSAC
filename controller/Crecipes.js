@@ -7,7 +7,6 @@ exports.getRecipe = async(req,res) => {
     try {
         console.log('레시피 상세페이지 >> ',req.query);
         
-        // 왜 안되는지 모르겠음 console.log("req.params >> ",req.params);
         const {recipe_num} = req.query;
         const recipe = await Recipes.findOne({
             where : {recipe_num}, // {recipe_num,recipe_num}
@@ -65,10 +64,38 @@ app.get('/getForm',(req,res)=>{
 
 */
 
-// 레시피 작성
-exports.postRecipe = (req,res) => {
-    console.log('레시피 작성 postRecipe')
-    res.render('recipeWrite');
+// 레시피 작성 버튼 클릭시  -테스트완료
+exports.getRecipeWrite = (req,res) => {
+    // res.render('write-detail-test',{title:'글 작성'});
+    res.render('recipeWrite',{title:'글 작성'});
+}
+
+// 레시피 작성페이지에서 저장 버튼 클릭시
+exports.postRecipeWrite = async(req,res) => {
+    try {
+        console.log('레시피 저장 버튼 클릭 postRecipe');
+        console.log(req.body); //레시피 저장 버튼 누를시 데이터를 받는다.
+        res.status(200).send('레시피 작성 완료'); // 응답을 보내지 않으면 클라이언트가 응답을 기다리게 됩니다.
+        const { recipeTitle, mainImg, mainImgDetail, subImgList, recipeRawHtml, content } = req.body;
+        const mainImage = req.files['mainImg'][0];
+        // const recipeSubImgs = req.files['subImgList'].concat(req.files['subImgList']);
+        console.log(req.file.path);
+        // 데이터베이스에 저장
+        // const newRecipe = await Recipes.create({
+        //     recipeTitle,
+        //     mainImg,
+        //     mainImgDetail,
+        //     subImgList,
+        //     recipeRawHtml,
+        //     content
+        // });
+        // console.log('Main Image Path:', mainImage);
+        // console.log('Sub Images Paths:', recipeSubImgs);
+        // console.log('저장완료 : ', {recipe:newRecipe});
+        } catch (error) {
+        console.error('오류 발생:', error);
+        res.status(500).send('서버 오류');
+        }
 }
 
 // 레시피 수정
@@ -111,4 +138,3 @@ exports.deleteRecipe = async(req,res)=>{
             res.status(500).send('Internal Server Error');
         }
     }
-

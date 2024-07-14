@@ -3,11 +3,9 @@ const controller = require("../controller/Crecipes");
 // const { recipeList, allRecipes } = require("../controller/Cmain");
 const router = express.Router();
 
-// 모든 레시피 가져오기
-router.get("/recipes", getRecipeListAll);
 
 // 주재료에 대한 레시피 리스트 가져오기
-router.get("/recipes/:main_ingredinet", controller.getRecipeListMain);
+// router.get("/recipes/:main_ingredinet", controller.getRecipeListMain);
 
 // const uploadImage = multer({
 //     storage: multer.diskStorage({ 
@@ -32,7 +30,7 @@ router.get("/write", controller.getRecipeWrite);
 router.post("/write",  controller.postRecipeWrite);
 
 // patch /recipes?recipe_id=
-router.patch('/:recipe_num', controller_rcp.patchRecipe);
+router.patch('/:recipe_num', controller.patchRecipe);
 
 // delete /recipes?recipe_id=
 router.delete('/recipes?recipe_id=', controller.deleteRecipe);

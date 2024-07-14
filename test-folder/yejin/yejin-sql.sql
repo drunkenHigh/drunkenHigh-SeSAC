@@ -1,3 +1,9 @@
+create database sesac_project1;
+create user 'sesac' identified by '1234';
+grant all privileges on *.* to sesac@'%';
+
+use sesac_project1;
+
 -- MySQL 에서 db table 생성 쿼리 
 -- 24.07.10 예진 업데이트 함.
 
@@ -47,6 +53,7 @@ show tables;
 drop table if exists users;
 drop table if exists recipes;
 drop table if exists recipe_img;
+drop table if exists likes;
 drop table if exists users,recipes,recipe_img;
 desc users;
 desc recipes;
@@ -80,7 +87,7 @@ CREATE TABLE RECIPES(
     LIKES_COUNT INT NOT NULL,
     MAIN_INGREDIENT VARCHAR(50) NOT NULL,
     MAIN_ING_DETAIL TEXT NULL,
-    SUB_INGREDIENT TEXT NULL,
+    sub_ingredient_detail TEXT NULL,
     createAt datetime default now(),
     updateAt datetime default now(),
     foreign key (USER_NUM) references users(USER_NUM) on update cascade on delete cascade
@@ -95,15 +102,34 @@ CREATE TABLE RECIPE_IMG(
 
 drop table users;
 insert into users (user_id,user_name,profile_img,user_pw,birth_day)
+	values ('user1', '네이버관리자', 'https://recipe1.ezmember.co.kr/cache/recipe/2018/02/10/31eb5c9685f61ec424e4000f484cfee81.jpg',
+    'pass','2024-01-01');
+insert into users (user_id,user_name,profile_img,user_pw,birth_day)
+	values ('user2', '네이버관리자', 'https://recipe1.ezmember.co.kr/cache/recipe/2018/02/10/31eb5c9685f61ec424e4000f484cfee81.jpg',
+    'pass','2024-01-01');
+insert into users (user_id,user_name,profile_img,user_pw,birth_day)
 	values ('user3', '네이버관리자', 'https://recipe1.ezmember.co.kr/cache/recipe/2018/02/10/31eb5c9685f61ec424e4000f484cfee81.jpg',
     'pass','2024-01-01');
 
 insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail)
-	values (1, '레몬 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔_버본 토닉워터', '콜라 물');
+	values (1, '레몬 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물');
+insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail)
+	values (1, '레몬 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물');
+insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail)
+	values (2, '라임 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물');
+insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail)
+	values (2, '라임 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물');
+insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail)
+	values (3, '레몬 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물');
 
 insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail)
-	values (1, 'user가 쓴 쓴 딸기 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔_버본 토닉워터', '콜라 물');
-    
+	values (1, 'user가 쓴 딸기 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물');
+
+insert into recipe_img (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail)
+	values (1, 'user가 쓴 딸기 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물');
+
+
+
 insert into recipe_img (recipe_num,image_url) values (4,'uploads/recipe/default_image.jpg');
 -- 컬럼 명 변경 / 컬럼 타입 변경 / 컬럼 값 변경
 alter table recipes change SUB_INGREDIENT sub_ingredient_detail text;
