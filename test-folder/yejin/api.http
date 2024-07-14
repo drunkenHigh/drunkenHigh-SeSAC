@@ -1,22 +1,22 @@
-@server = http://localhost:8000
+@server = http://localhost:8888
 @recipe_num = 1
 
 ### 전체 선수 조회
-GET {{server}}/recipes
+GET {{server}}
 
 ### id로 특정 선수 조회
-GET {{server}}/recipes/recipe_id={{recipe_num}}
+GET {{server}}/recipe?recipe_num={{recipe_num}}
 
 ### 선수 추가 
-POST {{server}}/recipes
+POST {{server}}/recipe/writeForm
 Content-Type: application/json ; charset=UTF-8
 //위아래 한줄 띄워야한다.
 // json 타입으로 주고 받겠다고 했으니, "":"" 타입으로 지정해야한다.
 
 {
-    "name" : "손흥민",
-    "age" : 31,
-    "team_id":2
+    "title" : "손흥민",
+    "mainImage" : "uploads/img.png",
+    "content":"2"
 }
 
 ### 특정 선수의 소속 팀 변경
