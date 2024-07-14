@@ -9,7 +9,7 @@
     try {
         const res = await axios({
             method: 'post',
-            url: '/writeForm',
+            url: '/write',
             data: {
                 "title": recipeObj.recipeTitle,
                 "content": "",
@@ -49,7 +49,7 @@ saveButton.addEventListener('click', () => {
     </script>
 </head>
 <body>
-    <form action="/recipe/writeForm" method="post">
+    <form action="/recipe/write" method="post">
         게시글 <input type="text" name="title" placeholder="title"> <br>
         메인재료 
         <select name="mainIngredient" class="form-select block w-full focus:bg-white" required>

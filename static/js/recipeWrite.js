@@ -116,7 +116,7 @@ const writeRecipe = async (recipeObj) => {
     try {
         const res = await axios({
             method: 'post',
-            url: '/write',
+            url: '/recipe/write',
             data: {
                 "title": recipeObj.recipeTitle,
                 "content": "",
@@ -125,13 +125,16 @@ const writeRecipe = async (recipeObj) => {
                 "sub_ingredient": recipeObj.subIngredient,
                 "main_img": recipeObj.mainImage,
                 "content": recipeObj.recipeRawHtml,
-                "sub_imgs": recipeObj.recipeSubImgs
+                "sub_imgs": recipeObj.recipeSubImgs,
+                "recipeStep" : recipeObj.recipeStep
             }
+
         })
     } catch(err) {
         console.error(err);
     }
 }
+
 
 // import path from "path";
 // console.log(__dirname);
@@ -162,9 +165,11 @@ saveButton.addEventListener('click', () => {
             // 조회 페이지에서 어떻게 렌더링할지 정해지면 raw html 수정하기!
             recipeRawHtml += `<div><div>${recipeStepNum}</div><div>${recipeContentText}</div></div>`;
             recipeSubImgs.push(recipeSubImg);
-        })
-
-
+            // console.log("recipeSubImg >> ",recipeSubImg);
+            // console.log("recipeSubImgs >> ",recipeSubImgs);
+        });
+        
+        
         const recipeObj = {
             recipeTitle, 
             mainIng, 
@@ -172,11 +177,17 @@ saveButton.addEventListener('click', () => {
             subIngList, 
             mainImage,
             recipeRawHtml,
-            recipeSubImgs
+            recipeSubImgs,
+            recipeStep
         }
         console.log(recipeObj.recipeTitle, recipeObj.mainIng, recipeObj.mainIngDetail, recipeObj.subIngList, recipeObj.mainImage);
-        // writeRecipe(recipeObj, () => {
-        //     if(confirm("저장되었습니다!")) {
+        
+        // console.log("recipe sub images >>> \n",recipeObj.recipeSubImgs);
+        // console.log("recipe sub images >>> \n",recipeObj.recipeSubImgs);
+        console.log("recipeStep >> ",recipeStep);
+         writeRecipe(recipeObj, () => {
+             if(confirm("저장되었습니다!")) { console.log("완료");} 
+            })
         //         // 홈으로 이동
         //         window.location.href = "/";
         //     }
