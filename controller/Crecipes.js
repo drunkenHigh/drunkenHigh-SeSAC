@@ -73,10 +73,10 @@ exports.postRecipeWrite = async(req,res) => {
   recipeStep: 2
 }
         */
-        const { title, content, main_ingredient, main_ing_detail, 
-            sub_ingredient_detail, thumnail_num, recipeStep , mainImage } = req.body;
+        // const { title, content, main_ingredient, main_ing_detail, 
+            // sub_ingredient_detail, thumnail_num, recipeStep , mainImage } = req.body;
         // const {main_img, sub_imgs} =
-        console.log("main image file path >>> ",req.file);
+        console.log("image file path >>> ",req.files);
         
         
                 /*
@@ -93,35 +93,29 @@ exports.postRecipeWrite = async(req,res) => {
             console.log("recipeSubImgs >> ",recipeSubImgs);
         });
 */
-        // console.log("req.body >>> ",req.body); 
-
-        
-        // await Recipe_Img_Model.save();
-        
-        // console.log("저장 버튼 클릭시 파일 위치 >>> ",req.file.name);
-        /*
         // 데이터베이스에 저장
+
         const post = await Recipe_Model.findByPk(req.body.recipe_num);
         const newRecipe = await Recipes.create({
-            title : req.body.title,
-            content : req.body.content,
-            main_ingredient : req.body.main_ingredient,
-            main_ing_detail : req.body.main_ing_detail,
-            sub_ingredient_detail : req.body.sub_ingredient_detail,
-
+            title : title,
+            user_num :1,
+            content,
+            main_ingredient,
+            main_ing_detail,
+            sub_ingredient_detail
         });
-        const newImage = await Recipe_Img.create({
-           recipe_num:req.params.recipe_num,
-           image_url:req.body.image_url,
-           main_img:req.body.thumnail_num
-        });
+        // const newImage = await Recipe_Img.create({
+        //    recipe_num:req.params.recipe_num,
+        //    image_url:req.body.image_url,
+        //    main_img:req.body.thumnail_num
+        // });
         
         // console.log('Main Image Path:', mainImage);
         // console.log('Sub Images Paths:', recipeSubImgs);
         // console.log('저장완료 : ', {recipe:newRecipe});
 
         // res.redirect('/') 작성 완료 버튼을 누를시 홈으로 돌아가기
-        */
+
         } catch (error) {
             console.error('postRecipeWrite 오류 발생:', error);
             res.status(500).send('레시피 작성버튼 클릭시 에러 발생! ');

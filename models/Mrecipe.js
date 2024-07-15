@@ -27,7 +27,7 @@ const RecipesModel = (sequelize, DataTypes) =>{
             allowNull : false,
         },
         likes_count:{
-            // LIKES_COUNT INT NOT NULL,
+            // LIKES_COUNT INT default 0,
             type:DataTypes.INTEGER,
             allowNull : false,
             defaultValue: 0

@@ -59,7 +59,7 @@ CREATE TABLE RECIPES(
     USER_NUM  INT NOT NULL,
     TITLE TEXT NOT NULL,
     CONTENT TEXT NOT NULL,
-    LIKES_COUNT INT NOT NULL,
+    LIKES_COUNT INT default 0,
     MAIN_INGREDIENT VARCHAR(50) NOT NULL,
     MAIN_ING_DETAIL TEXT NULL,
     sub_ingredient_detail TEXT NULL,
@@ -116,6 +116,7 @@ alter table recipes change SUB_INGREDIENT sub_ingredient_detail text;
 alter table recipes change createAt createdAt text;
 alter table recipes change updateAt updatedAt text;
 alter table recipe_img modify image_url varchar(255); 
+alter table recipes modify likes_count int default 0;
 update recipe_img set image_url='/uploads/recipe/3_img1.png' where recipe_num=3;
 update recipe_img set main_img=1 where image_num=3;
 alter table recipe_img add column MAIN_IMG INT default '0';
