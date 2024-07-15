@@ -51,18 +51,18 @@ $(window).scroll(function(){
 });
 
 // user id 받아오기
-let user_id = 0;
-axios({
-    method: 'GET',
-    url: `/user`
+// let user_id = 0;
+// axios({
+//     method: 'GET',
+//     url: `/user`
     
-}).then((res) => {
-    console.log(res.data);
-    //user_id = res.data;
+// }).then((res) => {
+//     console.log(res.data);
+//     //user_id = res.data;
     
-}).catch((err) => {
-    console.error(err);
-})
+// }).catch((err) => {
+//     console.error(err);
+// })
 
 
 // 작성한 레시피 목록 불러오기
@@ -112,7 +112,18 @@ const waitForUserChange = () => {
                     <div class="md:flex mb-6">
                         <div class="md:w-1/3">
                             <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textarea">
-                                비밀번호
+                                현재 비밀번호
+                            </label>
+                        </div>
+                        <div class="md:w-2/3">
+                            <input type="password" class="form-input block w-full focus:bg-white" id="old-pw" value="" rows="1"></input>
+                            <p class="py-2 text-sm text-gray-600">비밀번호 제한 조건</p>
+                        </div>
+                    </div>
+                    <div class="md:flex mb-6">
+                        <div class="md:w-1/3">
+                            <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textarea">
+                                새로운 비밀번호
                             </label>
                         </div>
                         <div class="md:w-2/3">
