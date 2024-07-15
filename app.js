@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const router = require("./routes/Rindex");
 const router_rcp = require("./routes/Rrecipe");
+const router_users = require('./routes/Rusers');
 const { sequelize } = require("./models/Mindex");
 const path = require("path");
 const dotenv = require("dotenv");
@@ -19,6 +20,7 @@ app.use(express.json());
 
 app.use("/", router);
 app.use('/recipe', router_rcp);
+app.use('/users', router_users);
 
 app.use(cookieParser());
 app.use("/public", express.static(__dirname + "/static"));
