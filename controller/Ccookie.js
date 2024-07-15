@@ -11,5 +11,5 @@ exports.setCookie = (req, res) => {
         res.cookie('age', false, cookieConfig);
     }
 
-    res.redirect('/');  // 쿠키 설정 후 메인 페이지로 리디렉션
+    // res.redirect('/');
 };

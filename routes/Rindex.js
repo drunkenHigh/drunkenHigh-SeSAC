@@ -1,6 +1,6 @@
 const {main} =require('../controller/Cmain.js')
 const {setCookie} = require('../controller/Ccookie');
-const {getRecipeList} = require('../controller/Cmain.js');
+const {getRecipeListMain} = require('../controller/Cmain.js');
 const express = require('express');
 const router=express.Router();
 
@@ -11,6 +11,6 @@ router.get('/', main);
 router.get('/setCookie', setCookie);
 
 // (전체, 주재료) 레시피 리스트 
-// router.get('/:main_ingredient?', getRecipeList);
+router.get('/:main_ingredient', getRecipeListMain);
 
 module.exports = router;

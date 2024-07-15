@@ -1,64 +1,92 @@
 // 모델 가져오기
 const { Recipes, Users, Recipe_Img } = require('../models/Mindex');
 
-// main page
-exports.main = async (req, res) => {
+// 전체 레시피 리스트 가져오기 (이미지, 제목, 작성자) // 테스트 완료!!!
+const getRecipeListAll = async () => {
     try {
-        // 쿼리 파라미터에서 주재료 가져오기
-        const { main_ingredient } = req.query
+        const listsALl = await Recipes.findAll({
+            include: [
+                {
+                    model: Users,
+                    attributes: ['user_name'],
+                },
+                {
+                    model: Recipe_Img,
+                    attributes: ['image_url'],
+                    where: { main_img: 1 }, // 메인 이미지 필터링
+                    required: false, // 이미지가 없어도 레시피를 가져옴
+                }
+            ],
+            attributes: ['title'],
+            order: [['created_at', 'DESC']], // 최신 레시피부터 정렬
+        });
 
-        // getRecipeList 함수 호출 (주재료가 있을 경우 필터링, 없을 경우 모든 레시피 가져오기)
-        const recipes = await getRecipeList({ main_ingredient: main_ingredient || '' });
+        return listsALl;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Internal Server Error');
+    }
+};
 
-        res.render('index', { recipes });  // 'index' 페이지에 recipes 데이터를 전달
+
+// 주재료에 대한 레시피 리스트 가져오기 (이미지, 제목, 작성자)
+const getRecipeListMain = async (req, res) => {
+    try {
+        console.log(req.params.main_ingredient);
+        const { main_ingredient } = req.params;
+        let lists;
+        if(main_ingredient==='전체'){
+            lists = await Recipes.findAll({
+                include: [
+                    {
+                        model: Users,
+                        attributes: ['user_name'],
+                    },
+                    {
+                        model: Recipe_Img,
+                        attributes: ['image_url'],
+                        where: { main_img: 1 }, // 메인 이미지 필터링
+                        required: false, // 이미지가 없어도 레시피를 가져옴
+                    }
+                ],
+                attributes: ['title'],
+                order: [['created_at', 'DESC']], // 최신 레시피부터 정렬
+            });
+        }else{
+            lists = await Recipes.findAll({
+                where: { main_ingredient },
+                include: [
+                    {
+                        model: Users,
+                        attributes: ['user_name']
+                    },
+                    {
+                        model: Recipe_Img,
+                        attributes: ['image_url'],
+                        where: { main_img: 1 },
+                        required: false 
+                    }
+                ],
+                attributes: ['title'],
+                order: [['created_at', 'DESC']] 
+            });
+        }
+        res.json(lists);
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
     }
 };
 
-
-// 레시피 리스트 가져오기 (전체, 주재료)
-exports.getRecipeList = async (filters = {}) => {
+// main 페이지
+const main = async (req, res) => {
     try {
-        // 주재료 필터링 (기본값은 빈 객체, 즉 필터링 없음)
-        const { main_ingredient } = filters;
-
-        // 주재료가 있을 경우 필터링, 없을 경우 모든 레시피 가져오기
-        const whereClause = main_ingredient ? { main_ingredient } : {};
-
-        // 레시피 조회
-        const lists = await Recipes.findAll({
-            where: whereClause,
-            include: [
-                {
-                    model: Users,
-                    attributes: ['user_name']  // 작성자
-                },
-                {
-                    model: Recipe_Img,
-                    where: { main_img: 1 },  // 메인 이미지
-                    attributes: ['image_url'],
-                    required: false  // 이미지가 없을 시에도 가져오기
-                }
-            ],
-            attributes: ['title'],  // 제목
-            order: [['createdAt', 'DESC']]  // 최신 레시피부터 정렬
-        });
-
-        // 레시피 리스트를 반환
-        return lists;
+        const listsALl = await getRecipeListAll();
+        res.render('index', { listsALl });
     } catch (error) {
         console.error(error);
-        throw new Error('Internal Server Error');  
+        res.status(500).send('Internal Server Error');
     }
 };
 
-
-
-
-
-
-
-
-
+module.exports = { main, getRecipeListAll, getRecipeListMain };
