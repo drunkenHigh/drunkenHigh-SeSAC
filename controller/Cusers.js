@@ -4,6 +4,12 @@ const { sequelize } = require('../models/Mindex');
 const UsersModel = require('../models/Muser');
 const Users = UsersModel(sequelize, DataTypes);
 
+const RecipesModel = require('../models/Mrecipe');
+const Recipes = RecipesModel(sequelize, DataTypes);
+const RecipesImageModel = require('../models/Mrecipe_img');
+const RecipesImg = RecipesImageModel(sequelize, DataTypes);
+const {Op} = require('sequelize');
+
 
 
     //로그인 
@@ -117,4 +123,85 @@ const Users = UsersModel(sequelize, DataTypes);
             }
             
 
+    }
+
+    // ==================================================
+    // 마이페이지 백엔드 부분
+
+    // myprofile controller 추가
+    exports.getMyprofile = async (req, res) => {
+        //if(req.session.loggedin) {
+            // // session 으로 user 정보 받아오기
+            // const user_id = req.session.user_id;
+           
+            const user_id = "user1";
+            // user_name, profile_img 찾기
+            const userInfo = await Users.findOne({
+                where: {
+                    user_id
+                }
+            }) 
+            const user_num = userInfo.user_num;
+            const user_name = userInfo.user_name;
+            const profile_img = userInfo.profile_img;
+            // array type으로 특정 user의 레시피 목록 불러오기
+            const recipeList = await Recipes.findAll({
+                where: {
+                    user_num
+                }
+            })
+
+            let recipe_list = [];
+            let recipeNumList = [];
+            recipeList.forEach((recipe) => {
+                let recipeInfo = new Object();
+                recipeInfo.recipe_num = recipe.recipe_num;
+                recipeNumList.push(recipe.recipe_num);
+                recipeInfo.recipe_title = recipe.title;
+                recipeInfo.main_ing = recipe.main_ingredient;
+                recipeInfo.likes_count = recipe.likes_count;
+                recipe_list.push(recipeInfo);
+                //console.log(recipe.recipe_num);
+            })
+            
+            const recipeImg = await RecipesImg.findAll({
+                where: {
+                    recipe_num: {
+                        [Op.in]: recipeNumList
+                    }
+                }
+            })
+            // recipe_list 에 각 레시피의 메인 이미지 경로 추가하기
+            recipeImg.forEach((imgPath) => {
+                recipe_list.forEach((recipeObj) => {
+                    recipeObj.main_img = imgPath.image_url;
+                })
+            })
+            // -- test --
+            console.log(recipe_list);
+            // ---------
+            res.render('myProfile', {
+                user_id, 
+                user_name,
+                profile_img,
+                recipe_list: [
+                    {
+                        main_img: "main_img_smaple_path",
+                        recipe_title: "sample_title",
+                        //main_ing,
+                        write_data: "2024-00-00"
+                    },
+                    {
+                        main_img: "main_img_smaple_path2",
+                        recipe_title: "sample_title2",
+                        //main_ing,
+                        write_data: "2024-00-002"
+                    },
+                ]
+            });
+        // } else {
+        //     // 로그인 페이지
+        //     res.render('');
+        // }
+        
     }
