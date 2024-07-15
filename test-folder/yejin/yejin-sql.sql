@@ -1,3 +1,9 @@
+create database sesac_project1;
+create user 'sesac' identified by '1234';
+grant all privileges on *.* to sesac@'%';
+
+use sesac_project1;
+
 -- MySQL 에서 db table 생성 쿼리 
 -- 24.07.10 예진 업데이트 함.
 
@@ -8,32 +14,7 @@ show databases;
 use codingon;
 use sesac_project1;
 show tables;
--- 테이블 생성
-CREATE TABLE USERS (
-	USER_ID VARCHAR(50) primary key,
-    USER_NAME VARCHAR(50) NOT NULL,
-    PROFILE_IMG VARCHAR(255) NULL,
-    USER_PW VARCHAR(255) NOT NULL,
-    BIRTH_DAY DATE NOT NULL
-);
-CREATE TABLE RECIPES(
-	RECIPE_NUM INT auto_increment primary key,
-    USER_ID VARCHAR(50) NOT NULL,
-    TITLE TEXT NOT NULL,
-    CONTENT TEXT NOT NULL,
-    LIKES_COUNT INT NOT NULL,
-    MAIN_INGREDIENT VARCHAR(50) NOT NULL,
-    MAIN_ING_DETAIL TEXT NULL,
-    SUB_INGREDIENT TEXT NULL,
-    foreign key (USER_ID) references USERS(USER_ID) on update cascade on delete cascade
-);
-CREATE TABLE RECIPE_IMG(
-	IMAGE_NUM INT auto_increment primary key,
-    RECIPE_NUM INT NOT NULL ,
-    IMAGE_URL VARCHAR(255) ,
-    MAIN_IMG INT default '0',
-    foreign key(RECIPE_NUM) references RECIPES(RECIPE_NUM) on update cascade on delete cascade
-);
+
 -- sesac 계정 생성
 create user 'sesac' identified by '1234';
 grant all privileges on *.* to 'sesac'@'%' with grant option;
@@ -47,6 +28,7 @@ show tables;
 drop table if exists users;
 drop table if exists recipes;
 drop table if exists recipe_img;
+drop table if exists likes;
 drop table if exists users,recipes,recipe_img;
 desc users;
 desc recipes;
@@ -77,14 +59,15 @@ CREATE TABLE RECIPES(
     USER_NUM  INT NOT NULL,
     TITLE TEXT NOT NULL,
     CONTENT TEXT NOT NULL,
-    LIKES_COUNT INT NOT NULL,
+    LIKES_COUNT INT default 0,
     MAIN_INGREDIENT VARCHAR(50) NOT NULL,
     MAIN_ING_DETAIL TEXT NULL,
-    SUB_INGREDIENT TEXT NULL,
-    createAt datetime default now(),
-    updateAt datetime default now(),
+    sub_ingredient_detail TEXT NULL,
+    createdAt datetime default now(),
+    updatedAt datetime default now(),
     foreign key (USER_NUM) references users(USER_NUM) on update cascade on delete cascade
 );
+select * from recipes;
 CREATE TABLE RECIPE_IMG(
 	IMAGE_NUM INT auto_increment primary key,
     RECIPE_NUM INT NOT NULL ,
@@ -95,26 +78,53 @@ CREATE TABLE RECIPE_IMG(
 
 drop table users;
 insert into users (user_id,user_name,profile_img,user_pw,birth_day)
+	values ('user1', '네이버관리자', 'https://recipe1.ezmember.co.kr/cache/recipe/2018/02/10/31eb5c9685f61ec424e4000f484cfee81.jpg',
+    'pass','2024-01-01');
+insert into users (user_id,user_name,profile_img,user_pw,birth_day)
+	values ('user2', '네이버관리자', 'https://recipe1.ezmember.co.kr/cache/recipe/2018/02/10/31eb5c9685f61ec424e4000f484cfee81.jpg',
+    'pass','2024-01-01');
+insert into users (user_id,user_name,profile_img,user_pw,birth_day)
 	values ('user3', '네이버관리자', 'https://recipe1.ezmember.co.kr/cache/recipe/2018/02/10/31eb5c9685f61ec424e4000f484cfee81.jpg',
     'pass','2024-01-01');
 
 insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail)
-	values (1, '레몬 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔_버본 토닉워터', '콜라 물');
+	values (1, '레몬 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물');
+insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail)
+	values (1, '레몬 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물');
+insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail)
+	values (2, '라임 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물');
+insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail)
+	values (2, '라임 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물');
+insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail)
+	values (3, '레몬 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물');
 
 insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail)
-	values (1, 'user가 쓴 쓴 딸기 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔_버본 토닉워터', '콜라 물');
-    
+	values (1, 'user가 쓴 딸기 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물');
+
+insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail)
+	values (1, 'user가 쓴 딸기 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물');
+
+
+insert into recipe_img (recipe_num,image_url) values (1,'uploads/recipe/1_img1.jpg');
+insert into recipe_img (recipe_num,image_url) values (1,'uploads/recipe/1_img2.jpg');
+insert into recipe_img (recipe_num,image_url) values (2,'uploads/recipe/2_img1.jpg');
+
 insert into recipe_img (recipe_num,image_url) values (4,'uploads/recipe/default_image.jpg');
+
 -- 컬럼 명 변경 / 컬럼 타입 변경 / 컬럼 값 변경
 alter table recipes change SUB_INGREDIENT sub_ingredient_detail text;
+alter table recipes change createAt createdAt text;
+alter table recipes change updateAt updatedAt text;
 alter table recipe_img modify image_url varchar(255); 
+alter table recipes modify likes_count int default 0;
 update recipe_img set image_url='/uploads/recipe/3_img1.png' where recipe_num=3;
+update recipe_img set main_img=1 where image_num=3;
 alter table recipe_img add column MAIN_IMG INT default '0';
 
 show tables;
 desc recipe_img;
 select * from users;
-select * from recipes;
+select * from recipes order by recipe_num desc limit 3;
 desc recipes;
 select * from recipe_img;
 
@@ -129,5 +139,4 @@ select * from test_table;
 insert into test_table (recipe_num,user_num) values(1,1);
 
 
-SELECT `Recipes`.`recipe_num`, `Recipes`.`user_num`, `Recipes`.`title`, `Recipes`.`content`, `Recipes`.`likes_count`, `Recipes`.`main_ingredient`, `Recipes`.`main_ing_detail`, `Recipes`.`sub_ingredient_detail`, `user`.`user_num` AS `user.user_num`, 
-`user`.`user_id` AS `user.user_id`, `Recipe_Imgs`.`image_num` AS `Recipe_Imgs.image_num`, `Recipe_Imgs`.`image_url` AS `Recipe_Imgs.image_url` FROM `Recipes` AS `Recipes` LEFT OUTER JOIN `users` AS `user` ON `Recipes`.`user_num` = `user`.`user_num` LEFT OUTER JOIN `Recipe_Img` AS `Recipe_Imgs` ON `Recipes`.`recipe_num` = `Recipe_Imgs`.`recipe_num` WHERE `Recipes`.`recipe_num` = '2';
+

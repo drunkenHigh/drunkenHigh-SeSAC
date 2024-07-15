@@ -1,7 +1,10 @@
 const RecipesModel = require('../models/Mrecipe');
+const Recipe_Img_Model = require('../models/Mrecipe_img');
+const express = require('express');
+
 const {Recipes,Recipe_Img,Users }= require('../models/Mindex');
 
-// get /recipes?recipe_id=1 레시피 상세보기 페이지
+// get /recipes?recipe_num=1 레시피 상세보기 페이지 - 완
 // select * from where rcp_id=?
 exports.getRecipe = async(req,res) => {
     try {
@@ -9,7 +12,7 @@ exports.getRecipe = async(req,res) => {
         
         const {recipe_num} = req.query;
         const recipe = await Recipes.findOne({
-            where : {recipe_num}, // {recipe_num,recipe_num}
+            where : {recipe_num}, 
             include: [{
                 model: Users,
                 attributes: ['user_id']
@@ -20,11 +23,9 @@ exports.getRecipe = async(req,res) => {
             }
             ],
         });
-        // res.json(recipe);
-        res.render('view-detail-test',{title:'레시피 상세페이지',rcpInfo:req.query})
-        //rcpInfo :req.query =
+        res.render('view-detail-test',{title:'레시피 상세페이지',rcpInfo:recipe})        
+        // res.json(recipe)
         /*
-        
   "recipe_num": 1,
   "user_num": 1,
   "title": "레몬 짐빔 레시피",
@@ -50,76 +51,95 @@ exports.getRecipe = async(req,res) => {
         // console.log('error');
     }
 }
-/*
-app.get('/',(req,res) =>{
-    res.render('dynamic',{'title':'동적 폼 전송을 사용해보자 !'})
-})
-// app.get('/',(req,res)=>{
-//     res.render('index',{title:"Home"});
-// })
-app.get('/getForm',(req,res)=>{
-    res.render('submit_result',{title:"Form",uInfo:req.query});
-    console.log(req.query);
-})
 
-*/
-
-// 레시피 작성 버튼 클릭시  -테스트완료
+// 레시피 작성 버튼 클릭시  - 완
 exports.getRecipeWrite = (req,res) => {
-    // res.render('write-detail-test',{title:'글 작성'});
-    res.render('recipeWrite',{title:'글 작성'});
+    // res.render('recipeWrite',{title:'글 작성'});
+    res.render('write-detail-test',{title:'글 작성'});
 }
 
-// 레시피 작성페이지에서 저장 버튼 클릭시
+// 레시피 작성페이지에서 저장 버튼 클릭시 - 부재료 값 안들어감, 이미지 추가필요)
 exports.postRecipeWrite = async(req,res) => {
     try {
-        console.log('레시피 저장 버튼 클릭 postRecipe');
-        console.log(req.body); //레시피 저장 버튼 누를시 데이터를 받는다.
-        res.status(200).send('레시피 작성 완료'); // 응답을 보내지 않으면 클라이언트가 응답을 기다리게 됩니다.
-        const { recipeTitle, mainImg, mainImgDetail, subImgList, recipeRawHtml, content } = req.body;
-        const mainImage = req.files['mainImg'][0];
-        // const recipeSubImgs = req.files['subImgList'].concat(req.files['subImgList']);
-        console.log(req.file.path);
-        // 데이터베이스에 저장
-        // const newRecipe = await Recipes.create({
-        //     recipeTitle,
-        //     mainImg,
-        //     mainImgDetail,
-        //     subImgList,
-        //     recipeRawHtml,
-        //     content
+        console.log('레시피 저장 버튼 클릭 postRecipe >> \n', req.body);
+        /*
+        {
+  title: '제목',
+  content: '<div><div>Step 1</div><div>1</div></div>',
+  main_ingredient: 'vodka',
+  main_ing_detail: '잭다니엘',
+  main_img: {},
+  sub_imgs: [ {} ],
+  recipeStep: 2
+}
+        */
+        const { user_num, title, content, main_ingredient, main_ing_detail, 
+            sub_ingredient_detail, thumnail_num, recipeStep , mainImage } = req.body;
+        // const {main_img, sub_imgs} =
+        console.log("image file path >>> ",sub_ingredient_detail);
+        
+        
+                /*
+            if(req.file){
+                const mainImagePath = req.file.path;
+                Recipe_Img_Model.image_url =req.file.path;
+                Recipe_Img_Model.recipe_num=recipe_num;
+                res.send('upload successed!');
+            }
+        });
+        
+        sub_imgs.forEach(() => {
+            upload.single(`sub-image-${recipeStep}`)
+            console.log("recipeSubImgs >> ",recipeSubImgs);
+        });
+*/
+        // 데이터베이스에 저장      
+        const newRecipe = await Recipes.create({
+            title,
+            user_num :1,
+            content,
+            main_ingredient,
+            main_ing_detail,
+            sub_ingredient_detail
+        });
+        // const newImage = await Recipe_Img.create({
+        //    recipe_num:req.files.recipe_num,
+        //    image_url:req.files.image_url,
+        //    main_img:req.files.thumnail_num
         // });
         // console.log('Main Image Path:', mainImage);
         // console.log('Sub Images Paths:', recipeSubImgs);
         // console.log('저장완료 : ', {recipe:newRecipe});
+
+        // res.redirect('/') 작성 완료 버튼을 누를시 홈으로 돌아가기
+
         } catch (error) {
-        console.error('오류 발생:', error);
-        res.status(500).send('서버 오류');
-        }
-}
-
-// 레시피 수정
-exports.patchRecipe = async (req,res) => {
-    try{
-        const {recipe_num} = req.params;
-
-        const updatedRecipe = await Recipes.update(
-            {title},
-            {content},
-            {main_ingredient},
-            {main_ing_detail},
-            {sub_ingredient},
-
-            {where: {recipe_num}}
-        );
-        res.json(updatedRecipe);
-    }catch(error){
-        console.error(err);
-        res.status(500).send('Internal Server Error');
+            console.error('postRecipeWrite 오류 발생:', error);
+            res.status(500).send('레시피 작성버튼 클릭시 에러 발생! ');
     }
 }
 
-// 레시피 삭제
+// 레시피 수정 - 프엔연결 필요
+exports.patchRecipe = async (req,res,next) => {
+    console.log(`update >>> `,req.params);
+    // try {
+    //     const result = await Comment.update({
+    //         title,
+    //         content,
+    //         main_ingredient,
+    //         main_ing_detail,
+    //         sub_ingredient_detail
+    //     },{
+    //         where : { recipe_num : req.params.recipe_num }
+    //     })
+    //     res.json(result)
+    // } catch (error) {
+    //     console.error(error)
+    //     next(error)
+    // }
+}
+
+// 레시피 삭제 - 프엔연결 필요
 exports.deleteRecipe = async(req,res)=>{
         try {
             const {recipe_num} = req.params;
@@ -138,3 +158,13 @@ exports.deleteRecipe = async(req,res)=>{
             res.status(500).send('Internal Server Error');
         }
     }
+
+exports.deleteRecipey=async(req,res,next) => {
+    try {
+        const result = await Comment.destroy({where : {recipe_num : req.params.recipe_num}})
+        res.json(result)
+    } catch (error) {
+        console.error(error)
+        next(error)
+    }
+}
