@@ -51,18 +51,18 @@ $(window).scroll(function(){
 });
 
 // user id 받아오기
-let user_id = 0;
-axios({
-    method: 'GET',
-    url: `/user`
+// let user_id = 0;
+// axios({
+//     method: 'GET',
+//     url: `/user`
     
-}).then((res) => {
-    console.log(res.data);
-    //user_id = res.data;
+// }).then((res) => {
+//     console.log(res.data);
+//     //user_id = res.data;
     
-}).catch((err) => {
-    console.error(err);
-})
+// }).catch((err) => {
+//     console.error(err);
+// })
 
 
 // 작성한 레시피 목록 불러오기

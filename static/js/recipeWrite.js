@@ -119,7 +119,6 @@ const writeRecipe = async (recipeObj) => {
             url: '/write',
             data: {
                 "title": recipeObj.recipeTitle,
-                "content": "",
                 "main_ingredient": recipeObj.mainIng,
                 "main_ing_detail": recipeObj.mainIngDetail,
                 "sub_ingredient": recipeObj.subIngredient,
