@@ -1,0 +1,12 @@
+@server = http://localhost:8888
+
+@main_ingredient = 소주
+
+### 전체 리스트 조회
+GET {{server}}
+
+### main_ingredient로 특정 레시피 조회
+GET {{server}}/{{main_ingredient}}
+
+
+
