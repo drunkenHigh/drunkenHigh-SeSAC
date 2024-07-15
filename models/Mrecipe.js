@@ -27,7 +27,7 @@ const RecipesModel = (sequelize, DataTypes) =>{
             allowNull : false,
         },
         likes_count:{
-            // LIKES_COUNT INT default 0,
+            // LIKES_COUNT INT NOT NULL,
             type:DataTypes.INTEGER,
             allowNull : false,
             defaultValue: 0
@@ -50,10 +50,12 @@ const RecipesModel = (sequelize, DataTypes) =>{
     },
     { // param3 : 모델 옵션 정의
         freezeTableName : true , // 테이블 명을 그대로 사용한다. (복수형으로 바까주지 X)
-        timestamps : true, // 데이터의 추가/수정 시간을 자동으로 기록(컬럼)
+        timestamps : false, // 데이터의 추가/수정 시간을 자동으로 기록(컬럼)
     }
 );
     return Recipes;
 }
 
 module.exports=RecipesModel;
+
+

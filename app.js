@@ -24,6 +24,7 @@ app.use(cookieParser());
 app.use("/public", express.static(__dirname + "/static"));
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
+
 dotenv.config({
   path: path.resolve(__dirname, ".env"),
 }); // default .env file

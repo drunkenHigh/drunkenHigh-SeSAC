@@ -10,12 +10,10 @@ const sequelize = new Sequelize(
   config.password,
   config
 ); // sequelize 객체
-
 // 모델 불러오기
 const RecipesModel = require("./Mrecipe")(sequelize, Sequelize);
 const Recipe_Img_Model = require("./Mrecipe_img")(sequelize, Sequelize);
-const UsersModel = require("./Muser")(sequelize, Sequelize);
-const LikesModel = require('./Mlikes')(sequelize, Sequelize);
+const USERSMODEL = require("./Musery")(sequelize, Sequelize);
 
 // --- sequelize 사용시
 
@@ -24,7 +22,7 @@ const LikesModel = require('./Mlikes')(sequelize, Sequelize);
 async function syncModels() {
   try {
     // USERSMODEL 테이블 먼저 생성
-    await UsersModel.sync({ force: false });
+    await USERSMODEL.sync({ force: false });
     console.log("*** Users table created");
 
     // 그 다음 RecipesModel 테이블 생성
@@ -43,13 +41,13 @@ async function syncModels() {
 
 // 모델간 관계 연결
 // Users <-> Recipe 1:N 관계 연결
-UsersModel.hasMany(RecipesModel, {
+USERSMODEL.hasMany(RecipesModel, {
   // recipe 테이블에서 'user_num' fk 생성
   // user 테이블에서 참조될 키는 'user_num'
   foreignKey: "user_num",
   sourceKey: "user_num",
 });
-RecipesModel.belongsTo(UsersModel, {
+RecipesModel.belongsTo(USERSMODEL, {
   foreignKey: "user_num",
   targetKey: "user_num",
 });
@@ -68,30 +66,15 @@ Recipe_Img_Model.belongsTo(RecipesModel, {
   targetKey: "recipe_num",
 });
 
-// 좋아요
-LikesModel.belongsTo(UsersModel, {
-    foreignKey: 'user_num' 
-});
-LikesModel.belongsTo(RecipesModel, {
-    foreignKey: 'recipe_num' 
-});
-UsersModel.hasMany(LikesModel, { 
-    foreignKey: 'user_num' 
-});
-RecipesModel.hasMany(LikesModel, {
-    foreignKey: 'recipe_num' 
-});
-
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
-
 db.Recipes = RecipesModel;
 db.Recipe_Img = Recipe_Img_Model;
-db.Users = UsersModel;
-db.Likes = LikesModel;
+
+db.Users = USERSMODEL;
 
 // module.exports = db;
 
-// syncModels();
+syncModels();
 
 module.exports = db;
