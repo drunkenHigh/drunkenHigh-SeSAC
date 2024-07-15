@@ -1,3 +1,95 @@
+/* 쿠키 */
+.cookie__container {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255,255,255,0.8);
+}
+
+.cookie__content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50vw;
+    height: 35vh;
+    padding : 20px;
+    box-sizing: border-box;
+    border : 1px solid var(--darkColor);
+    transform: translate(-50%, -50%);
+    border-radius: 20px;
+    text-align: center;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px 0;
+    font-family: 'Pretendard-Regular';
+}
+
+.cookie-title { 
+    font-size: min(2.8vw, 30px);
+    color : var(--darkColor);
+    border-bottom: 1px solid var(--darkColor);
+    margin-bottom: 20px;
+}
+
+.cookie-subtitle {
+    font-size: min(1.8vw, 20px);
+    color : #6b7280;
+}
+
+.cookie-ask { 
+    font-weight: 900;
+    font-size: min(2vw, 24px);
+    color : #333;
+}
+
+#age {
+    margin-top: 40px;
+    display: flex;
+    gap : 0 30px;
+}
+
+#age label {
+    display: block;
+    font-weight: bold;
+    font-size: min(2vw, 24px);
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#age label[for="yes"]{
+    background-color: var(--mainColor);
+    border : 1px solid var(--mainColor);
+    color : #fff;
+}
+
+#age label[for="no"]{
+    border : 1px solid var(--mainColor);
+    color : #555;
+}
+
+#age input {
+    display: none;
+}
+
+#age label[for='yes']:hover {
+    background-color: var(--darkColor);
+    border: 1px solid var(--darkColor);
+    transition: all .3s;
+}
+
+#age label[for='no']:hover {
+    background-color: var(--darkColor);
+    border: 1px solid var(--darkColor);
+    transition: all .3s;
+}
+
 /* 헤더 */
 #header {
     box-shadow: 0 2px 3px var(--mainColor);

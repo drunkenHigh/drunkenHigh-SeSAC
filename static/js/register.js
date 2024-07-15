@@ -23,6 +23,8 @@ regiterFormInput.forEach(ele=>{
                 // 아이디 중복검사 넣어야함 -> axios 쓸것
                 pass = true
                 sendMsg(0, '사용가능한 아이디입니다')
+                // 아이디 통과시에만 이미지 파일 올릴 수 있음
+                registerFileInput.disabled = false;
             }
         } else if(inputId === 'user_pw'){
             if(!this.checkValidity() || !valRegExp(inputValue, inputId)){
@@ -72,7 +74,7 @@ registerBtn.click(()=>{
     if(pass){
         registerSubmit()
     } else {
-        console.log('가입못해요 ㅠㅠ');
+        alert('가입할 수 없습니다 작성한 정보를 확인해주세요')
     }
 })
 
@@ -95,12 +97,27 @@ async function registerSubmit(){
         user_name : registerForm.user_name.value,
         birthday : registerForm.birthday.value
     }
+    const formData =  new FormData()
 
-    console.log('가입성공~');
-    // axios 는 백엔드랑 연결 후 진행
+    formData.append('user_id', registerForm.user_id.value)
+    formData.append('user_pw', registerForm.user_pw.value)
+    formData.append('user_name', registerForm.user_name.value)
+    formData.append('birthday', registerForm.birthday.value)
+    formData.append('profile_img', registerForm.profile_img.files[0])
+
+    try {
+        const registerAxios = await axios({
+            method : 'post',
+            url : '/user/register',
+            data : formData
+        })
+
+        document.location.href = '/'
+    }catch(err){
+        console.error(err);
+    }
 
 }
-
 
 // 정규식 체크 함수
 function valRegExp(value, input) { // value : 검사할 값 / input : 인풋태그아이디
@@ -120,8 +137,8 @@ function valRegExp(value, input) { // value : 검사할 값 / input : 인풋태�
     return reg.test(value);
 }
 
-// 파일 체크 함수 -> 작성중
-function fileCheck(obj) {
+// 파일 체크 함수
+function fileExtCheck(obj) {
     pathPoint = obj.value.lastIndexOf('.');
     filePoint = obj.value.substring(pathPoint+1, obj.length);
     fileType = filePoint.toLowerCase();
@@ -129,13 +146,36 @@ function fileCheck(obj) {
     else return false;
 }
 
+
 // 파일 체크
-registerFileInput.addEventListener('change', function(){
-    console.log(this);
-    if(fileCheck(this)){
-        // 백엔드랑 연결해서 프사 바꾸는거로 해야함
-    } else {
-        alert('이미지 파일만 올려주세요');
-        this.value = '';
-    }
-})
+function fileCheck() {
+    const tempProfile = document.querySelector('.filebx-img img')
+    registerFileInput.addEventListener('change', async function(){
+        console.log(this);
+        if(fileExtCheck(this)){
+            // 프사 설정한 대로 바꾸게 하기
+            registerForm = document.forms['register'];
+    
+            const formData =  new FormData()
+
+            formData.append('profile_img', registerForm.profile_img.files[0])
+            try {
+                const tempAxios = await axios({
+                    method : 'post',
+                    url : '/user/register/temp',
+                    data : formData
+                })
+                // 임시 저장소에 있는 프로필 이미지 가져와서 비동기적으로 프로필 이미지 변경
+                let tempImg = tempAxios.data.file.filename
+                tempProfile.setAttribute('src', `/uploads/temp/${tempImg}`)
+            } catch(err){
+
+            }
+        } else {
+            alert('이미지 파일만 올려주세요');
+            this.value = '';
+        }
+    })
+}
+
+fileCheck();

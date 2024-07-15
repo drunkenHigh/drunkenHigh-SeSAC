@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <%- include('include/include', { title : 'DRUNKEN HIGH' }) %>
     <link rel="stylesheet" href="/public/css/main.css">
 </head>
 <body>
@@ -11,50 +9,90 @@
     <%- include('./partials/header.ejs') %>
     <main>
         <section class="main__recommend">
-            <h2 class="recommend-title"></h2>
-            <div class="recommend-container">
-                <ul>
-                    <li>
-                        <a href="/recipes?recipe_id=">
-                            <figure>
-                                <img src="" alt="" class="recommed__img">
-                                <figcaption class="recommend__text">
-                                    <p class="receipe__title"></p>
-                                    <p class="receipe__writer"></p>
-                                </figcaption>
-                            </figure>
-                        </a>
-                    </li>
+          <h2 class="recommend-title"></h2>
+          <div class="recommend-container">
+            <!-- first swiper -->
+            <div class="recommend-leftSwiper">
+                <ul class="swiper-wrapper">
+                    <% for(let i = 0; i < 10 ; i++){ %>
+                        <li class="swiper-slide">
+                            <a href="/recipes?recipe_id=<%= recipeLists[i].dataValues.recipe_num%>">
+                                <figure>
+                                <img src="<%= recipeLists[i].dataValues.recipe_img %>" alt="레시피이미지" class="recipe-list__img" />          
+                                </figure>
+                            </a>
+                        </li>
+                    <%}%> 
                 </ul>
             </div>
+            <!-- second swiper -->
+            <div class="recommend-centerSwiper">
+                <ul class="swiper-wrapper">
+                    <% for(let i = 1; i <= 10 ; i++){ %>
+                        <% let index = i % 10; %>
+                            <li class="swiper-slide">
+                                <a href="/recipes?recipe_id=<%= recipeLists[index].dataValues.recipe_num%>">
+                                    <figure>
+                                    <img src="<%= recipeLists[index].dataValues.recipe_img %>" alt="레시피이미지" class="recipe-list__img" />          
+                                    </figure>
+                                    <p class="receipe__title"><%= recipeLists[index].dataValues.title %></p>
+                                    <p class="receipe__writer"><%= recipeLists[index].dataValues.user_name %></p>
+                                </a>
+                            </li> 
+                    <%}%> 
+                </ul>
+            </div>
+            <!-- third swiper -->
+            <div class="recommend-rightSwiper">
+                <ul class="swiper-wrapper">
+                    <% for(let i = 0; i < 10 ; i++){ %>
+                        <% let index = (i + 2) % 10; %>
+                        <li class="swiper-slide">
+                            <a href="/recipes?recipe_id=<%= recipeLists[index].dataValues.recipe_num%>">
+                                <figure>
+                                    <img src="<%= recipeLists[index].dataValues.recipe_img %>" alt="레시피이미지" class="recipe-list__img" />          
+                                </figure>
+                            </a>
+                        </li>
+                    <%}%> 
+                </ul>
+            </div>
+            <div class="swiper-pagination swiper-pagination-progressbar swiper-pagination-horizontal"><span class="swiper-pagination-progressbar-fill" style="transform: translate3d(0px, 0px, 0px) scaleX(0.111111) scaleY(1); transition-duration: 300ms;"></span></div>
+            <div class="swiper-btnGroup">
+                <div class="swiper-button-next" tabindex="0" role="button" aria-label="Next slide" aria-controls="swiper-wrapper-10687ab1e59b41b48" aria-disabled="false"></div>      
+                <div class="swiper-button-prev" tabindex="-1" role="button" aria-label="Previous slide" aria-controls="swiper-wrapper-10687ab1e59b41b48" aria-disabled="true"></div>
+            </div>
+          </div>
         </section>
         <section class="main__list">
-            <nav class="recipe-category">
-                <ul>
-                    <li>
-                        <a href="/cat">
-                            <img src="/public/img/all.png" alt="카테고리 아이콘">
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <div class="recipe-list__container">
-                <ul>
-                    <li>
-                        <a href="/recipes?recipe_num=">
-                            <figure>
-                                <img src="" alt="" class="recipe-list__img">
-                                <figcaption class="recipe-list__text">
-                                    <p class="receipe__title"></p>
-                                    <p class="receipe__writer"></p>
-                                </figcaption>
-                            </figure>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+          <h2 class="list-title">레시피 모음</h2>
+          <nav class="recipe-category">
+            <ul class="category-btn">   
+            </ul>
+          </nav>
+          <div class="recipe-list__container">
+            <ul class="recipe-lists">
+              <% for(let i = 0; i < 8 ; i++){ %>
+                  <li>
+                      <a href="/recipes?recipe_id=<%= recipeLists[i].dataValues.recipe_num%>">
+                          <figure>
+                          <img src="<%= recipeLists[i].dataValues.recipe_img %>" alt="레시피이미지" class="recipe-list__img" />          
+                          </figure>
+                          <p class="receipe__title"><%= recipeLists[i].dataValues.title %></p>
+                          <p class="receipe__writer"><%= recipeLists[i].dataValues.user_name %></p>
+                      </a>
+                  </li>
+              <%}%> 
+            </ul>
+          </div>
+          <div class="recipe-morebtn">
+          <% if(recipeLists.length > 8){ %>
+              <button class="morebtn1 morebtn">더보기</button>
+          <% } %>
+          </div>
         </section>
     </main>
     <%- include('./partials/footer.ejs') %>
+    <script src="/public/js/main.js"></script>
 </body>
 </html>

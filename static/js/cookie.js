@@ -22,7 +22,7 @@ function getCookie(cName) {
 }
 
 let ageCookie = getCookie('age')
-if(ageCookie){
+if(ageCookie==='true'){
     cookieContainer.remove()
 } 
 
@@ -33,7 +33,7 @@ async function setCookie(){
     try {
         const cookieAxios = await axios({
             method : 'get',
-            url : '/',
+            url : '/setCookie',
             params : {isAdult : cookieValue}
         })
 

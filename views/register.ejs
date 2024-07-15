@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <%- include('include/include', { title : 'DRUNKEN HIGH | 회원가입' }) %>
     <link rel="stylesheet" href="/public/css/register.css">
 </head>
 <body>
@@ -11,7 +9,7 @@
     <main>
         <section class="register__container">
             <h2 class="register__title">회원가입</h2>
-            <form id="register" name="register">
+            <form action="/user/register" id="register" name="register" enctype="multipart/form-data">
                 <div class="register-inputbx">
                     <label for="user_id">아이디<span>(필수)</span></label>
                     <input 
@@ -53,6 +51,7 @@
                 </div>
                 <div class="register__filebx">
                     <span>프로필 사진<b>(선택)</b></span>
+                    <span>프로필 사진은 아이디 입력 후에 업로드 가능합니다.</span>
                     <div class="filebx-img">
                         <figure>
                             <img src="public/img/user.jpg" alt="프로필사진">
@@ -60,7 +59,7 @@
                         <label for="profile_img">프로필 사진 올리기</label>
                         <span>5MB 이하의 .jpeg, .jpg, .png 파일만 올려주세요</span>
                     </div>
-                    <input type="file" name="profile_img" id="profile_img" accept="image/jpg, image/jpeg, image/png">
+                    <input type="file" name="profile_img" id="profile_img" accept="image/jpg, image/jpeg, image/png" disabled>
                 </div>
                 <button type="button" class="register__btn">가입하기</button>
             </form>
