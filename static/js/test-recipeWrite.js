@@ -121,32 +121,46 @@ addStepButton.addEventListener("click", () => {
 
 // ==== 저장 =====
 // axios로 레시피 정보 보내기
+const formData = new FormData();
+console.log("fromdata: >>>>>> ", formData);
 const writeRecipe = async (recipeObj) => {
+
   try {
+    
+    const file=document.getElementById('main-image');
+    
+    console.log(file.files[0]);
     const res = await axios({
       method: "post",
-      url: "/write",
-      data: {
-        title: recipeObj.recipeTitle,
-        content: "",
-        main_ingredient: recipeObj.mainIng,
-        main_ing_detail: recipeObj.mainIngDetail,
-        sub_ingredient: recipeObj.subIngredient,
-        main_img: recipeObj.mainImage,
-        content: recipeObj.recipeRawHtml,
-        sub_imgs: recipeObj.recipeSubImgs,
-      },
-    });
+      url: "/recipe/write",
+      headers: { "Content-Type": "multipart/form-data" },
+      data : formData,
+      // data: {
+      //   title: recipeObj.recipeTitle,
+      //   main_ingredient: recipeObj.mainIng,
+      //   main_ing_detail: recipeObj.mainIngDetail,
+      //   sub_ingredient: recipeObj.subIngredient,
+      //   main_img: recipeObj.mainImage,
+      //   content: recipeObj.recipeRawHtml,
+      //   sub_imgs: recipeObj.recipeSubImgs,
+      // },
+
+    }).then((res)=>{
+      console.log("res",res);
+
+    })
+      console.log("response >>> ",response);
   } catch (err) {
     console.error(err);
   }
 };
 
-// import path from "path";
+// import path from "path"; 
 // console.log(__dirname);
 // 저장 버튼을 누를 시
 //import * as FormData from 'form_data';
-const formData = new FormData();
+
+
 const saveButton = document.querySelector("#save-button");
 
 saveButton.addEventListener("click", () => {
@@ -175,25 +189,39 @@ saveButton.addEventListener("click", () => {
     // 조회 페이지에서 어떻게 렌더링할지 정해지면 raw html 수정하기!
     recipeRawHtml += `<div><div>${recipeStepNum}</div><div>${recipeContentText}</div></div>`;
     recipeSubImgs.push(recipeSubImg);
+
   });
 
   const recipeObj = {
     recipeTitle,
     mainIng,
-    mainIngDetail,
+    mainIngDetail, 
     subIngList,
     mainImage,
     recipeRawHtml,
     recipeSubImgs,
+    
   };
   console.log(
     recipeObj.recipeTitle,
     recipeObj.mainIng,
     recipeObj.mainIngDetail,
     recipeObj.subIngList,
-    recipeObj.mainImage
+    recipeObj.mainImage,
+    
   );
-  // writeRecipe(recipeObj, () => {
+
+formData.append('title', recipeObj.recipeTitle);
+formData.append('main_ingredient', recipeObj.mainIng);
+formData.append('main_ing_detail', recipeObj.mainIngDetail);
+formData.append('sub_ingredient', recipeObj.subIngredient);
+formData.append('main_img', recipeObj.mainImage);
+formData.append('content', recipeObj.recipeRawHtml);
+formData.append('sub_imgs', recipeObj.recipeSubImgs);
+console.log("formData >>> ",formData);
+
+  writeRecipe(recipeObj);
+  // console.log(`recipeStepNum >> ${recipeStepNum}`);
   //     if(confirm("저장되었습니다!")) {
   //         // 홈으로 이동
   //         window.location.href = "/";
