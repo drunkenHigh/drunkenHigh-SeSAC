@@ -217,7 +217,7 @@
             <!--Card-->
             <div id='recipe-img' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
 
-                <form enctype="multipart/form-data">
+                <form action='/recipe/write' enctype="multipart/form-data">
                     <!-- <div class="flex items-center justify-center w-full">
                         <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                             <div class="flex flex-col items-center justify-center pt-5 pb-6">
@@ -232,7 +232,7 @@
                     </div>  -->
                     <div class="flex items-center justify-center w-full">
                         <label for="main-image" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                            <input id="main-image" type="file" accept="image/png image/jpg image/jpeg"/>
+                            <input name='main-image' id="main-image" type="file" accept="image/png image/jpg image/jpeg"/>
                         </label>
                     </div> 
                 </form>
@@ -389,7 +389,7 @@
         
     <!-- jQuery -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script type="module" src="../public/js/recipeWrite.js"></script>
+    <script type="module" src="../public/js/test-recipeWrite.js"></script>
 
     
 </body>

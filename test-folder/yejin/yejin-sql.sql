@@ -113,8 +113,8 @@ insert into recipe_img (recipe_num,image_url) values (4,'uploads/recipe/default_
 
 -- 컬럼 명 변경 / 컬럼 타입 변경 / 컬럼 값 변경
 alter table recipes change SUB_INGREDIENT sub_ingredient_detail text;
-alter table recipes change createAt createdAt text;
-alter table recipes change updateAt updatedAt text;
+alter table recipes change createdAt created_At text;
+alter table recipes change updatedAt updated_At text;
 alter table recipe_img modify image_url varchar(255); 
 alter table recipes modify likes_count int default 0;
 update recipe_img set image_url='/uploads/recipe/3_img1.png' where recipe_num=3;
@@ -122,9 +122,11 @@ update recipe_img set main_img=1 where image_num=3;
 alter table recipe_img add column MAIN_IMG INT default '0';
 
 show tables;
+
 desc recipe_img;
-select * from users;
+select * from recipes;
 select * from recipes order by recipe_num desc limit 3;
+
 desc recipes;
 select * from recipe_img;
 
@@ -140,3 +142,4 @@ insert into test_table (recipe_num,user_num) values(1,1);
 
 
 
+SELECT `Recipes`.`recipe_num`, `Recipes`.`title`, `user`.`user_num` AS `user.user_num`, `user`.`user_name` AS `user.user_name`, `Recipe_Imgs`.`image_num` AS `Recipe_Imgs.image_num`, `Recipe_Imgs`.`image_url` AS `Recipe_Imgs.image_url` FROM `Recipes` AS `Recipes` LEFT OUTER JOIN `users` AS `user` ON `Recipes`.`user_num` = `user`.`user_num` LEFT OUTER JOIN `Recipe_Img` AS `Recipe_Imgs` ON `Recipes`.`recipe_num` = `Recipe_Imgs`.`recipe_num` AND `Recipe_Imgs`.`main_img` = 1 WHERE `Recipes`.`main_ingredient` = 'favicon.ico' ORDER BY `Recipes`.`created_at` DESC;

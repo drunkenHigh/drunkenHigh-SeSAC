@@ -82,7 +82,8 @@ const getRecipeListMain = async (req, res) => {
 const main = async (req, res) => {
     try {
         const listsALl = await getRecipeListAll();
-        res.render('index', { listsALl });
+        // res.render('index', { listsALl });
+        res.render('index-test', { listsALl });
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');

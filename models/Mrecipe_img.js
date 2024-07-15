@@ -26,7 +26,11 @@ const Recipe_Img_Model = (sequelize, DataTypes) =>{
             type:DataTypes.STRING(255),
             allowNull : true,
         },
-        
+        main_img:{
+            //main_img int default 0
+            type:DataTypes.INTEGER,
+            defaultValue: 0
+        }
     },
     { // param3 : 모델 옵션 정의
         freezeTableName : true , 

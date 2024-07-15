@@ -24,7 +24,6 @@ exports.getRecipe = async(req,res) => {
             ],
         });
         res.render('view-detail-test',{title:'레시피 상세페이지',rcpInfo:recipe})        
-        // res.json(recipe)
         /*
   "recipe_num": 1,
   "user_num": 1,
@@ -55,53 +54,58 @@ exports.getRecipe = async(req,res) => {
 // 레시피 작성 버튼 클릭시  - 완
 exports.getRecipeWrite = (req,res) => {
     // res.render('recipeWrite',{title:'글 작성'});
-    res.render('write-detail-test',{title:'글 작성'});
+    res.render('test-recipeWrite',{title:'글 작성'});
+    
 }
 
 // 레시피 작성페이지에서 저장 버튼 클릭시 - 부재료 값 안들어감, 이미지 추가필요)
 exports.postRecipeWrite = async(req,res) => {
     try {
+        /*
+        const files = req.files;
+        const imagesData = [];
+        // 각 파일 정보를 데이터베이스에 저장
+        for (const key in files) {
+            files[key].forEach(file => {
+                imagesData.push({
+                    filename: file.filename,
+                    path: file.path,
+                    mimetype: file.mimetype,
+                    size: file.size,
+                });
+            });
+        }
+
+        const images = await Image.bulkCreate(imagesData);
+
+        res.json({ message: '이미지가 성공적으로 업로드되었습니다.', images });
+        req.session. 을 이용하여 유저 정보 저장하기
+        */
+
         console.log('레시피 저장 버튼 클릭 postRecipe >> \n', req.body);
         /*
         {
-  title: '제목',
-  content: '<div><div>Step 1</div><div>1</div></div>',
+title: '1',
   main_ingredient: 'vodka',
-  main_ing_detail: '잭다니엘',
+  main_ing_detail: '2',
   main_img: {},
-  sub_imgs: [ {} ],
-  recipeStep: 2
+  content: '<div><div>Step 1</div><div>4</div></div>',
+  sub_imgs: [ null ]
 }
         */
         const { user_num, title, content, main_ingredient, main_ing_detail, 
-            sub_ingredient_detail, thumnail_num, recipeStep , mainImage } = req.body;
-        // const {main_img, sub_imgs} =
-        console.log("image file path >>> ",sub_ingredient_detail);
-        
-        
-                /*
-            if(req.file){
-                const mainImagePath = req.file.path;
-                Recipe_Img_Model.image_url =req.file.path;
-                Recipe_Img_Model.recipe_num=recipe_num;
-                res.send('upload successed!');
-            }
-        });
-        
-        sub_imgs.forEach(() => {
-            upload.single(`sub-image-${recipeStep}`)
-            console.log("recipeSubImgs >> ",recipeSubImgs);
-        });
-*/
+            sub_ingredient_detail, mainImage } = req.body;
+        console.log("image file info >>> ",req.file);
+
         // 데이터베이스에 저장      
-        const newRecipe = await Recipes.create({
-            title,
-            user_num :1,
-            content,
-            main_ingredient,
-            main_ing_detail,
-            sub_ingredient_detail
-        });
+        // const newRecipe = await Recipes.create({
+        //     title,
+        //     user_num :1,
+        //     content,
+        //     main_ingredient,
+        //     main_ing_detail,
+        //     sub_ingredient_detail
+        // });
         // const newImage = await Recipe_Img.create({
         //    recipe_num:req.files.recipe_num,
         //    image_url:req.files.image_url,
@@ -122,21 +126,20 @@ exports.postRecipeWrite = async(req,res) => {
 // 레시피 수정 - 프엔연결 필요
 exports.patchRecipe = async (req,res,next) => {
     console.log(`update >>> `,req.params);
-    // try {
-    //     const result = await Comment.update({
-    //         title,
-    //         content,
-    //         main_ingredient,
-    //         main_ing_detail,
-    //         sub_ingredient_detail
-    //     },{
-    //         where : { recipe_num : req.params.recipe_num }
-    //     })
-    //     res.json(result)
-    // } catch (error) {
-    //     console.error(error)
-    //     next(error)
-    // }
+    try {
+        const result = await Recipes.update({
+            title,
+            content,
+            main_ingredient,
+            main_ing_detail,
+            sub_ingredient_detail
+        },{
+            where : { recipe_num }
+        })
+        res.json(result)
+    } catch (error) {
+        console.error(error)
+    }
 }
 
 // 레시피 삭제 - 프엔연결 필요
@@ -158,13 +161,3 @@ exports.deleteRecipe = async(req,res)=>{
             res.status(500).send('Internal Server Error');
         }
     }
-
-exports.deleteRecipey=async(req,res,next) => {
-    try {
-        const result = await Comment.destroy({where : {recipe_num : req.params.recipe_num}})
-        res.json(result)
-    } catch (error) {
-        console.error(error)
-        next(error)
-    }
-}
