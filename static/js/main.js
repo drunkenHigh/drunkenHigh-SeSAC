@@ -12,11 +12,9 @@ let start = 0;
 let cnt = 1;
 
 // 추천 리스트 스와이퍼
-let leftSwiper = new Swiper('.recommendSwiper .recommend-leftSwiper', {
-    loop : true,
-    slidePerView : 1
-})
+// 중앙 스와이퍼
 let centerSwiper = new Swiper('.recommendSwiper .recommend-centerSwiper', {
+    spaceBetween : 20,
     loop : true,
     pagination : {
         el : '.swiper-pagination',
@@ -26,13 +24,17 @@ let centerSwiper = new Swiper('.recommendSwiper .recommend-centerSwiper', {
         nextEl : '.swiper-btnGroup .swiper-button-next',
         prevEl : '.swiper-btnGroup .swiper-button-prev'
     },
-    slidePerView : 1
+    slidePerView : 1,
 })
-let rightSwiper = new Swiper('.recommendSwiper .recommend-rightSwiper', {
+// 사이드 스와이퍼
+let sideSwiper = new Swiper('.recommendSwiper .recommend-rightSwiper, .recommendSwiper .recommend-leftSwiper', {
+    spaceBetween : 5,
     loop : true,
-    slidePerView : 1
+    slidePerView : 1,
+    allowTouchMove : false
 })
 
+centerSwiper.controller.control = sideSwiper;
 
 
 // 카테고리 버튼 만드는 함수
@@ -132,10 +134,10 @@ function renderRecipeLists(recipes){
             `<li>
               <a href="/recipes?recipe_id=${recipe.recipe_num}">
                 <figure>
-                  <img src="${recipe.recipe_img}" alt="레시피이미지" class="recipe-list__img" />          
+                  <img src="${recipe.Recipe_Img[0].recipe_img}" alt="레시피이미지" class="recipe-list__img" />          
                 </figure>
                 <p class="receipe__title">${recipe.title}</p>
-                <p class="receipe__writer">${recipe.user_name}</p>
+                <p class="receipe__writer">${recipe.Users.user_name}</p>
               </a>
             </li>`
     })

@@ -108,7 +108,7 @@ async function registerSubmit(){
     try {
         const registerAxios = await axios({
             method : 'post',
-            url : '/user/register',
+            url : '/users/register',
             data : formData
         })
 
@@ -162,7 +162,7 @@ function fileCheck() {
             try {
                 const tempAxios = await axios({
                     method : 'post',
-                    url : '/user/register/temp',
+                    url : '/users/register/temp',
                     data : formData
                 })
                 // 임시 저장소에 있는 프로필 이미지 가져와서 비동기적으로 프로필 이미지 변경
