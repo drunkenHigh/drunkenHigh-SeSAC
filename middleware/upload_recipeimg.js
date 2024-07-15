@@ -20,5 +20,5 @@ const uploadImage = multer({
     }),
     limits: { fileSize: 10 * 1024 * 1024 }, //업로드 크기 제한
     });
-
+    console.log("222");
 exports.singleup= uploadImage.fields([{name:'main-image'}, {name:'sub-image-1'}])

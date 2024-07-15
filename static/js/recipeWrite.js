@@ -180,7 +180,11 @@ saveButton.addEventListener('click', () => {
             recipeSubImgs,
             recipeStep
         }
-        console.log(recipeObj.recipeTitle, recipeObj.mainIng, recipeObj.mainIngDetail, recipeObj.subIngList, recipeObj.mainImage);
+        console.log(recipeObj.recipeTitle, 
+            recipeObj.mainIng, 
+            recipeObj.mainIngDetail, 
+            recipeObj.subIngList, 
+            recipeObj.mainImage);
         
         // console.log("recipe sub images >>> \n",recipeObj.recipeSubImgs);
         // console.log("recipe sub images >>> \n",recipeObj.recipeSubImgs);

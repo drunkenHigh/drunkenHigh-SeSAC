@@ -58,7 +58,7 @@ exports.getRecipeWrite = (req,res) => {
     res.render('write-detail-test',{title:'글 작성'});
 }
 
-// 레시피 작성페이지에서 저장 버튼 클릭시
+// 레시피 작성페이지에서 저장 버튼 클릭시 - 부재료 값 안들어감, 이미지 추가필요)
 exports.postRecipeWrite = async(req,res) => {
     try {
         console.log('레시피 저장 버튼 클릭 postRecipe >> \n', req.body);
@@ -73,10 +73,10 @@ exports.postRecipeWrite = async(req,res) => {
   recipeStep: 2
 }
         */
-        // const { title, content, main_ingredient, main_ing_detail, 
-            // sub_ingredient_detail, thumnail_num, recipeStep , mainImage } = req.body;
+        const { user_num, title, content, main_ingredient, main_ing_detail, 
+            sub_ingredient, thumnail_num, recipeStep , mainImage } = req.body;
         // const {main_img, sub_imgs} =
-        console.log("image file path >>> ",req.files);
+        console.log("image file path >>> ",sub_ingredient);
         
         
                 /*
@@ -93,11 +93,9 @@ exports.postRecipeWrite = async(req,res) => {
             console.log("recipeSubImgs >> ",recipeSubImgs);
         });
 */
-        // 데이터베이스에 저장
-
-        const post = await Recipe_Model.findByPk(req.body.recipe_num);
+        // 데이터베이스에 저장      
         const newRecipe = await Recipes.create({
-            title : title,
+            title,
             user_num :1,
             content,
             main_ingredient,
@@ -105,11 +103,10 @@ exports.postRecipeWrite = async(req,res) => {
             sub_ingredient_detail
         });
         // const newImage = await Recipe_Img.create({
-        //    recipe_num:req.params.recipe_num,
-        //    image_url:req.body.image_url,
-        //    main_img:req.body.thumnail_num
+        //    recipe_num:req.files.recipe_num,
+        //    image_url:req.files.image_url,
+        //    main_img:req.files.thumnail_num
         // });
-        
         // console.log('Main Image Path:', mainImage);
         // console.log('Sub Images Paths:', recipeSubImgs);
         // console.log('저장완료 : ', {recipe:newRecipe});
@@ -122,34 +119,17 @@ exports.postRecipeWrite = async(req,res) => {
     }
 }
 
-// 레시피 수정
-/* 예슬
-exports.patchRecipe = async (req,res) => {
-    try{
-        const {recipe_num} = req.params;
-
-        const updatedRecipe = await Recipes.update(
-            {title},
-            {content},
-            {main_ingredient},
-            {main_ing_detail},
-            {sub_ingredient},
-
-            {where: {recipe_num}}
-        );
-        res.json(updatedRecipe);
-    }catch(error){
-        console.error(err);
-        res.status(500).send('Internal Server Error');
-    }
-}*/ 
-
+// 레시피 수정 - 프엔연결 필요
 exports.patchRecipe = async (req,res,next) => {
     try {
         const result = await Comment.update({
-            comment : req.body.comment
+            title,
+            content,
+            main_ingredient,
+            main_ing_detail,
+            sub_ingredient_detail
         },{
-            where : { id : req.params.id }
+            where : { recipe_num : req.params.recipe_num }
         })
         res.json(result)
     } catch (error) {
@@ -180,7 +160,7 @@ exports.deleteRecipe = async(req,res)=>{
 
 exports.deleteRecipey=async(req,res,next) => {
     try {
-        const result = await Comment.destroy({where : {id : req.params.id}})
+        const result = await Comment.destroy({where : {recipe_num : req.params.recipe_num}})
         res.json(result)
     } catch (error) {
         console.error(error)
