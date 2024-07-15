@@ -124,7 +124,7 @@ alter table recipe_img add column MAIN_IMG INT default '0';
 show tables;
 desc recipe_img;
 select * from users;
-select * from recipes;
+select * from recipes order by recipe_num desc limit 3;
 desc recipes;
 select * from recipe_img;
 
@@ -139,29 +139,4 @@ select * from test_table;
 insert into test_table (recipe_num,user_num) values(1,1);
 
 
-SELECT `Recipes`.`recipe_num`, `Recipes`.`user_num`, 
-`Recipes`.`title`, `Recipes`.`content`, `Recipes`.`likes_count`, 
-`Recipes`.`main_ingredient`, `Recipes`.`main_ing_detail`, 
-`Recipes`.`sub_ingredient_detail`, `user`.`user_num` AS `user.user_num`, 
-`user`.`user_id` 
-AS `user.user_id`, `Recipe_Imgs`.`image_num` 
-AS `Recipe_Imgs.image_num`, `Recipe_Imgs`.`image_url` 
-AS `Recipe_Imgs.image_url` 
-FROM `Recipes` AS `Recipes` 
-LEFT OUTER JOIN `users` AS `user` 
-ON `Recipes`.`user_num` = `user`.`user_num` 
-LEFT OUTER JOIN `Recipe_Img` AS `Recipe_Imgs` 
-ON `Recipes`.`recipe_num` = `Recipe_Imgs`.`recipe_num` WHERE `Recipes`.`recipe_num` = '2';
 
-SELECT `Recipes`.`recipe_num`, `Recipes`.`user_num`, 
-`Recipes`.`title`, `Recipes`.`content`, `Recipes`.`likes_count`, 
-`Recipes`.`main_ingredient`, `Recipes`.`main_ing_detail`, 
-`Recipes`.`sub_ingredient_detail`, `Recipes`.`createdAt`, `Recipes`.`updatedAt`, 
-`user`.`user_num` AS `user.user_num`, 
-`user`.`user_id` AS `user.user_id`, `Recipe_Imgs`.`image_num` 
-AS `Recipe_Imgs.image_num`, `Recipe_Imgs`.`image_url` 
-AS `Recipe_Imgs.image_url` FROM `Recipes` AS `Recipes` 
-LEFT OUTER JOIN `users` AS `user` ON `Recipes`.`user_num` = `user`.`user_num` 
-LEFT OUTER JOIN `Recipe_Img` AS `Recipe_Imgs` 
-ON `Recipes`.`recipe_num` = `Recipe_Imgs`.`recipe_num` 
-WHERE `Recipes`.`recipe_num` = '1';

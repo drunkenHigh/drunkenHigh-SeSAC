@@ -74,9 +74,9 @@ exports.postRecipeWrite = async(req,res) => {
 }
         */
         const { user_num, title, content, main_ingredient, main_ing_detail, 
-            sub_ingredient, thumnail_num, recipeStep , mainImage } = req.body;
+            sub_ingredient_detail, thumnail_num, recipeStep , mainImage } = req.body;
         // const {main_img, sub_imgs} =
-        console.log("image file path >>> ",sub_ingredient);
+        console.log("image file path >>> ",sub_ingredient_detail);
         
         
                 /*
@@ -121,24 +121,25 @@ exports.postRecipeWrite = async(req,res) => {
 
 // 레시피 수정 - 프엔연결 필요
 exports.patchRecipe = async (req,res,next) => {
-    try {
-        const result = await Comment.update({
-            title,
-            content,
-            main_ingredient,
-            main_ing_detail,
-            sub_ingredient_detail
-        },{
-            where : { recipe_num : req.params.recipe_num }
-        })
-        res.json(result)
-    } catch (error) {
-        console.error(error)
-        next(error)
-    }
+    console.log(`update >>> `,req.params);
+    // try {
+    //     const result = await Comment.update({
+    //         title,
+    //         content,
+    //         main_ingredient,
+    //         main_ing_detail,
+    //         sub_ingredient_detail
+    //     },{
+    //         where : { recipe_num : req.params.recipe_num }
+    //     })
+    //     res.json(result)
+    // } catch (error) {
+    //     console.error(error)
+    //     next(error)
+    // }
 }
 
-// 레시피 삭제
+// 레시피 삭제 - 프엔연결 필요
 exports.deleteRecipe = async(req,res)=>{
         try {
             const {recipe_num} = req.params;
