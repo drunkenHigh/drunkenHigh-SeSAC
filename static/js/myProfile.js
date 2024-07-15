@@ -98,7 +98,18 @@ const waitForUserChange = () => {
                     <div class="md:flex mb-6">
                         <div class="md:w-1/3">
                             <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textarea">
-                                비밀번호
+                                현재 비밀번호
+                            </label>
+                        </div>
+                        <div class="md:w-2/3">
+                            <input type="password" class="form-input block w-full focus:bg-white" id="present-pw" value="" rows="1"></input>
+                            <p class="py-2 text-sm text-gray-600">비밀번호 제한 조건</p>
+                        </div>
+                    </div>
+                    <div class="md:flex mb-6">
+                        <div class="md:w-1/3">
+                            <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textarea">
+                                새로운 비밀번호
                             </label>
                         </div>
                         <div class="md:w-2/3">
@@ -137,14 +148,30 @@ const setupChangeUserInfoSaveButton = async () => {
         const profileImage = document.querySelector('#change-profile-info input').files[0];
         // 변경된 닉네임 저장
         const changedUsername = document.querySelector('#changed-nickname').value;
+        // 변경된 비밀번호 저장
         
-    });
-    
+        // 
+
+        axios.put(`/user?${userId}`, { username, profilePicture })
+            .then(response => {
+            const { username, profilePicture } = response.data;
+            }) .catch(error => console.error('Error updating profile:', error));
+        });
 };
 
 setupChangeUserInfoSaveButton();
 
 
 
-// 회원탈퇴 누르면 delette로 axios 전송
-
+// 회원탈퇴 누르면 delete로 axios 전송 -- 수정
+document.getElementById('deleteProfileButton').addEventListener('click', () => {
+    const userId = window.location.pathname.split('/').pop();
+    if (confirm('Are you sure you want to delete this user?')) {
+      axios.delete(`/users/${userId}`)
+        .then(() => {
+          alert('User deleted successfully');
+          window.location.href = '/'; // Redirect to homepage or another appropriate page
+        })
+        .catch(error => console.error('Error deleting profile:', error));
+    }
+  });
