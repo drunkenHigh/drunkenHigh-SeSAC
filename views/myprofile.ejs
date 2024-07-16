@@ -188,7 +188,12 @@
                                     <h3 class="font-sans font-bold break-normal text-gray-700 px-2 pb-6 text-lg"><%= recipe.recipe_title %></h3>
                                     <h3 class="font-sans font-bold break-normal text-gray-700 px-2 pb-0 text-sm">작성일자: <%= recipe.write_data %></h3>
                                     <h3 class="font-sans font-bold break-normal text-gray-700 px-2 pb-0 text-sm">주재료: <%= recipe.main_ing %></h3>
-                                    <h3 class="font-sans font-bold break-normal text-gray-700 px-2 pb-0 text-sm">좋아요: <%= recipe.likes_count %></h3>
+                                    <h3 class="font-sans font-bold break-normal text-gray-700 px-2 pb-0 text-sm">
+                                        <div class="flex">
+                                            <svg fill="red" class="" id="like" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="20px" height="20px"><path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/></svg>
+                                            <span class="px-2"><%= recipe.likes_count %></span>
+                                        </div>
+                                    </h3>
                                 </div>
                                 
                             </div>
@@ -196,6 +201,7 @@
                         <div class="md:flex md:items-center">
                             <div class="md:w-1/3"></div>
                             <div class="md:w-2/3">
+                                <!-- 상세페이지 작성 후 다시 수정 필요 -->
                                     <button onclick="location.href='/write?recipe_num=${<%= recipe.recipe_num %>}';" id="save-button-<%= index %>" class="shadow bg-yellow-700 hover:bg-yellow-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-4" type="button">
                                         수정
                                     </button>
@@ -204,6 +210,7 @@
                                     </button>
                             </div>
                         </div>
+                        <br/>
                     <% }) %>
                 </form>
 
