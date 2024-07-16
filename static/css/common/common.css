@@ -95,9 +95,9 @@
     box-shadow: 0 2px 3px var(--mainColor);
     width: 100%;
     height: 60px;
-    background-color: #fff;
     position: fixed;
     z-index: 999;
+    background-color: #fff;
 }
 
 #header header {
@@ -186,6 +186,10 @@
     font-size: 20px;
 }
 
+.header__nav a {
+    font-size: 14px;
+}
+
 .header__nav a:hover span {
     color : var(--darkColor);
     transition: color .4s;
@@ -206,8 +210,29 @@ main {
 #login {
     display: flex;
     flex-direction: column;
-    gap: 20px 0;
+    gap: 10px 0;
     width: 100%;
+}
+
+.login__content {
+    text-align: left;
+    height: 50vh;
+    width: 550px;
+    
+}
+
+.login__close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 20px;
+}
+
+.login__title {
+    font-size: 26px;
+    color : var(--darkColor);
+    font-weight: bold;
+    padding-bottom: 20px;
 }
 
 .login-inputbx {
@@ -216,7 +241,7 @@ main {
 
 .login-inputbx label {
     display: block;
-    font-size: 12px;
+    font-size: 14px;
     margin-bottom: 6px;
 }
 
@@ -224,17 +249,20 @@ main {
     width: 100%;
     height: 36px;
     padding-left: 10px;
-    border: 1px solid #ccc;
+    border: 2px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
+    font-size: 14px;
 }
 
 .login-inputbx input:focus {
     border-color: var(--darkColor);
 }
 
-.login-msg.on {
+.login-msg {
     color : red;
+    font-size: 12px;
+    height: 18px;
 }
 
 .login-btn {
@@ -252,11 +280,24 @@ main {
     width: 100%;
     margin: 0 auto;
     cursor: pointer;
+    font-size: 14px;
 }
 
 .login-btn:hover {
     background-color: var(--darkColor);
     opacity: 0.8;
+}
+
+.login-register {
+    font-size: 12px;
+}
+
+.login-register a {
+    color : var(--darkColor2);
+}
+
+.login-register a:hover {
+    text-decoration: underline;
 }
 
 /* 푸터 */

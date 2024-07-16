@@ -353,10 +353,11 @@
     border: 1px solid var(--darkColor);
     color : #fff;
     transition: all .3s;
+    border-radius: 10px;
 }
 
 .morebtn:hover {
-    border: 1px solid var(--darkColor);
-    background-color: #fff;
-    color : #000;
+    border: 1px solid var(--mainColor);
+    background-color: var(--mainColor);
+    
 }
