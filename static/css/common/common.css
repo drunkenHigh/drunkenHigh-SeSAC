@@ -95,6 +95,7 @@
     box-shadow: 0 2px 3px var(--mainColor);
     width: 100%;
     height: 60px;
+    background-color: #fff;
     position: fixed;
     z-index: 999;
 }
@@ -198,6 +199,7 @@ main {
     position: relative;
     top: 60px;
     margin: 0 auto;
+    padding-bottom: 100px;
 }
 
 /* 로그인 */
@@ -262,6 +264,7 @@ main {
     width: 100%;
     height: 60px;
     background-color: #333;
+    margin-top: 60px;
 }
 
 #footer footer {

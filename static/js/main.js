@@ -13,28 +13,60 @@ let cnt = 1;
 
 // 추천 리스트 스와이퍼
 // 중앙 스와이퍼
-let centerSwiper = new Swiper('.recommendSwiper .recommend-centerSwiper', {
-    spaceBetween : 20,
+let centerSwiper = new Swiper('.recommend-container .recommend-centerSwiper', {
+    spaceBetween : 10,
     loop : true,
+    speed : 700,
+    autoplay : {
+        delay : 3000,
+        disableOnInteraction: false,
+    },
     pagination : {
         el : '.swiper-pagination',
         type : 'progressbar'
     }, 
-    navation : {
+    navigation : {
         nextEl : '.swiper-btnGroup .swiper-button-next',
         prevEl : '.swiper-btnGroup .swiper-button-prev'
     },
     slidePerView : 1,
 })
 // 사이드 스와이퍼
-let sideSwiper = new Swiper('.recommendSwiper .recommend-rightSwiper, .recommendSwiper .recommend-leftSwiper', {
+let sideSwiper = new Swiper('.recommend-container .recommend-rightSwiper, .recommend-container .recommend-leftSwiper', {
     spaceBetween : 5,
     loop : true,
     slidePerView : 1,
     allowTouchMove : false
 })
-
 centerSwiper.controller.control = sideSwiper;
+
+
+
+// 타이틀 꾸미기용 JS
+function drawStarTitle() {
+    let index = 0, interval = 1000;
+
+    const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+    const animate = star => {
+        star.style.setProperty("--star-left", `${rand(-10, 100)}%`);
+        star.style.setProperty("--star-top", `${rand(-40, 80)}%`);
+
+        star.style.animation = "none";
+        star.offsetHeight;
+        star.style.animation = "";
+    }
+
+    for(const star of document.getElementsByClassName("magic-star")) {
+        setTimeout(() => {
+            animate(star);
+            
+            setInterval(() => animate(star), 1000);
+        }, index++ * (interval / 3))
+    }
+}
+
+drawStarTitle()
 
 
 // 카테고리 버튼 만드는 함수
@@ -82,7 +114,7 @@ recipeBtn.forEach(ele=>{
         const btnTitle = ele.querySelector('.category-title').innerText;
         // 초기화 
         recipeLists.innerHTML = '';
-        recipeMoreBtnBx.innerHTML = `<button class="morebtn2 morebtn">더보기</bottion>`
+        recipeMoreBtnBx.innerHTML = `<button class="morebtn2 morebtn">+ 더보기</bottion>`
         await getRecipeList(btnTitle)
     }
 })
@@ -97,7 +129,9 @@ async function getRecipeList(ingredient) {
             url : `/${ingredient}`,
         })
         const recipeData = getRecipeAxios.data;
-        // let hcode = '';
+        console.log(recipeData);
+        console.log(recipeData[0].Recipe_Imgs[0].image_url);
+        console.log(recipeData[0].title);
         renderRecipeLists(recipeData.slice(start, start + MAXCOUNT));
         let recipeMoreBtn = recipeMoreBtnBx.querySelector('.morebtn2')
 
@@ -126,7 +160,7 @@ async function getRecipeList(ingredient) {
     }
 }
 
-
+// 리스트 렌더링 함수
 function renderRecipeLists(recipes){
     let hcode = ``;
     recipes.forEach(recipe=>{
@@ -134,10 +168,10 @@ function renderRecipeLists(recipes){
             `<li>
               <a href="/recipes?recipe_id=${recipe.recipe_num}">
                 <figure>
-                  <img src="${recipe.Recipe_Img[0].recipe_img}" alt="레시피이미지" class="recipe-list__img" />          
+                  <img src="${recipe.Recipe_Imgs[0].image_url}" alt="레시피이미지" class="recipe-list__img" />          
                 </figure>
-                <p class="receipe__title">${recipe.title}</p>
-                <p class="receipe__writer">${recipe.Users.user_name}</p>
+                <p class="recipe__writer">${recipe.User.user_name}</p>
+                <p class="recipe__title">${recipe.title}</p>
               </a>
             </li>`
     })
@@ -148,25 +182,27 @@ function renderRecipeLists(recipes){
 
 // 메인페이지에서 더보기 버튼 클릭 시 목록 더 나오기
 const recipeMoreBtn = recipeMoreBtnBx.querySelector('.morebtn1')
-recipeMoreBtn.addEventListener('click', async ()=>{
-    try {
-        const btnAxios = await axios({
-            method : 'get',
-            url : '/전체'
-        })
-        const moreData = btnAxios.data
-        if(moreData.length > MAXCOUNT) {
-            start += MAXCOUNT;
-            renderRecipeLists(moreData.slice(start, start + MAXCOUNT));
-            // 더보기 버튼 처리
-            if(start + MAXCOUNT >= moreData.length) {
-                recipeMoreBtn.style.display = 'none'
-            } else {
-                recipeMoreBtn.style.display = 'block'
+if(recipeMoreBtn){
+    recipeMoreBtn.addEventListener('click', async ()=>{
+        try {
+            const btnAxios = await axios({
+                method : 'get',
+                url : '/전체'
+            })
+            const moreData = btnAxios.data
+            if(moreData.length > MAXCOUNT) {
+                start += MAXCOUNT;
+                renderRecipeLists(moreData.slice(start, start + MAXCOUNT));
+                // 더보기 버튼 처리
+                if(start + MAXCOUNT >= moreData.length) {
+                    recipeMoreBtn.style.display = 'none'
+                } else {
+                    recipeMoreBtn.style.display = 'block'
+                }
             }
+        }catch(err){
+            console.error(err);
         }
-    }catch(err){
-        console.error(err);
-    }
-})
+    })
+}
 
