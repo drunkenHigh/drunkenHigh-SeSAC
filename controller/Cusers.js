@@ -1,24 +1,31 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, where } = require('sequelize');
 const { sequelize } = require('../models/Mindex');
 const UsersModel = require('../models/Muser');
 const Users = UsersModel(sequelize, DataTypes);
+const { hashPw, comparePw } = require('../middleware/encrypt')
 const RecipesModel = require('../models/Mrecipe');
 const Recipes = RecipesModel(sequelize, DataTypes);
 const RecipesImageModel = require('../models/Mrecipe_img');
 const RecipesImg = RecipesImageModel(sequelize, DataTypes);
 const {Op} = require('sequelize');
+const validator = require('validator'); 
 
 
 
-    exports.getUmain = async (req, res) => {
-        
-    // 세션에 저장된 사용자 정보 가져오기
-    const user_id = req.session.user.user_id;
-    const user_name = req.session.user.user_name;
-    
-    // umain 페이지 렌더링 시 세션에 있는 사용자 정보 전달
-    res.render('umain', { user_id: user_id, user_name: user_name });
+exports.getUmain = async (req, res) => {
+    try {
+        // 세션에 저장된 사용자 정보 가져오기
+        const user_id = req.session.user.user_id;
+        const user_name = req.session.user.user_name;
+
+        // umain 페이지 렌더링 시 세션에 있는 사용자 정보 전달
+        res.render('umain', { user: { user_id, user_name } });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 };
+
 
     //로그인
      exports.getLogin = async (req, res) => {
@@ -33,30 +40,28 @@ const {Op} = require('sequelize');
 
         const user = await Users.findOne({
             where:{
-                user_id,
-                user_pw
+                user_id
             },
-            attributes:['user_id','user_name']
+            attributes:['user_id','user_name','user_pw']
         });
 
+            if (!user || !(await comparePw(user_pw, user.user_pw))) {
+                return res.status(401).json({ success: false, message: '등록되지 않은 사용자입니다.' });
 
-         if(!user){
-            
-            return res.status(401).json({ success : false, message: '등록되지 않은 사용자입니다.' });
-         }
+    
+         } else {
 
-
-             req.session.user = {
+            req.session.user = {
                 user_id: user.user_id,
                 user_name: user.user_name
              };
           
              console.log('세션 정보:', req.session.user); // 세션 정보 확인
 
+             
+            res.redirect('/users/umain')
 
-             res.json(user)
-
-       
+         }
        } catch (error) {
          res.status(500).send('Internal Server Error');
        }
@@ -91,10 +96,16 @@ const {Op} = require('sequelize');
 
     //회원가입(GET)
     exports.getUsers = async (req, res) => {
+         res.render('register')
+        // let isLogin = req.session.user
+        // if(isLogin) {
+        //     res.render('404')
+        // } else {
+        //     res.render('register', {isLogin})
+        // }
+       
 
-        res.render('register')
-    };
-
+    }
 
 
     //회원가입(POST)
@@ -109,22 +120,36 @@ const {Op} = require('sequelize');
             const month = birth_day.substring(4, 6); // 월 추출
             const day = birth_day.substring(6, 8); // 일 추출
 
-        const formatBirth = `${year}-${month}-${day}`;
+            const formatBirth = `${year}-${month}-${day}`;
 
 
             console.log(formatBirth);
 
 
-          
-           // 중복된 사용자 아이디 확인
-            const existUser = await Users.findOne({
+             // 중복된 사용자 아이디 확인
+             const userInfo = await Users.findOne({
                 where: {
                     user_id: user_id
+
                 }
             });
 
-           
+            if (userInfo) {
 
+                return res.status(400).json({ success: false, message: '중복된 아이디 입니다.' });
+
+            }
+             // 유효성 검사
+            if (!validator.isLength(user_id, { min: 6, max: 20 }) || !/^[a-z][a-z0-9]*$/g.test(user_id)) {
+                return res.status(400).json({ success: false, message: '아이디는 영문 소문자와 숫자로 이루어진 6~20자리여야 합니다.' });
+            }
+
+            if (!validator.isLength(user_pw, { min: 8, max: 16 }) || !/(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=])/.test(user_pw)) {
+                return res.status(400).json({ success: false, message: '비밀번호는 8~16자의 영문자, 숫자, 특수문자를 포함해야 합니다.' });
+            }
+          
+
+      
             //회원 생성
             const newUser = await Users.create({
                 user_id, user_name, profile_img, user_pw, birth_day: formatBirth
@@ -136,7 +161,19 @@ const {Op} = require('sequelize');
             }
     }
 
-
+    // exports.chkId = async (req, res) => {
+    //     const { user_id } = req.body
+    //     const chkId = await Users.findOne({
+    //         where : [
+    //             user_id 
+    //         ]
+    //     })
+    //     if(chkId){
+    //         res.json{success : true}
+    //     } else {
+    //         res.status(401).json({success : false})
+    //     }
+    // }
    // 마이페이지 ---- 태완
 
    // myprofile controller 추가
