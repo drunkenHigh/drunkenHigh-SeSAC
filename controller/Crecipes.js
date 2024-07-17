@@ -56,8 +56,11 @@ exports.getRecipe = async (req, res) => {
 
 // 레시피 작성 버튼 클릭시  - 완
 exports.getRecipeWrite = (req, res) => {
-  // res.render('recipeWrite',{title:'글 작성'});
-  res.render("test-recipeWrite", { title: "글 작성" });
+  res.render('recipeWrite',{
+    title:'글 작성',
+    isLogin: true
+});
+//   res.render("test-recipeWrite", { title: "글 작성" });
 };
 
 // 레시피 작성페이지에서 저장 버튼 클릭시 - 부재료 값 안들어감, 이미지 추가필요)

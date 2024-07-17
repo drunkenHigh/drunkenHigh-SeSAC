@@ -27,7 +27,7 @@ exports.getUmain = async (req, res) => {
 };
 
 
-    //로그인
+    // 다은 : 로그인
      exports.getLogin = async (req, res) => {
        res.render('user')
 
