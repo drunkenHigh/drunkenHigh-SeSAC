@@ -1,9 +1,11 @@
 const loginRegisterBtn = document.querySelector('.login-register a')
-const loginLink = document.querySelector('#login-link')
+const loginLink = document.querySelectorAll('.login-link')
 const loginBox = document.querySelector('.login__box')
 
 if(loginLink){
-    loginLink.addEventListener('click', getLogin)
+    loginLink.forEach(ele=>{
+        ele.addEventListener('click', getLogin)
+    })
 }
 
 // 로그인창 열기
@@ -97,16 +99,14 @@ async function postLogin(){
                 data
             })
             const result = loginAxios.data;
-            console.log(result.success);
             if(result.success){ // 로그인 성공 시
                 alert('환영합니다!')
                 loginContainer.remove();
                 document.location.href = currentURL;
-            } else { // 로그인 실패 시 
-                loginMsg[1].textContent = '로그인 실패, 아이디와 비밀번호를 확인해주세요.'
-            }
+            } 
         } catch(err){
             console.error(err);
+            loginMsg[1].textContent = '로그인 실패, 아이디와 비밀번호를 확인해주세요.'
         }
     }
 }

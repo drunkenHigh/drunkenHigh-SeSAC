@@ -1,10 +1,11 @@
 const bcrypt = require('bcrypt')
-const salt = 10;
 
-const hashPw =(user_pw) =>{
-    return bcrypt.hashSync(password, salt);
-};
+const saltRounds = 10
 
-const comparePw = (user_pw, db_Pw)=>{
-    return bcrypt.compareSync(user_pw, db_Pw);
-};
+exports.hashPw = (user_pw) => {
+    return bcrypt.hashSync(user_pw, saltRounds)
+}
+
+exports.comparePw = (inputPw, originalPw) => {
+    return bcrypt.compareSync(inputPw, originalPw) 
+}

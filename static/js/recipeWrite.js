@@ -65,21 +65,58 @@ const mainIngDetailHtml = `<div class="md:flex mb-6" id="main-ing-detail">
                     <p class="py-2 text-sm text-gray-600">예시: 잭 다니엘스 테네시 허니</p>
                 </div>
             </div>`;
-// const mainIngDetailHtml = `<div class="" id="main-ing-detail">
-//             <div class="">
-//                 <label class="" for="my-textarea">
-//                     주재료 상세
-//                 </label>
-//             </div>
-//             <div class="">
-//                 <textarea class="" value="" rows="2"></textarea>
-//                 <p class="">예시: 잭 다니엘스 테네시 허니</p>
-//             </div>
-//         </div>`;
 mainIng.addEventListener("change", () => {
     console.log("Main ind selected");
     mainIng.insertAdjacentHTML("afterend", mainIngDetailHtml);
 }, {once: true});
+
+
+// 메인 이미지 선택하면 미리보기 하기
+const mainImageUpload = document.querySelector('#main-image');
+const mainImage = document.querySelector('#recipe-img label');
+const mainImageText = document.querySelector('#main-image-text');
+mainImageUpload.addEventListener('change', (e) => {
+    const files = e.currentTarget.files;
+    let reader = new FileReader();
+
+    reader.onload = function(e) {
+        mainImage.removeChild(mainImage.querySelector('img'));
+        let img = document.createElement("img");
+        img.setAttribute("src", e.target.result);
+        img.setAttribute("class", "object-scale-down rounded-lg max-h-full p-5 hover:opacity-50");
+        mainImageText.classList.add("hidden");
+        mainImage.appendChild(img);
+    };
+    reader.readAsDataURL(e.target.files[0])
+    console.log(files);
+})
+
+// 부재료 이미지 미리보기 기능
+let subImageUpload = document.querySelectorAll('.sub-image');
+function resetSubImageEvent() {
+    subImageUpload = document.querySelectorAll('.sub-image');
+    subImageUpload.forEach((element, index) => {
+        const subImage = document.querySelector(`#step-${index+1} label`);
+        console.log(`subImage ${index+1} >>>> `, subImage);
+        const subImageText = document.querySelector(`#sub-image-text-${index+1}`)
+        element.addEventListener('change', (e) => {
+            const files = e.currentTarget.files;
+            let reader = new FileReader();
+        
+            reader.onload = function(e) {
+                subImage.removeChild(subImage.querySelector('img'));
+                let img = document.createElement("img");
+                img.setAttribute("src", e.target.result);
+                img.setAttribute("class", "object-scale-down rounded-lg max-h-full p-2 hover:opacity-50");
+                subImageText.classList.add("hidden");
+                subImage.appendChild(img);
+            };
+            reader.readAsDataURL(e.target.files[0])
+            console.log(files);        
+        })
+    })
+}
+resetSubImageEvent();
 
 
 
@@ -92,9 +129,9 @@ addStepButton.addEventListener('click', () => {
     const addStepHtml = `<div id="step-${recipeStep}" class="recipe-contents">
                         <div class="md:flex mb-6">
                             <div class="md:w-1/3">
-                                <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textarea">
+                                <span class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textarea">
                                     Step ${recipeStep}
-                                </label>
+                                </span>
                             </div>
                             <div class="md:w-2/3">
                                 <textarea class="form-textarea block w-full focus:bg-white" id="my-textarea" value="" rows="3"></textarea>
@@ -103,12 +140,49 @@ addStepButton.addEventListener('click', () => {
                         </div>
                         <div class="md:flex mb-6">
                             <div class="md:w-1/3">
-                                <input id="sub-image-${recipeStep}" name="sub_image_${recipeStep}" type="file" accept="image/png image/jpg image/jpeg"/>
+                                <span class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textarea">
+                                    
+                                </span>
+                            </div>
+                            <div class="md:w-2/3">
+                                <!-- <input id="sub-image-${recipeStep}" type="file" accept="image/png image/jpg image/jpeg"/> -->
+                                <span class="block mb-2 text-sm font-medium " for="file_input">사진을 올려주세요</span>
+                                <div class="flex items-center justify-center w-full">
+                                    <label for="sub-image-${recipeStep}" class="flex flex-col items-center justify-center w-full h-64 border-2 border-[#D9601A] border-dashed rounded-lg cursor-pointer bg-white hover:bg-white">
+                                        <div id="sub-image-text-${recipeStep}" class="flex flex-col items-center justify-center">
+                                            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                            </svg>
+                                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">클릭하여 업로드 해주세요</span></p>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG or JPEG (MAX. 800x400px).</p>
+                                        </div>
+                                        <img class="hidden object-scale-down rounded-lg max-h-full p-5 hover:opacity-50" src="" alt="">
+                                        <input class="sub-image" hidden name="sub_image_${recipeStep}" id="sub-image-${recipeStep}"  aria-describedby="file_input_help" type="file">
+                                    </label>
+                                </div> 
+                                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG, JPG or JPEG (MAX. 800x400px).</p>
                             </div>
                         </div>
                     </div>`;
     recipeStepForm.insertAdjacentHTML("beforebegin", addStepHtml);
+    // 추가된 부재료 이미지에 이벤트 리스너 붙이기
+    resetSubImageEvent();
 })
+
+// 단계 삭제하기 버튼 누르면 입력폼 단계 하나 삭제
+const deleteStepButton = document.querySelector('#delete-step');
+const recipeStepWrap = document.querySelector('#recipe-cont form');
+deleteStepButton.addEventListener('click', () => {
+    // Step Recipe 안에 있는 child element의 총 개수 -> initial: 2개 (step1, button wrap)
+    const totalChildNum = recipeStepWrap.childElementCount;
+    if (totalChildNum > 2) {
+        recipeStep--;
+        recipeStepWrap.children[totalChildNum - 2].remove();
+    }
+    // 지워진 부재료 이미지에 이벤트 리스너 빼기
+    resetSubImageEvent();
+})
+
 
 // ==== 저장 =====
 // axios로 레시피 정보 보내기 
@@ -141,10 +215,14 @@ const writeRecipe = async (recipeObj) => {
             //"Content-Type": "multipart/form-data" 
         },
       }).then((res) => {
-        const {recipe_title, mainIngredient, sub_ing_detail, main_image, 
-        step_textarea, sub_image} =res.data;
-        console.log("axios res >> ", res);
-        console.log("Img addr : ", res.data.path);
+        console.log("res.data >>> ", res.data);
+        // 저장하면 홈으로 이동
+        if(res.data === "saved") {
+            if(confirm("저장되었습니다!")) {
+                // 홈으로 이동
+                window.location.href = "/";
+            }
+        }
       });
     } catch (err) {
       console.error(err);
@@ -196,12 +274,6 @@ saveButton.addEventListener('click', () => {
             recipeSubImgs
         }
         console.log(recipeObj.recipeTitle, recipeObj.mainIng, recipeObj.mainIngDetail, recipeObj.subIngList, recipeObj.mainImage);
-        // writeRecipe(recipeObj, () => {
-        //     if(confirm("저장되었습니다!")) {
-        //         // 홈으로 이동
-        //         window.location.href = "/";
-        //     }
-        // })
         writeRecipe(recipeObj);
 })
 
