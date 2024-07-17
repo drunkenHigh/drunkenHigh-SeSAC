@@ -9,7 +9,7 @@ let pass = true;
 
 // 포커스 빠졌을 때
 regiterFormInput.forEach(ele=>{
-    ele.onblur = function() {
+    ele.onblur = async function() {
         // blur 된 아이디 읽어오기
         let inputId = this.getAttribute('id')
         let inputValue = this.value;
@@ -21,10 +21,23 @@ regiterFormInput.forEach(ele=>{
             } else {
                 $(this).next().empty();
                 // 아이디 중복검사 넣어야함 -> axios 쓸것
-                pass = true
-                sendMsg(0, '사용가능한 아이디입니다')
-                // 아이디 통과시에만 이미지 파일 올릴 수 있음
-                registerFileInput.disabled = false;
+                const idCheck = await axios({
+                    method : 'post',
+                    url : '/users/register/idCheck',
+                    data : {user_id : inputValue}
+                })
+
+                if(idCheck.data) {
+                    pass = true
+                    sendMsg(0, '사용가능한 아이디입니다')
+                    // 아이디 통과시에만 이미지 파일 올릴 수 있음
+                    registerFileInput.disabled = false;
+                } else {
+                    pass = false
+                    sendMsg(0, '이미 사용중인 아이디입니다')
+                    // 아이디 통과시에만 이미지 파일 올릴 수 있음
+                    registerFileInput.disabled = true;
+                }
             }
         } else if(inputId === 'user_pw'){
             if(!this.checkValidity() || !valRegExp(inputValue, inputId)){
@@ -42,6 +55,24 @@ regiterFormInput.forEach(ele=>{
             } else {
                 // 닉네임 중복검사 -> axios 쓸것 
                 $(this).next().empty();
+                // 아이디 중복검사 넣어야함 -> axios 쓸것
+                const nameCheck = await axios({
+                    method : 'post',
+                    url : '/users/register/nameCheck',
+                    data : {user_name : inputValue}
+                })
+
+                if(nameCheck.data) {
+                    pass = true
+                    sendMsg(2, '사용가능한 닉네임입니다')
+                    // 아이디 통과시에만 이미지 파일 올릴 수 있음
+                    registerFileInput.disabled = false;
+                } else {
+                    pass = false
+                    sendMsg(2, '이미 사용중인 닉네임입니다')
+                    // 아이디 통과시에만 이미지 파일 올릴 수 있음
+                    registerFileInput.disabled = true;
+                }
                 pass = true
                 sendMsg(2, '사용가능한 닉네임입니다.')
             }
@@ -116,7 +147,6 @@ async function registerSubmit(){
     }catch(err){
         console.error(err);
     }
-
 }
 
 // 정규식 체크 함수
