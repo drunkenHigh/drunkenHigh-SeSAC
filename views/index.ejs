@@ -1,16 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <%- include('include/include', { title : 'DRUNKEN HIGH' }) %>
-    <link rel="stylesheet" href="/public/css/main.css">
-</head>
-<body>
-    <%- include('./partials/cookie.ejs') %>
-    <%- include('./partials/header.ejs') %>
+    <link rel="stylesheet" href="/public/css/main.css" />
+  </head>
+  <body>
+    <%- include('./partials/cookie.ejs') %> 
+    <%- include('./partials/header.ejs')%>
+    <%- include('./partials/login.ejs')%>
     <main>
-        <section class="main__recommend">
-          <h2 class="recommend-title"></h2>
+      <section class="main__recommend">
           <div class="recommend-container swiper-container">
+            <div class="recommend-text">
+                <h2 class="recommend-title">
+                    <span class="magic">
+                        <span class="magic-star">
+                            <svg viewBox="0 0 512 512">
+                                <path d="M512 255.1c0 11.34-7.406 20.86-18.44 23.64l-171.3 42.78l-42.78 171.1C276.7 504.6 267.2 512 255.9 512s-20.84-7.406-23.62-18.44l-42.66-171.2L18.47 279.6C7.406 276.8 0 267.3 0 255.1c0-11.34 7.406-20.83 18.44-23.61l171.2-42.78l42.78-171.1C235.2 7.406 244.7 0 256 0s20.84 7.406 23.62 18.44l42.78 171.2l171.2 42.78C504.6 235.2 512 244.6 512 255.1z" />
+                            </svg>
+                        </span>
+                        <span class="magic-star">
+                            <svg viewBox="0 0 512 512">
+                                <path d="M512 255.1c0 11.34-7.406 20.86-18.44 23.64l-171.3 42.78l-42.78 171.1C276.7 504.6 267.2 512 255.9 512s-20.84-7.406-23.62-18.44l-42.66-171.2L18.47 279.6C7.406 276.8 0 267.3 0 255.1c0-11.34 7.406-20.83 18.44-23.61l171.2-42.78l42.78-171.1C235.2 7.406 244.7 0 256 0s20.84 7.406 23.62 18.44l42.78 171.2l171.2 42.78C504.6 235.2 512 244.6 512 255.1z" />
+                            </svg>
+                        </span>
+                        <span class="magic-star">
+                            <svg viewBox="0 0 512 512">
+                                <path d="M512 255.1c0 11.34-7.406 20.86-18.44 23.64l-171.3 42.78l-42.78 171.1C276.7 504.6 267.2 512 255.9 512s-20.84-7.406-23.62-18.44l-42.66-171.2L18.47 279.6C7.406 276.8 0 267.3 0 255.1c0-11.34 7.406-20.83 18.44-23.61l171.2-42.78l42.78-171.1C235.2 7.406 244.7 0 256 0s20.84 7.406 23.62 18.44l42.78 171.2l171.2 42.78C504.6 235.2 512 244.6 512 255.1z" />
+                            </svg>
+                        </span>
+                        <span class="title-emoji">👍</span>
+                        <span class="title-text">추천 레시피</span>
+                    </span>
+                </h2>
+                <p class="recommend-desc">오늘의 추천 레시피를 만나보세요!</p>
+            </div>
             <!-- left swiper -->
             <div class="recommend-leftSwiper">
                 <ul class="swiper-wrapper">
@@ -19,7 +43,7 @@
                         <li class="swiper-slide">
                             <a href="/recipes?recipe_id=<%= listsALl[i].dataValues.recipe_num%>">
                                 <figure>
-                                <img src="<%= listsALl[i].dataValues.Recipe_Img[0].image_url %>" alt="레시피이미지" class="recipe-list__img" />          
+                                <img src="<%= listsALl[i].dataValues.Recipe_Imgs[0].image_url %>" alt="레시피이미지" class="recipe-list__img" />          
                                 </figure>
                             </a>
                         </li>
@@ -34,10 +58,12 @@
                         <% let index = i % 10; %>
                             <li class="swiper-slide">
                                 <a href="/recipes?recipe_id=<%= listsALl[index].dataValues.recipe_num%>">
+                                    <div class="slide-bg">
+                                        <p class="receipe__title"><%= listsALl[index].dataValues.title %></p>
+                                    </div>
                                     <figure>
-                                    <img src="<%= listsALl[index].dataValues.Recipe_Img[0].image_url %>" alt="레시피이미지" class="recipe-list__img" />          
+                                        <img src="<%= listsALl[index].dataValues.Recipe_Imgs[0].image_url %>" alt="레시피이미지" class="recipe-list__img" />          
                                     </figure>
-                                    <p class="receipe__title"><%= listsALl[index].dataValues.title %></p>
                                 </a>
                             </li> 
                     <%}}%> 
@@ -52,51 +78,68 @@
                         <li class="swiper-slide">
                             <a href="/recipes?recipe_id=<%= listsALl[index].dataValues.recipe_num%>">
                                 <figure>
-                                    <img src="<%= listsALl[index].dataValues.Recipe_Img[0].image_url %>" alt="레시피이미지" class="recipe-list__img" />          
+                                    <img src="<%= listsALl[index].dataValues.Recipe_Imgs[0].image_url %>" alt="레시피이미지" class="recipe-list__img" />          
                                 </figure>
                             </a>
                         </li>
                     <%}}%> 
                 </ul>
-            </div>
-            <div class="swiper-pagination swiper-pagination-progressbar swiper-pagination-horizontal"><span class="swiper-pagination-progressbar-fill" style="transform: translate3d(0px, 0px, 0px) scaleX(0.111111) scaleY(1); transition-duration: 300ms;"></span></div>
-            <div class="swiper-btnGroup">
-                <div class="swiper-button-next" tabindex="0" role="button" aria-label="Next slide" aria-controls="swiper-wrapper-10687ab1e59b41b48" aria-disabled="false"></div>      
-                <div class="swiper-button-prev" tabindex="-1" role="button" aria-label="Previous slide" aria-controls="swiper-wrapper-10687ab1e59b41b48" aria-disabled="true"></div>
-            </div>
-          </div>
-        </section>
-        <section class="main__list">
-          <h2 class="list-title">레시피 모음</h2>
-          <nav class="recipe-category">
-            <ul class="category-btn">   
-            </ul>
-          </nav>
-          <div class="recipe-list__container">
-            <ul class="recipe-lists">
-              <% if(listsALl){ %>
-              <% for(let i = 0; i < 8 ; i++){ %>
-                  <li>
-                      <a href="/recipes?recipe_id=<%= listsALl[i].dataValues.recipe_num%>">
-                          <figure>
-                          <img src="<%= listsALl[i].dataValues.Recipe_Img[0].image_url %>" alt="레시피이미지" class="recipe-list__img" />          
-                          </figure>
-                          <p class="receipe__title"><%= listsALl[i].dataValues.title %></p>
-                          <p class="receipe__writer"><%= listsALl[i].dataValues.User.user_name %></p>
-                      </a>
-                  </li>
-              <%}}%> 
-            </ul>
-          </div>
-          <div class="recipe-morebtn">
-          <% if(listsALl.length > 8){ %>
-              <button class="morebtn1 morebtn">더보기</button>
-          <% } %>
-          </div>
-        </section>
+            </div>  
+            <div class="swiper-control">
+                <div class="swiper-pagination swiper-pagination-progressbar swiper-pagination-horizontal">
+                    <span
+                    class="swiper-pagination-progressbar-fill"
+                    style="transform: translate3d(0px, 0px, 0px) scaleX(0.111111) scaleY(1); transition-duration: 300ms;"></span>
+                </div>
+                <div class="swiper-btnGroup">
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+            </div>          
+        </div>
+      </section>
+      <section class="main__list">
+        <h2 class="list-title">🍻레시피 모음</h2>
+        <nav class="recipe-category">
+          <ul class="category-btn"></ul>
+        </nav>
+        <div class="recipe-list__container">
+          <ul class="recipe-lists">
+            <%if(listsALl){%> <% for(let i = 0; i < 8; i++){ %>
+            <li>
+              <a
+                href="/recipes?recipe_id=<%= listsALl[i].dataValues.recipe_num%>"
+              >
+                <figure>
+                  <img
+                    src="<%= listsALl[i].dataValues.Recipe_Imgs[0].dataValues.image_url %>"
+                    alt="레시피이미지"
+                    class="recipe-list__img"
+                  />
+                </figure>
+                <p class="recipe__writer">
+                    <%= listsALl[i].dataValues.User.user_name %>
+                  </p>
+                <p class="recipe__title">
+                  <%= listsALl[i].dataValues.title %>
+                </p>
+              </a>
+            </li>
+            <% } %> <%}%>
+          </ul>
+        </div>
+        <div class="recipe-morebtn">
+            <% if(listsALl){ %>
+            <% if(listsALl.length > 8){ %>
+                <button class="morebtn1 morebtn">+ 더보기</button>
+            <% } %>
+            <% } %>
+        </div>
+      </section>
     </main>
     <%- include('./partials/footer.ejs') %>
+    <script src="/public/js/cookie.js"></script>
     <script src="/public/js/main.js"></script>
     <script src="/public/js/login.js"></script>
-</body>
+  </body>
 </html>

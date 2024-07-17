@@ -2,9 +2,11 @@ const cookieBtn = document.getElementsByName('adult')
 const cookieMsg = document.querySelector('.cookie-msg')
 const cookieContainer = document.querySelector('.cookie__container')
 
-cookieBtn.forEach(ele=>{
-    ele.addEventListener('click', setCookie)
-})
+if(cookieBtn){
+    cookieBtn.forEach(ele=>{
+        ele.addEventListener('click', setCookie)
+    })
+}
 
 // 쿠키 가져오기 함수
 function getCookie(cName) {

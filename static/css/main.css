@@ -2,35 +2,134 @@
 @import url(./common/core.css);
 @import url(./common/common.css);
 
+.main__recommend {
+    padding : 60px 0;
+    margin-bottom: 60px;
+}
+
 .recommend-container {
     position: relative;
     width: 100%;
-    height: 80vh;
+    height: 650px;
     overflow: hidden;
-    display: flex;
-    justify-content: space-between;
+}
+
+.recommend-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 322px;
+    height: 322px;
+}
+
+.recommend-title {
+    font-size: 36px;
+    font-weight: 900;
+    color : #fff;
+    margin-bottom: 20px;
+}
+
+.recommend-title .magic {
+    display: inline-block;
+    position: relative;
+}
+
+.recommend-title .magic-star {
+    --size : clamp(20px, 1.5vw, 30px);
+    animation: scale .7s ease forwards;
+    display: block;
+    height: var(--size);
+    width: var(--size);
+    position: absolute;
+    top : var(--star-top);
+    left : var(--star-left);
+}
+
+.recommend-title .magic-star > svg {
+    animation: rotate 1s linear infinite;
+    display: block;
+    overflow: 0.7;
+}
+
+.recommend-title .magic-star > svg > path {
+    fill : var(--darkColor);
+}   
+
+@keyframes scale {
+    from, to {
+      transform: scale(0);
+    }
+    
+    50% {
+      transform: scale(1);
+    }
+}
+  
+@keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    
+    to {
+      transform: rotate(180deg);
+    }
+}
+
+.recommend-title .title-text {
+    animation: backgroud-pan 3s linear infinite;
+    background: linear-gradient(to right, var(--darkColor2),var(--lightColor2), var(--mainColor), var(--darkColor), var(--darkColor2));
+    background-size: 200%;
+    background-position: 0% center;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    white-space: nowrap;
+}
+
+@keyframes backgroud-pan {
+    from {
+        background-position: 0% center;
+    } 
+    to {
+        background-position: -200% center;
+    }
+}
+
+.recommend-desc {
+    color : #555;
+    font-size: 20px;
 }
 
 .recommend-leftSwiper, .recommend-centerSwiper, .recommend-rightSwiper {
     overflow: hidden;
     user-select: none;
+    border-radius: 20px;
 }
 
 .recommend-leftSwiper{
-    width: 25%;
-    height: 50%;
-    margin-right: 20px;
+    width: 322px;
+    height: 276px;
 }
 
 .recommend-rightSwiper {
-    width: 35%;
-    height: 70%;
-
+    width: 378px;
+    height: 378px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .recommend-centerSwiper {
-    width: 40%;
-    margin-right: 40px;
+    width: 570px;
+    height: 650px;
+    margin-right: 20px;
+    left: 50%;
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+    z-index: 2;
 }
 
 
@@ -38,6 +137,22 @@
     position: relative;
     overflow: hidden;
     border-radius: 20px;
+}
+
+.recommend-container .swiper-slide a{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.recommend-container .swiper-slide .slide-bg {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 20;
 }
 
 .recommend-container .swiper-slide img {
@@ -50,6 +165,60 @@
 
 .recommend-container .swiper-slide p {
     position: absolute;
+    color : #fff;
+    top: 20px;
+    font-size: 30px;
+    right: 20px;
+    font-weight: bold;
+
+}
+
+.recommend-container .swiper-control {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20%;
+    display: flex;
+}
+
+.recommend-container .swiper-pagination.swiper-pagination-progressbar.swiper-pagination-horizontal {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    right: 0;
+    left: auto;
+    top: auto;
+    height: 3px;
+}
+
+.recommend-container .swiper-pagination-progressbar {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.recommend-container .swiper-pagination-progressbar .swiper-pagination-progressbar-fill  {
+    background: var(--darkColor);
+}
+
+.recommend-container .swiper-btnGroup {
+    position: absolute;
+    right: 7%;
+    bottom: 10px;
+    width: calc(27px * 4);
+    height: 44px;
+}
+
+.recommend-container .swiper-button-prev {
+    left: 0;
+    color : var(--darkColor);
+}
+
+.recommend-container .swiper-button-next {
+    right: 0;
+    color : var(--darkColor);
+}
+
+.recommend-container .swiper-button-next:after, .recommend-container .swiper-button-prev:after{
+    font-size: 24px;
 }
 
 /* 하이볼 리스트 */
@@ -58,10 +227,14 @@
     font-size: min(3.4vw, 36px);
     font-weight: 900;
     color : var(--darkColor2);
-    padding : 20px 0 10px 20px;
+    padding : 20px 0;
 }
 
 /* 카테고리 버튼 */
+.recipe-category {
+    padding-bottom: 60px;
+}
+
 .category-btn {
     display: flex;
     flex-wrap: wrap;
@@ -108,12 +281,29 @@
     object-fit: cover;
 }
 
+.category-btn li:hover img {
+    animation: btnAction .3s ease-out forwards;
+}
+
+@keyframes btnAction {
+    0% {
+        transform: translate(-50%, -50%) rotate(-0.025turn);
+    } 
+    50% {
+        transform: translate(-50%, -50%) rotate(0.025turn);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(0turn);
+    }   
+}
+
+
 /* 레시피 목록 */
 .recipe-lists {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-column-gap: min(2vw, 50px);
-    grid-row-gap: min(1.5vw, 15px);
+    grid-row-gap: min(1.5vw, 50px);
     width: 100%;
 }
 
@@ -125,4 +315,49 @@
 
 .recipe-lists img {
     width: 100%;
+    transition: all .4s ease-in-out;
+}
+
+.recipe-lists li:hover img {
+    transform: scale(1.1);
+}
+
+.recipe-lists .recipe__writer {
+    font-size: 16px;
+    color : #888;
+    margin: 20px 0 10px;
+}
+
+.recipe-lists .recipe__title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* 더보기 버튼 */
+.recipe-morebtn {
+    position: relative;
+    margin-top: 30px;
+    width: 100%;
+}
+
+.morebtn {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding : 10px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: var(--darkColor);
+    border: 1px solid var(--darkColor);
+    color : #fff;
+    transition: all .3s;
+    border-radius: 10px;
+}
+
+.morebtn:hover {
+    border: 1px solid var(--mainColor);
+    background-color: var(--mainColor);
+    
 }
