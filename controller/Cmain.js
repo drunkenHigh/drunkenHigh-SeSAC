@@ -97,7 +97,6 @@ const getRecipeListMain = async (req, res) => {
 const main = async (req, res) => {
     try {
         const listsALl = await getRecipeListAll();
-        
         res.render('index', { listsALl, isLogin :req.session.loggedin})
     } catch (error) {
         console.error(error);
@@ -108,4 +107,3 @@ const main = async (req, res) => {
 };
 
 module.exports = { main, getRecipeListAll, getRecipeListMain };
-
