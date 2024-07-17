@@ -53,19 +53,16 @@ const dbName = process.env.DATABASE_NAME;
 const dbPw = process.env.DATABASE_PW;
 
 
-
+// 라우터 등록
 app.use("/", router);
 app.use('/recipe', router_rcp);
 app.use('/users', router_users);
+// 404 처리
+app.get('*', (req, res) => {
+  res.render('404')
+})
 
-// app.listen(port, () => {
-//   console.log(`Server running...PORT: ${port}`);
-//   console.log(`Database name: ${dbName}, Database Password: ${dbPw}`);
-// });
 
-// --- sequelize 사용시
-// force: true = 서버 실행때마다 테이블을 재생성
-// force: false = 서버 실행때마다 테이블이 없으면 생성
 sequelize
     .sync({ force: false })
     .then(() => {

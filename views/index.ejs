@@ -8,7 +8,7 @@
     <%- include('./partials/cookie.ejs') %> 
     <%- include('./partials/header.ejs')%>
     <%- include('./partials/login.ejs')%>
-    <main>
+    <main> 
       <section class="main__recommend">
           <div class="recommend-container swiper-container">
             <div class="recommend-text">
@@ -96,6 +96,24 @@
                     <div class="swiper-button-next"></div>
                 </div>
             </div>          
+        </div>
+      </section>
+      <section class="main__write">
+        <div class="write-bg">
+            <div class="bg-wrap">
+                <div class="bg"></div>
+            </div>
+        </div>
+        <div class="write-content">
+            <p>
+                <img src="" alt="">
+                <span>자신만의 하이볼 레시피를 공유해주세요!</span>
+            </p>
+            <% if(isLogin){ %>
+                <a href="/recipe/write" class="main-writebtn">작성하기</a>
+            <% } else{ %>
+                <a href="/users/login" class="login-link main-writebtn">작성하기</a>
+            <% }  %>
         </div>
       </section>
       <section class="main__list">
