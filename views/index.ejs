@@ -8,7 +8,7 @@
     <%- include('./partials/cookie.ejs') %> 
     <%- include('./partials/header.ejs')%>
     <%- include('./partials/login.ejs')%>
-    <main> 
+    <main>
       <section class="main__recommend">
           <div class="recommend-container swiper-container">
             <div class="recommend-text">
@@ -38,51 +38,89 @@
             <!-- left swiper -->
             <div class="recommend-leftSwiper">
                 <ul class="swiper-wrapper">
-                    <% if(listsALl){ %>
+                    <% if(listsALl.length > 10){ %>
                     <% for(let i = 0; i < 10 ; i++){ %>
                         <li class="swiper-slide">
-                            <a href="/recipes?recipe_id=<%= listsALl[i].dataValues.recipe_num%>">
+                            <a href="/recipes?recipe_id=<%= listsALl[i].recipe_num%>">
                                 <figure>
-                                <img src="<%= listsALl[i].dataValues.Recipe_Imgs[0].image_url %>" alt="레시피이미지" class="recipe-list__img" />          
+                                <img src="<%= listsALl[i].image_url %>" alt="레시피이미지" class="recipe-list__img" />          
                                 </figure>
                             </a>
                         </li>
-                    <%}}%> 
+                    <%}} else if(listsALl.length < 10 && listsALl.length > 1) {%> 
+                    <% for(let i = 0; i < listsALl.length ; i++){ %>    
+                        <li class="swiper-slide">
+                            <a href="/recipes?recipe_id=<%= listsALl[i].recipe_num%>">
+                                <figure>
+                                <img src="<%= listsALl[i].image_url %>" alt="레시피이미지" class="recipe-list__img" />          
+                                </figure>
+                            </a>
+                        </li>
+                    <%}} else { %> 
+                        <li></li>
+                    <%}%> 
                 </ul>
             </div>
             <!-- center swiper -->
             <div class="recommend-centerSwiper">
                 <ul class="swiper-wrapper">
-                    <% if(listsALl){ %>
+                    <% if(listsALl.length > 10){ %>
                     <% for(let i = 1; i <= 10 ; i++){ %>
                         <% let index = i % 10; %>
                             <li class="swiper-slide">
-                                <a href="/recipes?recipe_id=<%= listsALl[index].dataValues.recipe_num%>">
+                                <a href="/recipes?recipe_id=<%= listsALl[index].recipe_num%>">
                                     <div class="slide-bg">
-                                        <p class="receipe__title"><%= listsALl[index].dataValues.title %></p>
+                                        <p class="receipe__title"><%= listsALl[index].title %></p>
                                     </div>
                                     <figure>
-                                        <img src="<%= listsALl[index].dataValues.Recipe_Imgs[0].image_url %>" alt="레시피이미지" class="recipe-list__img" />          
+                                        <img src="<%= listsALl[index].image_url %>" alt="레시피이미지" class="recipe-list__img" />          
                                     </figure>
                                 </a>
                             </li> 
-                    <%}}%> 
+                    <%}} else if(listsALl.length < 10 && listsALl.length > 1) {%> 
+                        <% for(let i = 0; i < listsALl.length ; i++){ %>    
+                            <% let index = i % 10; %>
+                            <li class="swiper-slide">
+                                <a href="/recipes?recipe_id=<%= listsALl[index].recipe_num%>">
+                                    <div class="slide-bg">
+                                        <p class="receipe__title"><%= listsALl[index].title %></p>
+                                    </div>
+                                    <figure>
+                                    <img src="<%= listsALl[index].image_url %>" alt="레시피이미지" class="recipe-list__img" />          
+                                    </figure>
+                                </a>
+                            </li>
+                        <%}} else { %> 
+                            <li></li>
+                    <%}%>
                 </ul>
             </div>
             <!-- right swiper -->
             <div class="recommend-rightSwiper">
                 <ul class="swiper-wrapper">
-                    <% if(listsALl){ %>
+                    <% if(listsALl.length > 10){ %>
                     <% for(let i = 0; i < 10 ; i++){ %>
                         <% let index = (i + 2) % 10; %>
                         <li class="swiper-slide">
-                            <a href="/recipes?recipe_id=<%= listsALl[index].dataValues.recipe_num%>">
+                            <a href="/recipes?recipe_id=<%= listsALl[index].recipe_num%>">
                                 <figure>
-                                    <img src="<%= listsALl[index].dataValues.Recipe_Imgs[0].image_url %>" alt="레시피이미지" class="recipe-list__img" />          
+                                    <img src="<%= listsALl[index].image_url %>" alt="레시피이미지" class="recipe-list__img" />          
                                 </figure>
                             </a>
                         </li>
-                    <%}}%> 
+                    <%}} else if(listsALl.length < 10 && listsALl.length > 1) {%> 
+                    <% for(let i = 0; i < listsALl.length ; i++){ %>  
+                        <% let index = (i + 2) % 10; %>  
+                        <li class="swiper-slide">
+                            <a href="/recipes?recipe_id=<%= listsALl[index].recipe_num%>">
+                                <figure>
+                                <img src="<%= listsALl[index].image_url %>" alt="레시피이미지" class="recipe-list__img" />          
+                                </figure>
+                            </a>
+                        </li>
+                    <%}} else { %> 
+                        <li></li>
+                    <%}%>
                 </ul>
             </div>  
             <div class="swiper-control">
@@ -105,10 +143,12 @@
             </div>
         </div>
         <div class="write-content">
-            <p>
-                <img src="" alt="">
+            <div>
+                <figure>
+                    <img src="/public/img/rabbit-icon.png" alt="아이콘">
+                </figure>
                 <span>자신만의 하이볼 레시피를 공유해주세요!</span>
-            </p>
+            </div>
             <% if(isLogin){ %>
                 <a href="/recipe/write" class="main-writebtn">작성하기</a>
             <% } else{ %>
@@ -123,27 +163,51 @@
         </nav>
         <div class="recipe-list__container">
           <ul class="recipe-lists">
-            <%if(listsALl){%> <% for(let i = 0; i < 8; i++){ %>
+            <%if(listsALl.length > 8){%> 
+            <% for(let i = 0; i < 8; i++){ %>
             <li>
               <a
-                href="/recipes?recipe_id=<%= listsALl[i].dataValues.recipe_num%>"
+                href="/recipes?recipe_id=<%= listsALl[i].recipe_num%>"
               >
                 <figure>
                   <img
-                    src="<%= listsALl[i].dataValues.Recipe_Imgs[0].dataValues.image_url %>"
+                    src="<%= listsALl[i].image_url %>"
                     alt="레시피이미지"
                     class="recipe-list__img"
                   />
                 </figure>
                 <p class="recipe__writer">
-                    <%= listsALl[i].dataValues.User.user_name %>
+                    <%= listsALl[i].user_name %>
                   </p>
                 <p class="recipe__title">
-                  <%= listsALl[i].dataValues.title %>
+                  <%= listsALl[i].title %>
                 </p>
               </a>
             </li>
-            <% } %> <%}%>
+            <% }} else if(listsALl.length < 8 && listsALl.length > 1) {%>
+                <% for(let i = 0; i < listsALl.length; i++){ %>
+                <li>
+                    <a
+                    href="/recipes?recipe_id=<%= listsALl[i].recipe_num%>"
+                    >
+                    <figure>
+                        <img
+                        src="<%= listsALl[i].image_url %>"
+                        alt="레시피이미지"
+                        class="recipe-list__img"
+                        />
+                    </figure>
+                    <p class="recipe__writer">
+                        <%= listsALl[i].user_name %>
+                        </p>
+                    <p class="recipe__title">
+                        <%= listsALl[i].title %>
+                    </p>
+                    </a>
+                </li>
+            <% }} else{ %>
+                <li></li>
+            <% } %>
           </ul>
         </div>
         <div class="recipe-morebtn">
