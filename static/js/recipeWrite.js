@@ -89,7 +89,7 @@ const recipeStepForm = document.querySelector('#add-step-wrap');
 let recipeStep = 1;
 addStepButton.addEventListener('click', () => {
     recipeStep++;
-    const addStepHtml = `<div id="step-${recipeStep}">
+    const addStepHtml = `<div id="step-${recipeStep}" class="recipe-contents">
                         <div class="md:flex mb-6">
                             <div class="md:w-1/3">
                                 <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textarea">
@@ -103,7 +103,7 @@ addStepButton.addEventListener('click', () => {
                         </div>
                         <div class="md:flex mb-6">
                             <div class="md:w-1/3">
-                                <input id="sub-image-${recipeStep}" type="file" accept="image/png image/jpg image/jpeg"/>
+                                <input id="sub-image-${recipeStep}" name="sub_image_${recipeStep}" type="file" accept="image/png image/jpg image/jpeg"/>
                             </div>
                         </div>
                     </div>`;
@@ -120,15 +120,26 @@ const writeRecipe = async (recipeObj) => {
       formData.append("mainIng", recipeObj.mainIng);
       formData.append("mainIngDetail", recipeObj.mainIngDetail);
       formData.append("main_image", recipeObj.mainImage);
-      formData.append("sub_ingredient", recipeObj.subIngredient);
-      formData.append("content", recipeObj.recipeRawHtml);
-      formData.append("sub_imgs", recipeObj.recipeSubImgs);
-  
+      recipeObj.subIngList.forEach((subIng, index) => {
+        formData.append(`sub_ingredient_${index}`, subIng);
+      })
+
+      recipeObj.recipeRawHtml.forEach((recipeStep, index) => {
+        formData.append(`content_${index}`, recipeStep);
+      })
+
+      recipeObj.recipeSubImgs.forEach((sub_imgs, index) => {
+        formData.append(`sub_imgs_${index+1}`, sub_imgs);
+      })
+      
+      
       await axios({
         method: "post",
         url: "/recipe/write",
         data : formData,
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { 
+            //"Content-Type": "multipart/form-data" 
+        },
       }).then((res) => {
         const {recipe_title, mainIngredient, sub_ing_detail, main_image, 
         step_textarea, sub_image} =res.data;
@@ -169,11 +180,12 @@ saveButton.addEventListener('click', () => {
             const recipeContentText = recipeContent.querySelector('textarea').value;
             const recipeSubImg = recipeContent.querySelector('input').files[0];
             // 조회 페이지에서 어떻게 렌더링할지 정해지면 raw html 수정하기!
+            //console.log(`TEST >>>> ${recipeStepNum}`, recipeSubImg);
             recipeRawHtml.push(recipeContentText);
             recipeSubImgs.push(recipeSubImg);
         })
 
-
+        console.log("TEST >>>>>>> ", recipeSubImgs[0]);
         const recipeObj = {
             recipeTitle, 
             mainIng, 

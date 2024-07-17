@@ -16,7 +16,7 @@ router.get("/", controller.getRecipe);
 router.get("/write", controller.getRecipeWrite);
 
 // post 레시피작성 페이지에서 "작성 완료" 버튼 클릭시
-router.post("/write", mdware.uploadFile, controller.postRecipeWrite);
+router.post("/write", mdware.uploadFile.fields([{name: 'main_image'}, {name: 'sub_imgs_1'}]), controller.postRecipeWrite);
 // router.post("/write", controller.postRecipeWrite);
 
 // patch /recipe?recipe_num=
