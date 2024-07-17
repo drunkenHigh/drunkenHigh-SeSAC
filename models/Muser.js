@@ -24,7 +24,7 @@ const UsersModel = (sequelize, DataTypes) => {
                 allowNull: false,
             },
             birth_day: {
-                type: DataTypes.DATE,
+                type: DataTypes.DATEONLY,
                 allowNull: false,
             },
         },
