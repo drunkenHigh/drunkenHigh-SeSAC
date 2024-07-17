@@ -99,14 +99,20 @@ const {Op} = require('sequelize');
     exports.postUsers = async (req, res) => {
         try {
 
-            
-            const {user_id, user_name, user_pw,birth_day,profile_img} = req.body;
-           // 중복된 사용자 아이디 확인
+            console.log(req.body);
+            // 생년월일 형식 변환
+        
+            const {user_id, user_name, user_pw,birth_day ,profile_img} = req.body;
+            const formatBirth = `${birth_day.substring(0, 4)}-${birth_day.substring(4, 6)}-${birth_day.substring(6, 8)}`;
+
+          
+            // 중복된 사용자 아이디 확인
             const existUser = await users.findOne({
                 where: {
                     user_id: user_id
                 }
             });
+
             if (existUser) {
                 return res.status(400).json('중복된 아이디 입니다.' );
             }
@@ -116,9 +122,10 @@ const {Op} = require('sequelize');
             if (!isValidBirthday(birth_day)) {
             return res.status(400).json('올바른 생일 형식이 아닙니다. (예: YYYY-MM-DD)');
              }
+
             //회원 생성
             const newUser = await users.create({
-                user_id, user_name, profile_img, user_pw, birth_day
+                user_id, user_name, profile_img, user_pw, birth_day: formatBirth
             });
             res.json(newUser);
             } catch (error) {

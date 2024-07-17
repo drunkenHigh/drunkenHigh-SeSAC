@@ -61,12 +61,36 @@
                     </div>
                     <input type="file" name="profile_img" id="profile_img" accept="image/jpg, image/jpeg, image/png" disabled>
                 </div>
-                <button type="button" class="register__btn">가입하기</button>
+                <button type="button" class="register__btn" onclick="axiosPost() ">가입하기</button>
             </form>
         </section>
     </main>
     <%- include('./partials/footer.ejs') %>
     <script src="/public/js/register.js"></script>
+
+    <script>
+        function axiosPost() {
+            console.log('axiosPost');
+            const form = document.forms['register']
+        
+            axios({
+                method: 'POST',
+                url:'/users/register',
+                data: {
+                user_id:  form.user_id.value,
+                user_pw:  form.user_pw.value,
+                user_name:  form.user_name.value,
+                profile_img:  form.profile_img.value,
+                birth_day:  form.birthday.value,
+            },
+            }).then((res)=>{ 
+                console.log(res.data);
+            }).catch((err) => {
+                console.error(err);
+                // 오류 처리
+            });
+        }
+    </script>
 
   
 </body>
