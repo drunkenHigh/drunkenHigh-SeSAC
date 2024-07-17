@@ -97,10 +97,6 @@ const getRecipeListMain = async (req, res) => {
 const main = async (req, res) => {
     try {
         const listsALl = await getRecipeListAll();
-        console.log('세션', req.session);
-        console.log('로그인함?', req.session.loggedin);
-        console.log('main',listsALl);
-        
         res.render('index', { listsALl, isLogin :req.session.loggedin})
     } catch (error) {
         console.error(error);

@@ -89,7 +89,7 @@ const recipeStepForm = document.querySelector('#add-step-wrap');
 let recipeStep = 1;
 addStepButton.addEventListener('click', () => {
     recipeStep++;
-    const addStepHtml = `<div id="step-${recipeStep}">
+    const addStepHtml = `<div id="step-${recipeStep}" class="recipe-contents">
                         <div class="md:flex mb-6">
                             <div class="md:w-1/3">
                                 <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textarea">
@@ -103,7 +103,7 @@ addStepButton.addEventListener('click', () => {
                         </div>
                         <div class="md:flex mb-6">
                             <div class="md:w-1/3">
-                                <input id="sub-image-${recipeStep}" type="file" accept="image/png image/jpg image/jpeg"/>
+                                <input id="sub-image-${recipeStep}" name="sub_image_${recipeStep}" type="file" accept="image/png image/jpg image/jpeg"/>
                             </div>
                         </div>
                     </div>`;
@@ -114,23 +114,42 @@ addStepButton.addEventListener('click', () => {
 // axios로 레시피 정보 보내기 
 const writeRecipe = async (recipeObj) => {
     try {
-        const res = await axios({
-            method: 'post',
-            url: '/write',
-            data: {
-                "title": recipeObj.recipeTitle,
-                "main_ingredient": recipeObj.mainIng,
-                "main_ing_detail": recipeObj.mainIngDetail,
-                "sub_ingredient": recipeObj.subIngredient,
-                "main_img": recipeObj.mainImage,
-                "content": recipeObj.recipeRawHtml,
-                "sub_imgs": recipeObj.recipeSubImgs
-            }
-        })
-    } catch(err) {
-        console.error(err);
+      const formData = new FormData();
+  
+      formData.append("recipeTitle", recipeObj.recipeTitle);
+      formData.append("mainIng", recipeObj.mainIng);
+      formData.append("mainIngDetail", recipeObj.mainIngDetail);
+      formData.append("main_image", recipeObj.mainImage);
+      recipeObj.subIngList.forEach((subIng, index) => {
+        formData.append(`sub_ingredient_${index}`, subIng);
+      })
+
+      recipeObj.recipeRawHtml.forEach((recipeStep, index) => {
+        formData.append(`content_${index}`, recipeStep);
+      })
+
+      recipeObj.recipeSubImgs.forEach((sub_imgs, index) => {
+        formData.append(`sub_imgs_${index+1}`, sub_imgs);
+      })
+      
+      
+      await axios({
+        method: "post",
+        url: "/recipe/write",
+        data : formData,
+        headers: { 
+            //"Content-Type": "multipart/form-data" 
+        },
+      }).then((res) => {
+        const {recipe_title, mainIngredient, sub_ing_detail, main_image, 
+        step_textarea, sub_image} =res.data;
+        console.log("axios res >> ", res);
+        console.log("Img addr : ", res.data.path);
+      });
+    } catch (err) {
+      console.error(err);
     }
-}
+  };
 
 // import path from "path";
 // console.log(__dirname);
@@ -154,18 +173,19 @@ saveButton.addEventListener('click', () => {
         //console.log(mainImage);
         // 레시피 내용 저장
         const recipeContents = document.querySelectorAll('.recipe-contents');
-        let recipeRawHtml = ``;
+        let recipeRawHtml = [];
         let recipeSubImgs = [];
         recipeContents.forEach((recipeContent) => {
             const recipeStepNum = recipeContent.querySelector('label').innerText;
             const recipeContentText = recipeContent.querySelector('textarea').value;
             const recipeSubImg = recipeContent.querySelector('input').files[0];
             // 조회 페이지에서 어떻게 렌더링할지 정해지면 raw html 수정하기!
-            recipeRawHtml += `<div><div>${recipeStepNum}</div><div>${recipeContentText}</div></div>`;
+            //console.log(`TEST >>>> ${recipeStepNum}`, recipeSubImg);
+            recipeRawHtml.push(recipeContentText);
             recipeSubImgs.push(recipeSubImg);
         })
 
-
+        console.log("TEST >>>>>>> ", recipeSubImgs[0]);
         const recipeObj = {
             recipeTitle, 
             mainIng, 
@@ -182,6 +202,7 @@ saveButton.addEventListener('click', () => {
         //         window.location.href = "/";
         //     }
         // })
+        writeRecipe(recipeObj);
 })
 
 

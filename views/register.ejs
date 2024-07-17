@@ -9,7 +9,7 @@
     <main>
         <section class="register__container">
             <h2 class="register__title">회원가입</h2>
-            <form action="/user/register" id="register" name="register" enctype="multipart/form-data">
+            <form id="register" name="register" enctype="multipart/form-data">
                 <div class="register-inputbx">
                     <label for="user_id">아이디<span>(필수)</span></label>
                     <input 
@@ -54,19 +54,43 @@
                     <span>프로필 사진은 아이디 입력 후에 업로드 가능합니다.</span>
                     <div class="filebx-img">
                         <figure>
-                            <img src="public/img/user.jpg" alt="프로필사진">
+                            <img src="/public/img/user.jpg" alt="프로필사진">
                         </figure>
                         <label for="profile_img">프로필 사진 올리기</label>
                         <span>5MB 이하의 .jpeg, .jpg, .png 파일만 올려주세요</span>
                     </div>
                     <input type="file" name="profile_img" id="profile_img" accept="image/jpg, image/jpeg, image/png" disabled>
                 </div>
-                <button type="button" class="register__btn">가입하기</button>
+                <button type="button" class="register__btn" onclick="axiosPost() ">가입하기</button>
             </form>
         </section>
     </main>
     <%- include('./partials/footer.ejs') %>
     <script src="/public/js/register.js"></script>
+
+    <script>
+        function axiosPost() {
+            console.log('axiosPost');
+            const form = document.forms['register']
+        
+            axios({
+                method: 'POST',
+                url:'/users/register',
+                data: {
+                user_id:  form.user_id.value,
+                user_pw:  form.user_pw.value,
+                user_name:  form.user_name.value,
+                profile_img:  form.profile_img.value,
+                birth_day:  form.birthday.value,
+            },
+            }).then((res)=>{ 
+                console.log(res.data);
+            }).catch((err) => {
+                console.error(err);
+                // 오류 처리
+            });
+        }
+    </script>
 
   
 </body>

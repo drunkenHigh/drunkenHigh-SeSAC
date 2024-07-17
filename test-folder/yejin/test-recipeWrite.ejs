@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('include/include', { title: '레시피 작성' })%>
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>
+    <link href="https://unpkg.com/@tailwindcss/custom-forms/dist/custom-forms.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+    <!--Replace with your tailwind.css once created-->
+    <style>
+        .max-h-64 {
+            max-height: 16rem;
+        }
+        /*Quick overrides of the form input as using the CDN version*/
+        .form-input,
+        .form-textarea,
+        .form-select,
+        .form-multiselect {
+            background-color: #edf2f7;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900 tracking-wider leading-normal">
+    <%- include('./partials/header.ejs') %>
+    <!-- <nav id="header" class="bg-white fixed w-full z-10 top-0 shadow">
+        <div class="w-full container mx-auto flex flex-wrap items-center justify-between my-4">
+            <div class="pl-4 md:pl-0">
+                <a class="flex items-center text-yellow-600 text-base xl:text-xl no-underline hover:no-underline font-extrabold font-sans" href="#">
+                    <svg class="fill-current h-6 inline-block text-yellow-600 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M16 2h4v15a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V0h16v2zm0 2v13a1 1 0 0 0 1 1 1 1 0 0 0 1-1V4h-2zM2 2v15a1 1 0 0 0 1 1h11.17a2.98 2.98 0 0 1-.17-1V2H2zm2 8h8v2H4v-2zm0 4h8v2H4v-2zM4 4h8v4H4V4z" />
+                    </svg> Multi Section Form / Scrollspy
+                </a>
+            </div>
+            <div class="pr-0 flex justify-end">
+
+                <div class="flex relative inline-block float-right">
+
+                    <div class="relative text-sm">
+
+                        <button id="userButton" class="flex items-center mr-3 shadow bg-yellow-700 hover:bg-yellow-500 focus:shadow-outline focus:outline-none text-white text-sm md:text-base font-bold py-2 px-4 rounded">
+                            Menu
+                            <svg class="pl-2 h-2 fill-current text-white" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 129 129">
+                                <g>
+                                    <path d="m121.3,34.6c-1.6-1.6-4.2-1.6-5.8,0l-51,51.1-51.1-51.1c-1.6-1.6-4.2-1.6-5.8,0-1.6,1.6-1.6,4.2 0,5.8l53.9,53.9c0.8,0.8 1.8,1.2 2.9,1.2 1,0 2.1-0.4 2.9-1.2l53.9-53.9c1.7-1.6 1.7-4.2 0.1-5.8z" />
+                                </g>
+                            </svg>
+                        </button>
+
+                        <div id="userMenu" class="bg-white rounded shadow-md mt-2 mr-2 absolute mt-12 top-0 right-0 min-w-full overflow-auto z-30 invisible">
+                            <ul class="list-reset">
+                                <li><a href="#" class="px-4 py-2 block hover:bg-gray-400 no-underline hover:no-underline">My account</a></li>
+                                <li><a href="#" class="px-4 py-2 block hover:bg-gray-400 no-underline hover:no-underline">Notifications</a></li>
+                                <li>
+                                    <hr class="border-t mx-2 border-gray-400">
+                                </li>
+                                <li><a href="#" class="px-4 py-2 block text-yellow-600 font-bold hover:bg-yellow-600 hover:text-white no-underline hover:no-underline">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </nav> -->
+    <!--Container-->
+    <div class="container w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-16 mt-16">
+        <div class="w-full lg:w-1/5 px-6 text-xl text-gray-800 leading-normal">
+            <p class="text-base font-bold py-2 lg:pb-6 text-gray-700">Menu</p>
+            <div class="block lg:hidden sticky inset-0">
+                <button id="menu-toggle" class="flex w-full justify-end px-3 py-3 bg-white lg:bg-transparent border rounded border-gray-600 hover:border-yellow-600 appearance-none focus:outline-none">
+                    <svg class="fill-current h-3 float-right" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                </button>
+            </div>
+            <div class="w-full sticky inset-0 hidden max-h-64 lg:h-auto overflow-x-hidden overflow-y-auto lg:overflow-y-hidden lg:block mt-0 my-2 lg:my-0 border border-gray-400 lg:border-transparent bg-white shadow lg:shadow-none lg:bg-transparent z-20" style="top:6em;" id="menu-content">
+                <ul class="list-reset py-2 md:py-0">
+                    <li class="py-1 md:my-2 hover:bg-yellow-100 lg:hover:bg-transparent border-l-4 border-transparent font-bold border-yellow-600">
+                        <a href='#warning' class="block pl-4 align-middle text-gray-700 no-underline hover:text-yellow-600">
+                            <span class="pb-1 md:pb-0 text-sm">주의사항</span>
+                        </a>
+                    </li>
+                    <li class="py-1 md:my-2 hover:bg-yellow-100 lg:hover:bg-transparent border-l-4 border-transparent">
+                        <a href='#main-ing' class="block pl-4 align-middle text-gray-700 no-underline hover:text-yellow-600">
+                            <span class="pb-1 md:pb-0 text-sm">제목과 주재료</span>
+                        </a>
+                    </li>
+                    <li class="py-1 md:my-2 hover:bg-yellow-100 lg:hover:bg-transparent border-l-4 border-transparent">
+                        <a href='#recipe-img' class="block pl-4 align-middle text-gray-700 no-underline hover:text-yellow-600">
+                            <span class="pb-1 md:pb-0 text-sm">사진</span>
+                        </a>
+                    </li>
+                    <li class="py-1 md:my-2 hover:bg-yellow-100 lg:hover:bg-transparent border-l-4 border-transparent">
+                        <a href='#recipe-cont' class="block pl-4 align-middle text-gray-700 no-underline hover:text-yellow-600">
+                            <span class="pb-1 md:pb-0 text-sm">레시피</span>
+                        </a>
+                    </li>
+
+                    <li class="py-1 md:my-2 hover:bg-yellow-100 lg:hover:bg-transparent border-l-4 border-transparent">
+                        <a href='#save-recipe' class="block pl-4 align-middle text-gray-700 no-underline hover:text-yellow-600">
+                            <span class="pb-1 md:pb-0 text-sm">저장</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!--Section container-->
+        <section class="w-full lg:w-4/5">
+
+            <!--Title-->
+            <h1 class="flex items-center font-sans font-bold break-normal text-gray-700 px-2 text-xl mt-12 lg:mt-0 md:text-2xl">
+				여러분의 멋진 하이볼 레시피를 함께 즐겨요
+			</h1>
+
+            <!--divider-->
+            <hr class="bg-gray-300 my-12">
+
+            <!--Title-->
+            <h2 id='warning' class="font-sans font-bold break-normal text-gray-700 px-2 pb-8 text-xl">작성하기 전에 참고해주세요</h2>
+
+            <!--Card-->
+            <div class="p-8 mt-6 lg:mt-0 leading-normal rounded shadow bg-white font-bold">
+                <li>재료의 양을 정확히 알려주세요. <span class="italic font-medium">(예시: <span class="text-[#D9601A]">mL, L, 큰술, 소주잔</span>)</span></li>
+                <li>다른 사람이 이해하기 쉽게 작성해주세요.</li>
+            </div>
+            <!--/Card-->
+
+            <!--divider-->
+            <hr class="bg-gray-300 my-12">
+
+            <!--Title-->
+            <h2 class="font-sans font-bold break-normal text-gray-700 px-2 pb-8 text-xl">제목과 주재료에 대해서 알려주세요</h2>
+
+            <!--Card-->
+            <div id='main-ing' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+
+                <form action='/recipe/write' name="writeform" enctype="multipart/form-data">
+
+                    <div class="md:flex mb-6">
+                        <div class="md:w-1/3">
+                            <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textfield">
+                                레시피 제목
+                            </label>
+                        </div>
+                        <div class="md:w-2/3">
+                            <input name="recipe-title" class="form-input block w-full focus:bg-white" id="recipe-title" type="text" value="" required>
+                            <p class="py-2 text-sm text-gray-600">독창적인 제목을 적어주세요</p>
+                        </div>
+                    </div>
+
+                    <div class="md:flex mb-6" id="main-ing-select">
+                        <div class="md:w-1/3">
+                            <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-select">
+                                주재료
+                            </label>
+                        </div>
+                        <div class="md:w-2/3">
+                            <select name="mainIngredient" class="form-select block w-full focus:bg-white" required>
+                                <option value="default">-</option>
+                                <option value="vodka">보드카</option>
+                                <option value="soju">소주</option>
+                                <option value="whiskey">위스키</option>
+                            </select>
+
+                            <p class="py-2 text-sm text-gray-600">하이볼의 주재료를 선택해주세요</p>
+                        </div>
+                    </div>
+
+                    <!-- <div class="md:flex mb-6 opacity-0" id="main-ing-detail">
+                        <div class="md:w-1/3">
+                            <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textarea">
+                                주재료 상세
+                            </label>
+                        </div>
+                        <div class="md:w-2/3">
+                            <textarea class="form-textarea block w-full focus:bg-white" id="my-textarea" value="" rows="2"></textarea>
+                            <p class="py-2 text-sm text-gray-600">예시: 잭 다니엘스 테네시 허니</p>
+                        </div>
+                    </div> -->
+
+                    <div class="md:flex mb-6">
+                        <div class="md:w-1/3">
+                            <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="sub-ing-detail">
+                                부재료
+                            </label>
+                        </div>
+                        <div class="md:w-2/3">
+                            <textarea name="sub_ing_detail" class="form-textarea block w-full focus:bg-white" id="sub-ing-detail" value="" rows="2"></textarea>
+                            <p class="py-2 text-sm text-gray-600">다른 재료는 쉽표로 구분해주세요</p>
+                            <p class="py-0 text-sm text-gray-600">예시: 라임, 탄산수, 시럽</p>
+                        </div>
+                    </div>
+
+                    <!-- <div class="md:flex md:items-center">
+                        <div class="md:w-1/3"></div>
+                        <div class="md:w-2/3">
+                            <button class="shadow bg-yellow-700 hover:bg-yellow-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button">
+                                Save
+                            </button>
+                        </div>
+                    </div> -->
+                
+
+            </div>
+            <!--/Card-->
+
+            <!--divider-->
+            <hr class="bg-gray-300 my-12">
+
+            <!--Title-->
+            <h2 class="font-sans font-bold break-normal text-gray-700 px-2 pb-8 text-xl">완성된 하이볼 사진을 올려주세요</h2>
+
+            <!--Card-->
+            <div id='recipe-img' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+
+                
+                    <!-- <div class="flex items-center justify-center w-full">
+                        <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                </svg>
+                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">클릭하여 업로드</span> 하시거나 드래그 앤 드롭 해주세요</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG, JPEG (최대. 800x400px)</p>
+                            </div>
+                            <input id="dropzone-file" type="file" class="hidden" accept="image/png image/jpg image/jpeg"/>
+                        </label>
+                    </div>  -->
+                    <div class="flex items-center justify-center w-full">
+                        <label for="main-image" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                            <input name='main_image' id="main-image" type="file" accept="image/png image/jpg image/jpeg"/>
+                        </label>
+                    </div> 
+                
+
+            </div>
+            <!--/Card-->
+
+            <!--divider-->
+            <hr class="bg-gray-300 my-12">
+
+            <!--Title-->
+            <h2 class="font-sans font-bold break-normal text-gray-700 px-2 pb-8 text-xl">레시피를 작성해주세요</h2>
+
+            <!--Card-->
+            <div id='recipe-cont' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+
+                
+                    <div id="step-1" class="recipe-contents">
+                        <div class="md:flex mb-6">
+                            <div class="md:w-1/3">
+                                <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textarea">
+                                    Step 1
+                                </label>
+                            </div>
+                            <div class="md:w-2/3">
+                                <textarea name="step_textarea" class="form-textarea block w-full focus:bg-white" id="my-textarea" value="" rows="3"></textarea>
+                                <p class="py-2 text-sm text-gray-600">예시: 잭 다니엘스 테네시 허니</p>
+                            </div>
+                        </div>
+                        <div class="md:flex mb-6">
+                            <div class="md:w-1/3">
+                                <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textarea">
+                                    레시피 사진
+                                </label>
+                            </div>
+                            <div class="md:w-2/3">
+                                <!-- <input id="sub-image-1" type="file" accept="image/png image/jpg image/jpeg"/> -->
+                                <label class="block mb-2 text-sm font-medium " for="file_input">사진을 올려주세요</label>
+                                <input name="sub_image" id="sub-image-1"  class="block w-full text-sm bg-[#edf2f7] cursor-pointer focus:outline-none " aria-describedby="file_input_help" id="file_input" type="file">
+                                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG, JPG or JPEG (MAX. 800x400px).</p>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                    
+                    
+
+                    <!-- <div class="md:flex mb-6">
+                        <div class="md:w-1/3">
+                            <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-radio">
+                                Radio Buttons
+                            </label>
+                        </div> -->
+                        <!-- <div class="md:w-2/3">
+                            <div class="mt-2">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" class="form-radio text-indigo-600" name="radioOption" value="A">
+                                    <span class="ml-2">Radio A</span>
+                                </label>
+                                <label class="inline-flex items-center ml-6">
+                                    <input type="radio" class="form-radio" name="radioOption" value="B">
+                                    <span class="ml-2">Radio B</span>
+                                </label>
+                            </div>
+                            <p class="py-2 text-sm text-gray-600">add notes about populating the field</p>
+                        </div>
+                    </div>
+
+                    <div class="md:flex mb-6">
+                        <div class="md:w-1/3">
+                            <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-checkbox">
+                                Checkboxes
+                            </label>
+                        </div> -->
+                        <!-- <div class="md:w-2/3">
+                            <div>
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" class="form-checkbox text-indigo-600" checked>
+                                    <span class="ml-2">Option 1</span>
+                                </label>
+                            </div>
+                            <div>
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" class="form-checkbox text-green-500" checked>
+                                    <span class="ml-2">Option 2</span>
+                                </label>
+                            </div>
+                            <div>
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" class="form-checkbox text-pink-600" checked>
+                                    <span class="ml-2">Option 3</span>
+                                </label>
+                            </div>
+                            <p class="py-2 text-sm text-gray-600">add notes about populating the field</p>
+                        </div>
+                    </div> -->
+
+                    <div id="add-step-wrap" class="md:flex md:items-center">
+                        <div class="md:w-1/3"></div>
+                        <div class="md:w-2/3">
+                            <button id="add-step" class="shadow bg-yellow-700 hover:bg-yellow-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button">
+                                단계 추가하기
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <!--/Card-->
+
+            <!--divider-->
+            <hr class="bg-gray-300 my-12">
+
+            <!--Title-->
+            <h2 class="font-sans font-bold break-normal text-gray-700 px-2 pb-8 text-xl">저장</h2>
+
+            <!--Card-->
+            <div id='save-recipe' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+
+                <blockquote class="border-l-4 border-yellow-600 italic my-4 pl-8 md:pl-12">이제 함께 즐겨요!</blockquote>
+
+                <div class="pt-8">
+
+                    <button id="save-button" class="shadow bg-yellow-700 hover:bg-yellow-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-4" type="button">
+                        저장
+                    </button>
+
+                    <button id="refresh-button" class="shadow bg-yellow-100 hover:bg-yellow-200 focus:shadow-outline focus:outline-none text-gray-700 font-bold py-2 px-4 rounded mr-4" type="button">
+                        다시 작성하기
+                    </button>
+
+                </div>
+
+            </div>
+            <!--/Card-->
+
+        </section>
+        <!--/Section container-->
+
+        <!--Back link -->
+        <div class="w-full lg:w-4/5 lg:ml-auto text-base md:text-sm text-gray-600 px-4 py-24 mb-12">
+          <span class="text-base text-yellow-600 font-bold">&#94;</span> <a href="#" class="text-base md:text-sm text-yellow-600 font-bold no-underline hover:underline">맨 위로</a>
+         </div>
+
+      </div>
+      <!--/container-->
+    <%- include('./partials/footer.ejs') %>
+
+    <output id="output"></output>
+    
+        
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="module" src="../public/js/test-recipeWrite.js"></script>
+
+    
+</body>
+</html>
