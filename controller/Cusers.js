@@ -103,9 +103,7 @@ const {Op} = require('sequelize');
             // 생년월일 형식 변환
         
             const {user_id, user_name, user_pw,birth_day ,profile_img} = req.body;
-            const formatBirth = `${birth_day.substring(0, 4)}-${birth_day.substring(4, 6)}-${birth_day.substring(6, 8)}`;
-
-          
+           
             // 중복된 사용자 아이디 확인
             const existUser = await users.findOne({
                 where: {
