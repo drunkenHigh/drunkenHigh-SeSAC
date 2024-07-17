@@ -11,6 +11,7 @@ const {Op} = require('sequelize');
 
 
     exports.getUmain = async (req, res) => {
+        
     // 세션에 저장된 사용자 정보 가져오기
     const user_id = req.session.user.user_id;
     const user_name = req.session.user.user_name;
@@ -41,7 +42,7 @@ const {Op} = require('sequelize');
 
          if(!user){
             
-            return res.status(404).json({ message: '등록되지 않은 사용자입니다.' });
+            return res.status(401).json({ success : false, message: '등록되지 않은 사용자입니다.' });
          }
 
 
@@ -90,6 +91,7 @@ const {Op} = require('sequelize');
 
     //회원가입(GET)
     exports.getUsers = async (req, res) => {
+
         res.render('register')
     };
 
@@ -98,31 +100,33 @@ const {Op} = require('sequelize');
     //회원가입(POST)
     exports.postUsers = async (req, res) => {
         try {
-
-            console.log(req.body);
-            // 생년월일 형식 변환
         
-            const {user_id, user_name, user_pw,birth_day ,profile_img} = req.body;
+            const {user_id, user_name, user_pw, birth_day, profile_img} = req.body;
            
-            // 중복된 사용자 아이디 확인
-            const existUser = await users.findOne({
+
+            // 생년월일 형식 변환
+            const year = birth_day.substring(0, 4); // 연도 추출
+            const month = birth_day.substring(4, 6); // 월 추출
+            const day = birth_day.substring(6, 8); // 일 추출
+
+        const formatBirth = `${year}-${month}-${day}`;
+
+
+            console.log(formatBirth);
+
+
+          
+           // 중복된 사용자 아이디 확인
+            const existUser = await Users.findOne({
                 where: {
                     user_id: user_id
                 }
             });
 
-            if (existUser) {
-                return res.status(400).json('중복된 아이디 입니다.' );
-            }
-            if (!isValidPassword(user_pw)) {
-            return res.status(400).json('비밀번호는 대소문자, 특수문자, 숫자 포함하여 최소 8자 이상이어야 합니다.');
-            }
-            if (!isValidBirthday(birth_day)) {
-            return res.status(400).json('올바른 생일 형식이 아닙니다. (예: YYYY-MM-DD)');
-             }
+           
 
             //회원 생성
-            const newUser = await users.create({
+            const newUser = await Users.create({
                 user_id, user_name, profile_img, user_pw, birth_day: formatBirth
             });
             res.json(newUser);
@@ -131,7 +135,6 @@ const {Op} = require('sequelize');
                 res.status(500).send('Internal Server Error');
             }
     }
-
 
 
    // 마이페이지 ---- 태완
