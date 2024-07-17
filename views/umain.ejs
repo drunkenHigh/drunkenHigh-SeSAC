@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>UMain Page</title>
 </head>
 <body>
-    
-    
     <h1>Welcome to umain page!</h1>
-    <p>User ID: <%= user_id %></p>
-    <p>User Name: <%= user_name %></p>
-    <form id="logoutForm" action="/users/logout" method="POST">
-        <button type="submit">로그아웃</button>
-    </form>
 
+    <% if (user) { %>
+        <p>User ID: <%= user.user_id %></p>
+        <p>User Name: <%= user.user_name %></p>
+        <form id="logoutForm" action="/users/logout" method="POST">
+            <button type="submit">로그아웃</button>
+        </form>
+    <% } else { %>
+        <p>No user logged in.</p>
+    <% } %>
 </body>
 </html>
