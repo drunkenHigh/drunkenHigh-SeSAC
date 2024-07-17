@@ -68,7 +68,7 @@ const getRecipeListMain = async (req, res) => {
                     }
                 ],
                 attributes: ['title'],
-                order: [['created_at', 'DESC']] 
+                order: [['createdat', 'DESC']] 
             });
         }
         res.json(lists);

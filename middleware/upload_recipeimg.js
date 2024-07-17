@@ -1,6 +1,9 @@
 const multer = require('multer');
 const path = require("path");
-console.log("111");
+const express = require('express');
+const app = express();
+app.use('/uploads', express.static(__dirname + '/uploads/recipe'));
+console.log("middleware connected.");
 
 // 이미지 저장하기 
 
@@ -18,7 +21,7 @@ const uploadImage = multer({
     
         },
     }),
-    limits: { fileSize: 10 * 1024 * 1024 }, //업로드 크기 제한
+    limits: { fileSize: 100 * 1024 * 1024 }, //업로드 크기 제한
 });
 
-exports.uploadFile=uploadImage.single('main-image');
+exports.uploadFile=uploadImage.fields([{name:'main_image'},{name:'sub_image1'}]);
