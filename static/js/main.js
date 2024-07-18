@@ -17,10 +17,10 @@ let centerSwiper = new Swiper('.recommend-container .recommend-centerSwiper', {
     spaceBetween : 10,
     loop : true,
     speed : 700,
-    // autoplay : {
-    //     delay : 3000,
-    //     disableOnInteraction: false,
-    // },
+    autoplay : {
+        delay : 3000,
+        disableOnInteraction: false,
+    },
     pagination : {
         el : '.swiper-pagination',
         type : 'progressbar'

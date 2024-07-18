@@ -140,3 +140,23 @@
     background-color: var(--darkColor);
     opacity: 0.8;
 }
+
+/**** 미디어쿼리 ****/
+/* 900 px 이하 미디어쿼리 */
+@media screen and (max-width: 900px) {
+    .register__container {
+        width: 80%;
+    }
+
+    .filebx-img {
+        flex-direction: column;
+        align-items: start;
+    }
+}
+
+/* 640 px 이하 미디어쿼리 */
+@media screen and (max-width: 640px) {
+    .register__container {
+        width: 90%;
+    }
+}

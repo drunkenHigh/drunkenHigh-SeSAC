@@ -62,8 +62,14 @@ async function getLogin(e) {
         const loginContainer = document.querySelector('.login__container') 
         const loginBtn = document.querySelector('.login-btn')
         const loginCloseBtn = document.querySelector('.login__close button')
+        const loginForm = document.querySelector('#login')
 
         loginBtn.addEventListener('click', postLogin)
+        loginForm.addEventListener('keypress', (e)=>{
+            if(e.keyCode === 13){
+                postLogin()
+            }
+        })
         loginCloseBtn.addEventListener('click', ()=>{
             loginContainer.remove();
         })
