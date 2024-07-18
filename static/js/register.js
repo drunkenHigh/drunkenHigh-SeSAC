@@ -36,10 +36,11 @@ regiterFormInput.forEach(ele=>{
                     //     pass = false
                     //     sendMsg(0, '이미 사용중인 아이디입니다')
                     //     // 아이디 통과시에만 이미지 파일 올릴 수 있음
-                    //     registerFileInput.disabled = true;
+                    //     
                     // }
                         pass = true
                         sendMsg(0, '사용가능한 아이디입니다')
+                        registerFileInput.disabled = false;
 
             }
         } else if(inputId === 'user_pw'){
@@ -185,27 +186,17 @@ function fileExtCheck(obj) {
 // 파일 체크
 function fileCheck() {
     const tempProfile = document.querySelector('.filebx-img img')
-    registerFileInput.addEventListener('change', async function(){
-        console.log(this);
+    registerFileInput.addEventListener('change', function(e){
+        let file = this.files[0]
         if(fileExtCheck(this)){
             // 프사 설정한 대로 바꾸게 하기
-            registerForm = document.forms['register'];
-    
-            const formData =  new FormData()
+            let reader = new FileReader();
+            
+            reader.addEventListener('load', function(){
+                tempProfile.setAttribute('src', reader.result)
+            })
 
-            formData.append('profile_img', registerForm.profile_img.files[0])
-            try {
-                const tempAxios = await axios({
-                    method : 'post',
-                    url : '/users/register/temp',
-                    data : formData
-                })
-                // 임시 저장소에 있는 프로필 이미지 가져와서 비동기적으로 프로필 이미지 변경
-                let tempImg = tempAxios.data.file.filename
-                tempProfile.setAttribute('src', `/uploads/temp/${tempImg}`)
-            } catch(err){
-
-            }
+            reader.readAsDataURL(file)
         } else {
             alert('이미지 파일만 올려주세요');
             this.value = '';
