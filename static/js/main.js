@@ -40,8 +40,6 @@ let sideSwiper = new Swiper('.recommend-container .recommend-rightSwiper, .recom
 })
 centerSwiper.controller.control = sideSwiper;
 
-
-
 // 타이틀 꾸미기용 JS
 function drawStarTitle() {
     let index = 0, interval = 1000;
@@ -67,6 +65,61 @@ function drawStarTitle() {
 }
 
 drawStarTitle()
+
+// 탄산수 효과 주는 JS
+// 변수
+const bubbleWrap = document.querySelector('.bubble-wrap')
+let spawnNumber = 30;
+let bubbles = [];
+let radius, speed, leftDeviation, topLimit = 0;
+
+for(let i = 0; i < spawnNumber; i++){
+    attributeRandomizer();
+
+    bubbles[i] = document.createElement('div');
+    bubbles[i].classList.add('bubble');
+    bubbleWrap.appendChild(bubbles[i]);
+
+    setBubbleRadius(bubbles[i], radius);
+    setBubbleDeviation(bubbles[i], leftDeviation);
+
+    bubbleFlow(bubbles[i], speed, topLimit);
+}
+
+function setBubbleRadius(bubble, size){
+    bubble.style.width = size + 'px';
+    bubble.style.height = size + 'px';
+}
+
+function setBubbleDeviation(bubble, deviation){
+    bubble.style.left = deviation + 'px';
+}
+
+function attributeRandomizer(){
+    speed = Math.floor(Math.random() * 10) + 1; 
+    radius = Math.floor(Math.random() * 25) + 3; 
+    leftDeviation = Math.floor(Math.random() * 1240) + 20;
+    topLimit = Math.floor(Math.random() * 350) + 200;
+}
+
+function bubbleFlow(bubble, time, limit){
+    let startingPosition = 0;
+
+    let id = setInterval(flow, time, limit)
+
+    function flow(){
+        if(startingPosition == limit){
+            startingPosition = 0;
+            startingPosition++;
+            bubble.style.bottom = 0 + startingPosition + 'px';
+        } else {
+            startingPosition++;
+            bubble.style.bottom = startingPosition + 'px';
+        }
+    }
+}
+
+
 
 
 // 카테고리 버튼 만드는 함수

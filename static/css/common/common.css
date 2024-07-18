@@ -145,6 +145,15 @@
     var(--darkColor2) 0px 2.3px 0px;
 }
 
+.title__text {
+    overflow: hidden;
+}
+
+.title__text use {
+    overflow: hidden;
+    width: 1600px;
+    height: 60px;
+}
 
 .header__title .water-fill {
     animation: wave 0.7s infinite linear, 
@@ -310,4 +319,20 @@ main {
 
 #footer footer {
     max-width: var(--mainWidth);
+}
+
+/**** 미디어쿼리 ****/
+/* 1280px 이하 미디어쿼리 시작 */
+@media screen and (max-width: 1280px) {
+    #header header {
+     
+    }
+}
+
+/* 900px 이하 미디어쿼리 시작 */
+@media screen and (max-width: 900px) {
+    .header__title .title__img {
+        display: none;
+    }
+    
 }
