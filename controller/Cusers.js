@@ -75,7 +75,7 @@ exports.getLogout = async (req, res) => {
 
 //회원가입(GET)
 exports.getUsers = async (req, res) => {
-    res.render('register')
+    res.render('register', {isLogin : req.session.loggedin})
 }
 
 

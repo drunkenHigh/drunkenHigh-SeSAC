@@ -102,7 +102,11 @@ async function postLogin(){
             if(result.success){ // 로그인 성공 시
                 alert('환영합니다!')
                 loginContainer.remove();
-                document.location.href = currentURL;
+                if(currentURL.slice(-8) === 'register'){
+                    document.location.href = '/';
+                } else {
+                    document.location.href = currentURL;
+                }
             } 
         } catch(err){
             console.error(err);
@@ -110,3 +114,5 @@ async function postLogin(){
         }
     }
 }
+
+

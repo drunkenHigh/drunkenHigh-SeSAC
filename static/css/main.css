@@ -148,11 +148,17 @@
 
 .recommend-container .swiper-slide .slide-bg {
     position: absolute;
-    top: 0;
+    width: 100%;
+    height: 80px;
     bottom: 0;
-    left: 0;
-    right: 0;
     background-color: rgba(0, 0, 0, 0.3);
+    z-index: 20;
+}
+
+.recommend-container .swiper-slide .slide-subbg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
     z-index: 20;
 }
 
@@ -164,10 +170,15 @@
     position: absolute;
 }
 
+.recommend-leftSwiper .swiper-slide img, .recommend-rightSwiper .swiper-slide img {
+
+}
+
 .recommend-container .swiper-slide p {
     position: absolute;
     color : #fff;
-    top: 20px;
+    top: 50%;
+    transform: translateY(-50%);
     font-size: 30px;
     right: 20px;
     font-weight: bold;
