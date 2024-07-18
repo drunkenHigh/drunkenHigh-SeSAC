@@ -1,11 +1,8 @@
 const express = require('express');
-const {getUmain,getUsers, postUsers, getLogin, postLogin,postLogout} = require('../controller/Cusers');
+const {getUmain,getUsers, postUsers, getLogin, postLogin,getLogout, postChkId, postChkName} = require('../controller/Cusers');
 const router = express.Router();
 const uploadProfile = require('../middleware/uploadProfile');
 
-
-// get /user/umain
-router.get('/umain', getUmain);
 
 // get /users/register
 router.get('/register', getUsers);
@@ -19,9 +16,11 @@ router.get('/login', getLogin);
 router.post('/login', postLogin);
 
 //post /users/logout
-router.post('/logout',postLogout)
+router.get('/logout',getLogout)
 
-
+// 중복검사
+router.post('/register/chkid', postChkId)
+router.post('/register/chkName', postChkName)
 
 // // post /user/profile
 //  router.post('/profile', controller.getUsers);
