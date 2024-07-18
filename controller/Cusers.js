@@ -26,8 +26,6 @@ exports.getUmain = async (req, res) => {
     }
 };
 
-
-    // 다은 : 로그인
      exports.getLogin = async (req, res) => {
        res.render('user')
 
@@ -45,22 +43,34 @@ exports.getUmain = async (req, res) => {
             attributes:['user_id','user_name','user_pw']
         });
 
-            if (!user || !(await comparePw(user_pw, user.user_pw))) {
+            if (!user) {
                 return res.status(401).json({ success: false, message: '등록되지 않은 사용자입니다.' });
+            }
 
-    
-         } else {
+            // 비밀번호 비교
+            const isPasswordValid = await comparePw(user_pw, user.user_pw);
+                
+            console.log('user_pw:', user_pw);
+             console.log('user.user_pw:', user.user_pw);
+            console.log('isPasswordValid:', isPasswordValid);
+
+        if (!isPasswordValid) {
+            
+            // 비밀번호가 일치하지 않으면 401 에러 응답
+            return res.status(401).json({ success: false, message: '비밀번호가 일치하지 않습니다.' });
+     
+           }else {
 
             req.session.user = {
                 user_id: user.user_id,
                 user_name: user.user_name
              };
-          
+
+            
              console.log('세션 정보:', req.session.user); // 세션 정보 확인
 
              
-            res.redirect('/users/umain')
-
+            res.json({ success: true, redirectUrl: '/users/umain' });
          }
        } catch (error) {
          res.status(500).send('Internal Server Error');
@@ -149,15 +159,17 @@ exports.getUmain = async (req, res) => {
             }
           
 
-      
-            //회원 생성
-            const newUser = await Users.create({
-                user_id, user_name, profile_img, user_pw, birth_day: formatBirth
-            });
-            res.json(newUser);
-            } catch (error) {
-                console.error(error);
-                res.status(500).send('Internal Server Error');
+                // 회원 생성
+                const hashedPw = await hashPw(user_pw);
+
+                const newUser = await Users.create({
+                    user_id, user_name, profile_img, user_pw: hashedPw, birth_day: formatBirth
+                });
+
+                res.json({ success: true, newUser });
+                    } catch (error) {
+                        console.error(error);
+                        res.status(500).send('Internal Server Error');
             }
     }
 
@@ -174,7 +186,9 @@ exports.getUmain = async (req, res) => {
     //         res.status(401).json({success : false})
     //     }
     // }
-   // 마이페이지 ---- 태완
+
+
+    // 마이페이지 ---- 태완
 
    // myprofile controller 추가
    exports.getMyprofile = async (req, res) => {
