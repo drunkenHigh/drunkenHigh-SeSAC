@@ -1,7 +1,7 @@
 const express = require('express');
 const {getUmain,getUsers, postUsers, getLogin, postLogin,postLogout} = require('../controller/Cusers');
 const router = express.Router();
-const getFileUpload= require('../middleware/uploadProfile')
+const uploadProfile = require('../middleware/uploadProfile');
 
 
 // get /user/umain
@@ -10,7 +10,7 @@ router.get('/umain', getUmain);
 // get /users/register
 router.get('/register', getUsers);
 // post /users/register
-router.post('/register', postUsers);
+router.post('/register', uploadProfile.single('profile_img'), postUsers);
 
 // get /users/login
 router.get('/login', getLogin);

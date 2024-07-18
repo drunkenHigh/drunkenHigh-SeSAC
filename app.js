@@ -12,7 +12,7 @@ const dotenv = require("dotenv");
 const cookieParser = require('cookie-parser');
 const multer = require('multer');
 const upload_rcp = multer({ dest: 'uploads/recipe' }); // 파일을 저장할 경로 설정
-
+const upload_user = multer({ dest: 'uploads/profile' }); 
 app.set("view engine", "ejs");
 app.set("views", "./views");
 

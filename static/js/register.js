@@ -74,7 +74,7 @@ regiterFormInput.forEach(ele=>{
                 //     pass = false
                 //     sendMsg(2, '이미 사용중인 닉네임입니다')
                 //     // 아이디 통과시에만 이미지 파일 올릴 수 있음
-                //     registerFileInput.disabled = true;
+                     registerFileInput.disabled = false;
                 // }
                 // pass = true
                 // sendMsg(2, '사용가능한 닉네임입니다.')
