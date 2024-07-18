@@ -19,9 +19,7 @@ show tables;
 create user 'sesac' identified by '1234';
 grant all privileges on *.* to 'sesac'@'%' with grant option;
 select * from mysql.user;
-select * from users;
-select * from recipes;
-select * from recipe_img;
+
 CREATE TABLE IF NOT EXISTS `Recipe_Img` (`image_num` INTEGER NOT NULL auto_increment , `recipe_num` INTEGER NOT NULL, `image_url` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`image_num`), FOREIGN KEY (`recipe_num`) REFERENCES `Recipes` (`recipe_num`)) ENGINE=InnoDB;
 
 show tables;
@@ -75,6 +73,9 @@ CREATE TABLE RECIPE_IMG(
     MAIN_IMG INT default '0',
     foreign key(RECIPE_NUM) references RECIPES(RECIPE_NUM) on update cascade on delete cascade
 );
+select * from users;
+select * from recipes;
+select * from recipe_img;
 
 drop table users;
 insert into users (user_id,user_name,profile_img,user_pw,birth_day)
@@ -87,16 +88,16 @@ insert into users (user_id,user_name,profile_img,user_pw,birth_day)
 	values ('user3', '네이버관리자', 'https://recipe1.ezmember.co.kr/cache/recipe/2018/02/10/31eb5c9685f61ec424e4000f484cfee81.jpg',
     'pass','2024-01-01');
 
-insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail)
-	values (1, '레몬 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물');
-insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail)
-	values (1, '레몬 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물');
-insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail)
-	values (2, '라임 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물');
-insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail)
-	values (2, '라임 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물');
-insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail)
-	values (3, '레몬 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물');
+insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail,createdAt,updatedAt)
+	values (1, '레몬 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물',now(),now());
+insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail,createdAt,updatedAt)
+	values (1, '레몬 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물',now(),now());
+insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail,createdAt,updatedAt)
+	values (2, '라임 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물',now(),now());
+insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail,createdAt,updatedAt)
+	values (2, '라임 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물',now(),now());
+insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail,createdAt,updatedAt)
+	values (3, '레몬 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물',now(),now());
 
 insert into recipes (USER_num,TITLE,CONTENT,LIKES_COUNT,main_ingredient,main_ing_detail,sub_ingredient_detail)
 	values (1, 'user가 쓴 딸기 짐빔 레시피', '1. 우선 재료를 준비한다.', 5, '하이볼', '짐빔 버본,토닉워터', '콜라,물');
@@ -113,8 +114,8 @@ insert into recipe_img (recipe_num,image_url) values (4,'uploads/recipe/default_
 
 -- 컬럼 명 변경 / 컬럼 타입 변경 / 컬럼 값 변경
 alter table recipes change SUB_INGREDIENT sub_ingredient_detail text;
-alter table recipes change createdAt created_At text;
-alter table recipes change updatedAt updated_At text;
+alter table recipes change created_At createdAt text;
+alter table recipes change updated_At updatedAt text;
 alter table recipe_img modify image_url varchar(255); 
 alter table recipes modify likes_count int default 0;
 update recipe_img set image_url='/uploads/recipe/3_img1.png' where recipe_num=3;
@@ -134,7 +135,7 @@ create table test_table (
 `recipe_num` int NOT NULL primary key AUTO_INCREMENT,
   `user_num` int NOT NULL,
   `content` text,
-  `createdAt` datetime default now() NOT NULL
+  `created_At` datetime default now() NOT NULL
 );
 drop table test_table;
 select * from test_table;

@@ -4,9 +4,10 @@ const express = require("express");
 
 const { Recipes, Recipe_Img, Users } = require("../models/Mindex");
 
-// get /recipes?recipe_num=1 레시피 상세보기 페이지 - 완
+// get /recipe?recipe_num=1 레시피 상세보기 페이지 - 완
 // select * from where rcp_id=?
 exports.getRecipe = async (req, res) => {
+  console.log("레시피 상세페이지 1 >> ", req.query);
   try {
     console.log("레시피 상세페이지 >> ", req.query);
 
@@ -24,11 +25,11 @@ exports.getRecipe = async (req, res) => {
         },
       ],
     });
-    res.render("view-detail-test", {
+    res.render("recipeView", {
       title: "레시피 상세페이지",
-      rcpInfo: recipe,
     });
     /*
+
   "recipe_num": 1,
   "user_num": 1,
   "title": "레몬 짐빔 레시피",
@@ -56,11 +57,11 @@ exports.getRecipe = async (req, res) => {
 
 // 레시피 작성 버튼 클릭시  - 완
 exports.getRecipeWrite = (req, res) => {
-  res.render('recipeWrite',{
-    title:'글 작성',
-    isLogin: true
-});
-//   res.render("test-recipeWrite", { title: "글 작성" });
+  // res.render('recipeWrite',{
+  res.render("test-recipeWrite", {
+    title: "글 작성",
+    isLogin: true,
+  });
 };
 
 // 레시피 작성페이지에서 저장 버튼 클릭시 - 부재료 값 안들어감, 이미지 추가필요)
@@ -88,21 +89,22 @@ exports.postRecipeWrite = async (req, res) => {
         */
 
     console.log("레시피 저장 버튼 클릭 postRecipe >> \n", req.body);
-    console.log("req.files >>> ", req.files);
+    
+
     /*
-        {
-title: '1',
-  main_ingredient: 'vodka',
-  main_ing_detail: '2',
+    {
+      title: '1',
+      main_ingredient: 'vodka',
+      main_ing_detail: '2',
   main_img: {},
   content: '<div><div>Step 1</div><div>4</div></div>',
   sub_imgs: [ null ]
-}
-        */
+  }
+  */
     // const { user_num, title, content, main_ingredient, main_ing_detail,
     //     sub_ingredient_detail, mainImage } = req.body;
 
-    // 데이터베이스에 저장
+    // 레시피 데이터베이스에 저장
     // const newRecipe = await Recipes.create({
     //     title,
     //     user_num :1,
@@ -111,18 +113,39 @@ title: '1',
     //     main_ing_detail,
     //     sub_ingredient_detail
     // });
-    // const newImage = await Recipe_Img.create({
-    //    recipe_num:req.files.recipe_num,
-    //    image_url:req.files.image_url,
-    //    main_img:req.files.thumnail_num
-    // });
-    // console.log('Main Image Path:', mainImage);
-    // console.log('Sub Images Paths:', recipeSubImgs);
-    // console.log('저장완료 : ', {recipe:newRecipe});
+
+    var imgFileArr = req.files; // 객체
+    //  완료된 것 
+    // filename 속성을 추출하는 함수
+    // const extractFilenames = (imgArr) => {
+    //   const filenames = [];
+    //   for (const key in imgArr) {
+    //     if (Object.prototype.hasOwnProperty.call(imgArr, key)) {
+    //       imgArr[key].forEach((file) => {
+    //         filenames.push(file.filename);
+    //       });
+    //     }
+    //   }
+
+    //   return filenames;
+    // };
+
+    // // 추출된 filename들
+    // const filenames = extractFilenames(imgFileArr);
+    // for (i = 0; i < filenames.length; i++) {
+    //   console.log("i>> ", i);
+    //   // const newImage = await Recipe_Img.create({
+    //   // recipe_num:req.body.recipe_num,
+    //   // image_url:filenames[i],
+    //   // main_img:req.body.thumnail_num
+    //   // });
+    // }
+    
+    res.send("File upload completed"); // 프론트로 다시 보내주는 것 
 
     // res.redirect('/') 작성 완료 버튼을 누를시 홈으로 돌아가기
   } catch (error) {
-    console.error("postRecipeWrite 오류 발생:", error);
+    console.error("postRecipeWrite 오류발생:", error);
     res.status(500).send("레시피 작성버튼 클릭시 에러 발생! ");
   }
 };
