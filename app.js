@@ -25,6 +25,9 @@ app.use(cookieParser());
 app.use("/public", express.static(__dirname + "/static"));
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
+const today = new Date()
+const expireDate = new Date()
+expireDate.setDate(today.getDate() + 1)
 
 app.use(session({
   secret :process.env.COOKIE_SECRET, 
@@ -33,7 +36,7 @@ app.use(session({
   cookie : {
     httpOnly :true,
     secure : false,
-    expires : 1800 * 1000
+    expires : expireDate
 }
   
 }))
