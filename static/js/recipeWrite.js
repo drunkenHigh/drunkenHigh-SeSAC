@@ -194,9 +194,7 @@ const writeRecipe = async (recipeObj) => {
       formData.append("mainIng", recipeObj.mainIng);
       formData.append("mainIngDetail", recipeObj.mainIngDetail);
       formData.append("main_image", recipeObj.mainImage);
-      recipeObj.subIngList.forEach((subIng, index) => {
-        formData.append(`sub_ingredient_${index}`, subIng);
-      })
+      formData.append("sub_ingredient", recipeObj.subIngString);
 
       recipeObj.recipeRawHtml.forEach((recipeStep, index) => {
         formData.append(`content_${index}`, recipeStep);
@@ -244,8 +242,8 @@ saveButton.addEventListener('click', () => {
         const mainIng = document.querySelector('#main-ing-select select').value;
         // 주재료 상세설명 저장
         const mainIngDetail = document.querySelector('#main-ing-detail textarea').value;
-        // list 형식으로 부재료들 구분하여 저장
-        const subIngList = document.querySelector('#sub-ing-detail').value.split(',');
+        // string 형식으로 부재료들 구분하여 저장
+        const subIngString = document.querySelector('#sub-ing-detail').value;
         // 대표 이미지 저장
         const mainImage = document.querySelector('#main-image').files[0];
         //console.log(mainImage);
@@ -268,12 +266,12 @@ saveButton.addEventListener('click', () => {
             recipeTitle, 
             mainIng, 
             mainIngDetail, 
-            subIngList, 
+            subIngString, 
             mainImage,
             recipeRawHtml,
             recipeSubImgs
         }
-        console.log(recipeObj.recipeTitle, recipeObj.mainIng, recipeObj.mainIngDetail, recipeObj.subIngList, recipeObj.mainImage);
+        console.log(recipeObj.recipeTitle, recipeObj.mainIng, recipeObj.mainIngDetail, recipeObj.subIngString, recipeObj.mainImage);
         writeRecipe(recipeObj);
 })
 
