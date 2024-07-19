@@ -2,21 +2,17 @@
 <html lang="en">
 <head>
     <%- include('include/include', { title: '레시피 작성' })%>
-    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>
-    <link href="https://unpkg.com/@tailwindcss/custom-forms/dist/custom-forms.min.css" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    
     <!--Replace with your tailwind.css once created-->
     <link rel="stylesheet" href="/public/css/write.css">
 </head>
-<body class="bg-gray-100 text-gray-900 tracking-wider leading-normal">
+<body class="text-gray-900 tracking-wider leading-normal">
     <%- include('./partials/header.ejs') %>
     <%- include('./partials/login.ejs') %>
 
+    <main>
     <!--Container-->
     <div class="container w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-16 mt-0 pt-4">
-        <div class="w-full lg:w-1/5 px-6 text-xl text-gray-800 leading-normal">
+        <div class="w-full lg:w-1/5 px-6 text-xl text-gray-800 leading-normal write-menu">
             <p class="text-base font-bold py-2 lg:pb-6 text-gray-700">Menu</p>
             <div class="block lg:hidden sticky inset-0">
                 <button id="menu-toggle" class="flex w-full justify-end px-3 py-3 bg-white lg:bg-transparent border rounded border-gray-600 hover:border-yellow-600 appearance-none focus:outline-none">
@@ -61,7 +57,7 @@
         <section class="w-full lg:w-4/5">
 
             <!--Title-->
-            <h1 class="flex items-center font-sans font-bold break-normal text-gray-700 px-2 text-xl mt-12 lg:mt-0 md:text-2xl">
+            <h1 class="flex items-center font-sans font-bold break-normal text-xl mt-12 lg:mt-0 md:text-2xl write-title">
 				여러분의 멋진 하이볼 레시피를 함께 즐겨요
 			</h1>
 
@@ -110,11 +106,12 @@
                         <div class="md:w-2/3">
                             <select name="mainIngredient" class="form-select block w-full focus:bg-white" required>
                                 <option value="default">-</option>
+                                <option value="whiskey">위스키</option>
                                 <option value="vodka">보드카</option>
                                 <option value="soju">소주</option>
-                                <option value="whiskey">위스키</option>
+                                <option value="sake">사케</option>
+                                <option value="etc">기타</option>
                             </select>
-
                             <p class="py-2 text-sm text-gray-600">하이볼의 주재료를 선택해주세요</p>
                         </div>
                     </div>
@@ -255,10 +252,10 @@
                     <div id="add-step-wrap" class="md:flex md:items-center">
                         <div class="md:w-1/3"></div>
                         <div class="md:w-2/3">
-                            <button id="add-step" class="shadow bg-yellow-700 hover:bg-yellow-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-4" type="button">
+                            <button id="add-step" class="shadow focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-4" type="button">
                                 단계 추가하기
                             </button>
-                            <button id="delete-step" class="shadow bg-yellow-100 hover:bg-yellow-200 focus:shadow-outline focus:outline-none text-gray-700 font-bold py-2 px-4 rounded mr-4" type="button">
+                            <button id="delete-step" class="shadow focus:shadow-outline focus:outline-none text-gray-700 font-bold py-2 px-4 rounded mr-4" type="button">
                                 단계 삭제하기
                             </button>
                         </div>
@@ -281,11 +278,11 @@
 
                 <div class="pt-8">
 
-                    <button id="save-button" class="shadow bg-yellow-700 hover:bg-yellow-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-4" type="button">
+                    <button id="save-button" class="shadow focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-4" type="button">
                         저장
                     </button>
 
-                    <button id="refresh-button" class="shadow bg-yellow-100 hover:bg-yellow-200 focus:shadow-outline focus:outline-none text-gray-700 font-bold py-2 px-4 rounded mr-4" type="button">
+                    <button id="refresh-button" class="shadow focus:shadow-outline focus:outline-none text-gray-700 font-bold py-2 px-4 rounded mr-4" type="button">
                         다시 작성하기
                     </button>
 
@@ -303,16 +300,9 @@
          </div>
 
       </div>
+    </main>
       <!--/container-->
     <%- include('./partials/footer.ejs') %>
-
-
-    
-        
-    <!-- jQuery -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="module" src="../public/js/recipeWrite.js"></script>
-
-    
 </body>
 </html>

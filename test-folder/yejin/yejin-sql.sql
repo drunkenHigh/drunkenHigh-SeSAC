@@ -74,8 +74,8 @@ CREATE TABLE RECIPE_IMG(
     foreign key(RECIPE_NUM) references RECIPES(RECIPE_NUM) on update cascade on delete cascade
 );
 select * from users;
-select * from recipes;
-select * from recipe_img;
+select * from recipes where user_num=2 order by recipe_num desc;
+select * from recipe_img order by image_num desc;
 
 drop table users;
 insert into users (user_id,user_name,profile_img,user_pw,birth_day)
@@ -125,6 +125,7 @@ alter table recipe_img add column MAIN_IMG INT default '0';
 show tables;
 
 desc recipe_img;
+select * from users;
 select * from recipes;
 select * from recipes order by recipe_num desc limit 3;
 
@@ -141,6 +142,6 @@ drop table test_table;
 select * from test_table;
 insert into test_table (recipe_num,user_num) values(1,1);
 
-
+SELECT `recipe_num` FROM `Recipes` AS `Recipes` WHERE `Recipes`.`user_num` = 2 ORDER BY `Recipes`.`createdAt` DESC LIMIT 1;
 
 SELECT `Recipes`.`recipe_num`, `Recipes`.`title`, `user`.`user_num` AS `user.user_num`, `user`.`user_name` AS `user.user_name`, `Recipe_Imgs`.`image_num` AS `Recipe_Imgs.image_num`, `Recipe_Imgs`.`image_url` AS `Recipe_Imgs.image_url` FROM `Recipes` AS `Recipes` LEFT OUTER JOIN `users` AS `user` ON `Recipes`.`user_num` = `user`.`user_num` LEFT OUTER JOIN `Recipe_Img` AS `Recipe_Imgs` ON `Recipes`.`recipe_num` = `Recipe_Imgs`.`recipe_num` AND `Recipe_Imgs`.`main_img` = 1 WHERE `Recipes`.`main_ingredient` = 'favicon.ico' ORDER BY `Recipes`.`created_at` DESC;

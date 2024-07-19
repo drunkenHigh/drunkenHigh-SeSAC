@@ -60,11 +60,11 @@ const dbPw = process.env.DATABASE_PW;
 app.use("/", router);
 app.use('/recipe', router_rcp);
 app.use('/users', router_users);
+
 // 404 처리
 app.get('*', (req, res) => {
   res.render('404')
 })
-
 
 sequelize
     .sync({ force: false })

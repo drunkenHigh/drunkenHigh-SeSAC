@@ -1,3 +1,4 @@
+window.addEventListener('DOMContentLoaded', ()=>{
 function actionBtn(){
     $('.ham-btn').click(function () {
         $(this).toggleClass('on')
@@ -6,6 +7,7 @@ function actionBtn(){
 }
 
 actionBtn()
+})
 
 
 // const customCurser = document.querySelector('.mouse-custom')

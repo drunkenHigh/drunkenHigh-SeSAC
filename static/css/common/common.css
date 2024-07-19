@@ -192,6 +192,7 @@
     right: 5%;
     top: 50%;
     transform: translateY(-50%);
+    display: block;
 }
 
 .header__nav ul {
@@ -362,6 +363,10 @@ main {
     .cookie__content {
         width: 65vw;
     }
+
+    .header__submenu {
+        display: none;
+    }
     
 }
 
@@ -383,7 +388,10 @@ main {
         z-index: 99999;
         width: 20px;
         height: 15px;
-        /*cursor: pointer;*/
+    }
+
+    .header__submenu {
+        display: inline;
     }
 
     .ham-btn span {

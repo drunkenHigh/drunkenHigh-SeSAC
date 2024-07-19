@@ -36,7 +36,6 @@ router.post('/mypage/edit', uploadProfile.single('profile_img'), patchMyprofile)
 
 // // post /user/profile
 //  router.post('/profile', controller.getUsers);
-
 // // patch /user/profile/edit
 // router.patch('/profile/edit', controller.updateUser);
 // // delete /user/profile/delete
