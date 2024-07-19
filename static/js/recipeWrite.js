@@ -190,15 +190,17 @@ const writeRecipe = async (recipeObj) => {
     try {
       const formData = new FormData();
   
-      formData.append("recipeTitle", recipeObj.recipeTitle);
-      formData.append("mainIng", recipeObj.mainIng);
-      formData.append("mainIngDetail", recipeObj.mainIngDetail);
+      formData.append("title", recipeObj.recipeTitle);
+      formData.append("main_ingredient", recipeObj.mainIng);
+      formData.append("main_ing_detail", recipeObj.mainIngDetail);
       formData.append("main_image", recipeObj.mainImage);
-      formData.append("sub_ingredient", recipeObj.subIngString);
+      formData.append("sub_ingredient_detail", recipeObj.subIngString);
 
-      recipeObj.recipeRawHtml.forEach((recipeStep, index) => {
-        formData.append(`content_${index}`, recipeStep);
-      })
+    //   recipeObj.recipeRawHtml.forEach((recipeStep, index) => {
+    //     formData.append(`content_${index}`, recipeStep);
+    //   })
+    formData.append("content", recipeObj.recipeRawHtml);
+
 
       recipeObj.recipeSubImgs.forEach((sub_imgs, index) => {
         formData.append(`sub_imgs_${index+1}`, sub_imgs);
@@ -249,7 +251,7 @@ saveButton.addEventListener('click', () => {
         //console.log(mainImage);
         // 레시피 내용 저장
         const recipeContents = document.querySelectorAll('.recipe-contents');
-        let recipeRawHtml = [];
+        let recipeRawHtml = "";
         let recipeSubImgs = [];
         recipeContents.forEach((recipeContent) => {
             const recipeStepNum = recipeContent.querySelector('label').innerText;
@@ -257,7 +259,7 @@ saveButton.addEventListener('click', () => {
             const recipeSubImg = recipeContent.querySelector('input').files[0];
             // 조회 페이지에서 어떻게 렌더링할지 정해지면 raw html 수정하기!
             //console.log(`TEST >>>> ${recipeStepNum}`, recipeSubImg);
-            recipeRawHtml.push(recipeContentText);
+            recipeRawHtml += (recipeContentText + "$");
             recipeSubImgs.push(recipeSubImg);
         })
 

@@ -57,3 +57,27 @@ value
 (19,'/public/img/test/19.jpg', 1);
 
 select * from recipe_img;
+
+
+insert into likes (user_num, recipe_num) values 
+('1', '1'),
+('1', '2');
+
+select * from likes where user_num = '1' and recipe_num = '1';
+
+select * from likes;
+
+-- select count(*) from likes where recipe_num = '1'; 
+select count(recipe_num) from likes group by(recipe_num) order by recipe_num asc limit 10;
+
+select ri.image_url, r.title, count(l.recipe_num) 
+from recipe_img ri join recipes r
+on ri.recipe_num = r.recipe_num join likes l
+on r.recipe_num = l.recipe_num
+group by ri.image_url, r.title, r.recipe_num
+order by (l.recipe_num) asc 
+limit 10;
+
+
+
+

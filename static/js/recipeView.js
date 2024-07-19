@@ -67,15 +67,12 @@ const deleteButton = document.querySelector('#delete-button');
 deleteButton.addEventListener('click', async () => {
     await axios({
         method: 'delete',
-        url: "/write/delete",
-        data: {
-            recipe_num
-        },
-        headers: {
-            'content-type': 'application/json'
-        }
+        url: `/recipe/read?recipe_num=${recipe_num}`
+        // headers: {
+        //     'content-type': 'application/json'
+        // }
     }).then((res) => {
-        if(res.data === "true") {
+        if(res.data) {
             if(confirm("삭제되었습니다!")) {
                 // 홈으로 이동
                 window.location.href = "/";

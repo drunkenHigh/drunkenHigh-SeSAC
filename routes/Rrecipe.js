@@ -1,6 +1,7 @@
 const express = require("express");
 const controller = require("../controller/Crecipes");
 const controller_img = require("../controller/Crecipes_image");
+const {postLikes} = require('../controller/Clikes');
 
 const mdware = require("../middleware/uploadRecipeImg");
 const router = express.Router();
@@ -8,6 +9,9 @@ const router = express.Router();
 // get /recipe/read?recipe_num=
 // get /recipe 레시피 상세보기 페이지
 router.get("/read", controller.getRecipe);
+
+// 좋아요
+router.post('/:recipe_num/likes', postLikes);
 
 // get /recipe 레시피 "작성 화면" 보여주기
 router.get("/write", controller.getRecipeWrite);
@@ -19,6 +23,6 @@ router.post("/write", mdware.upload, controller.postRecipeWrite);
 router.patch("/update", controller.patchRecipe);
 
 // delete /recipe?recipe_num=
-router.delete("/delete", controller.deleteRecipe);
+router.delete("/read", controller.deleteRecipe);
 
 module.exports = router;

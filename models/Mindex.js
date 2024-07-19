@@ -14,6 +14,7 @@ const sequelize = new Sequelize(
 const RecipesModel = require("./Mrecipe")(sequelize, Sequelize);
 const Recipe_Img_Model = require("./Mrecipe_img")(sequelize, Sequelize);
 const UsersModel = require("./Muser")(sequelize, Sequelize);
+const LikesModel = require('./Mlikes')(sequelize, Sequelize);
 
 // --- sequelize 사용시
 
@@ -46,6 +47,8 @@ UsersModel.hasMany(RecipesModel, {
   // user 테이블에서 참조될 키는 'user_num'
   foreignKey: "user_num",
   sourceKey: "user_num",
+  onDelete: 'cascade',
+  onUpdate: 'cascade'
 });
 RecipesModel.belongsTo(UsersModel, {
   foreignKey: "user_num",
@@ -58,6 +61,8 @@ RecipesModel.hasMany(Recipe_Img_Model, {
   foreignKey: "recipe_num",
   // recipe 테이블에서 참조될 키는 'recipe_num'
   sourceKey: "recipe_num",
+  onDelete: 'cascade',
+  onUpdate: 'cascade'
 });
 Recipe_Img_Model.belongsTo(RecipesModel, {
   // recipe_img 테이블에 'recipe_num' fk 생성
@@ -66,10 +71,34 @@ Recipe_Img_Model.belongsTo(RecipesModel, {
   targetKey: "recipe_num",
 });
 
+// 좋아요
+LikesModel.belongsTo(UsersModel, {
+  foreignKey: 'user_num',
+  targetKey: 'user_num'
+});
+LikesModel.belongsTo(RecipesModel, {
+  foreignKey: 'recipe_num',
+  targetKey: 'recipe_num'
+});
+
+UsersModel.hasMany(LikesModel, {
+  foreignKey: 'user_num',
+  sourceKey: 'user_num',
+  onDelete: 'cascade',
+  onUpdate: 'cascade'
+});
+RecipesModel.hasMany(LikesModel, {
+  foreignKey: 'recipe_num',
+  sourceKey: 'recipe_num',
+  onDelete: 'cascade',
+  onUpdate: 'cascade'
+});
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 db.Recipes = RecipesModel;
 db.Recipe_Img = Recipe_Img_Model;
+db.Likes = LikesModel;
 
 db.Users = UsersModel;
 
