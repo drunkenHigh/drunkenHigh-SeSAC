@@ -4,6 +4,45 @@ let registerForm = document.forms['register']
 let regiterFormInput = registerForm.querySelectorAll('.register-inputbx input')
 const registerFileInput = document.querySelector('.register__filebx input')
 
+$('#conf').html(rcode.conf);
+
+// 약관동의 전체 체크 시 모든 체크 박스 변경
+const chkAll = $('#chk_all');
+const chkEach = $('.chk');
+
+chkAll.change(function(){
+    let chk = $(this).prop('checked');
+
+    chkEach.prop('checked', chk)
+})
+
+// 개별 체크 박스 체크시 전체 체크박스 변경
+chkEach.change(function(){
+    let num = $('.chk:checked').length;
+
+    if(num===2) chkAll.prop('checked', true);
+    else chkAll.prop('checked', false)
+})
+
+// 동의/비동의 버튼 클릭 시 처리
+$('.YNbox button').click(function(){
+    let isYes = $(this).is('#btnY')
+
+    if(isYes){
+        if($('#termsService').prop('checked') && $('#termsPrivacy').prop('checked')){
+            $('#conf').fadeOut(200, ()=>{
+                $('.register__container').fadeIn(300);
+            })
+        } else {
+            alert('필수 항목을 체크하셔야 합니다')
+        }
+    } else {
+        alert('메인페이지로 이동합니다.')
+        window.location.href = '/'
+    }
+})
+
+
 // 회원가입 통과여부 담을 변수
 let pass = true;
 

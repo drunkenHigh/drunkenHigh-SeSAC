@@ -2,14 +2,6 @@
 @import url(./common/core.css);
 @import url(./common/common.css);
 
-.register__container {
-    margin: 0 auto;
-    width: 50vw;
-    padding: 60px 0;
-    font-family: 'Pretendard-Regular';
-
-}
-
 .register__title {
     text-align: center;
     font-size: 26px;
@@ -17,6 +9,15 @@
     color: var(--darkColor);
     margin-bottom: 40px;
     width: 100%;
+    padding-top: 60px;
+}
+
+.register__container {
+    margin: 0 auto;
+    width: 50vw;
+    padding: 30px 0 60px;
+    font-family: 'Pretendard-Regular';
+    display: none;
 }
 
 #register {
@@ -140,6 +141,139 @@
     background-color: var(--darkColor);
     opacity: 0.8;
 }
+
+/* 약관동의박스 */
+#conf {
+    max-width: 700px;
+    padding: 30px 15px;
+    height: auto;
+    border: 2px solid var(--mainColor);
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: #fff;
+    margin: 0 auto;
+}
+
+.terms_p {
+    margin-bottom: 20px;
+    border: solid 1px #dadada;
+    background: #fff;
+}
+
+.terms_chk_all {
+    display: block;
+    padding: 15px;
+}
+
+.terms_bx:first-child {
+    border-top: 1px solid #f0f0f0;
+}
+
+.terms_bx {
+    display: block;
+    padding: 13px 15px 7px;
+}
+
+.input_chk {
+    position: relative;
+    display: block;
+    height: 24px;
+}
+
+.input_chk input {
+    position: absolute;
+    z-index: 9;
+    top: 50%;
+    right: 1px;
+    width: 22px;
+    height: 22px;
+    margin-top: -11px;
+    opacity: 0;
+    outline: 0;
+    -webkit-appearance: none;
+}
+
+.input_chk label {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 24px;
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 24px;
+    cursor: pointer;
+    color: #333;
+    background: url(https://static.nid.naver.com/images/ui/join/m_ico_check_off_2x_20170904.png) 100% 50% no-repeat;
+    -webkit-background-size: 24px 24px;
+    background-size: 24px 24px;
+}
+
+.input_chk input:checked+label {
+    background: url(https://static.nid.naver.com/images/ui/join/m_ico_check_on_2x_20170904.png) 100% 50% no-repeat;
+    -webkit-background-size: 24px 24px;
+    background-size: 24px 24px
+}
+
+.terms_necessary {
+    font-size: 12px;
+    font-weight: 400;
+    display: inline-block;
+    vertical-align: top;
+    color: red;
+    font-weight: bold;
+}
+
+.terms_box {
+    position: relative;
+    overflow: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 88px;
+    margin-top: 11px;
+    padding: 8px 10px;
+    border: 1px solid #f0f0f0;
+    background: #f7f7f7;
+}
+
+
+
+/* 동의/비동의 버튼박스 */
+.YNbox {
+    text-align: center;
+}
+/* 버튼공통 */
+.YNbox button {
+    width: 113px;
+    height: 40px;
+    border: 1px solid var(--darkColor);
+    background-color: var(--darkColor);
+    color: #fff;
+    border-radius: 5px;
+    font-size: 1em;
+    font-weight: bold;
+    margin: 0 20px;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+#btnY:hover, #btnN:hover {
+    border-color: var(--mainColor);
+    background-color: var(--mainColor);
+}
+
+#btnN {
+    background-color: #fff;
+    color : #333;
+}
+
+#btnN:hover {
+    color : #fff;
+}
+
 
 /**** 미디어쿼리 ****/
 /* 900 px 이하 미디어쿼리 */
