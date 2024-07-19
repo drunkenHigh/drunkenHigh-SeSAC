@@ -58,6 +58,41 @@ $(window).scroll(function(){
 // - 좋아요 기능 완성하기
 
 
+const url = new URL(window.location.href);
+const recipe_id = url.searchParams.get('recipe_id');
+
+
+// 삭제 버튼
+const deleteButton = document.querySelector('#delete-button');
+deleteButton.addEventListener('click', async () => {
+    await axios({
+        method: 'delete',
+        url: "/write/delete",
+        data: {
+            recipe_id
+        },
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then((res) => {
+        if(res.data === "true") {
+            if(confirm("삭제되었습니다!")) {
+                // 홈으로 이동
+                window.location.href = "/";
+            }
+        }
+    })
+}, {once: true})
+
+// 수정 버튼
+const updateButton = document.querySelector('#update-button');
+updateButton.addEventListener('click', async () => {
+    if(confirm("수정하시겠습니까?")) {
+        // 수정 페이지로 이동
+        window.location.href = `/write?recipe_id=${recipe_id}`;
+    }
+}, {once:true})
+
 // 좋아요 기능: 미완성 -------------------------
 let main = {
 

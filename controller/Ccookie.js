@@ -11,5 +11,5 @@ exports.setCookie = (req, res) => {
         res.cookie('age', false, cookieConfig);
     }
 
-    // res.redirect('/');
+    res.send('cookie');
 };

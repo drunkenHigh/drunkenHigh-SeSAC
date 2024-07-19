@@ -25,7 +25,7 @@
 }
 
 .recommend-title {
-    font-size: 36px;
+    font-size: min(3vw, 36px);
     font-weight: 900;
     color : #fff;
     margin-bottom: 20px;
@@ -125,7 +125,7 @@
 
 .recommend-centerSwiper {
     width: 570px;
-    height: 650px;
+    height: 100%;
     margin-right: 20px;
     left: 50%;
     position: absolute;
@@ -148,11 +148,17 @@
 
 .recommend-container .swiper-slide .slide-bg {
     position: absolute;
-    top: 0;
+    width: 100%;
+    height: 80px;
     bottom: 0;
-    left: 0;
-    right: 0;
     background-color: rgba(0, 0, 0, 0.3);
+    z-index: 20;
+}
+
+.recommend-container .swiper-slide .slide-subbg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
     z-index: 20;
 }
 
@@ -164,10 +170,15 @@
     position: absolute;
 }
 
+.recommend-leftSwiper .swiper-slide img, .recommend-rightSwiper .swiper-slide img {
+
+}
+
 .recommend-container .swiper-slide p {
     position: absolute;
     color : #fff;
-    top: 20px;
+    top: 50%;
+    transform: translateY(-50%);
     font-size: 30px;
     right: 20px;
     font-weight: bold;
@@ -246,10 +257,10 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(to top, var(--mainColor),var(--lightColor), var(--lightColor2), var(--mainColor));
+    background-image: linear-gradient(to top, var(--darkColor),var(--mainColor), var(--darkColor));
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center center;
+    background-position: 50% 50%;
     transform: translateZ(0);
     will-change: transform;
 }
@@ -258,6 +269,12 @@
     position: relative;
     width: 100%;
     height: 100%;
+}
+
+.bubble {
+    position: relative;
+    border: 1.7px solid #fff;
+    border-radius: 50%;
 }
 
 .write-content {
@@ -279,14 +296,14 @@
     color : #fff;
     font-weight: 900;
     font-size: 24px;
-    text-shadow: var(--darkColor) -1px -1px 0px, 
-    var(--darkColor) 1px -1px 0px, 
-    var(--darkColor) -1px 1px 0px, 
-    var(--darkColor) 1px 1px 0px, 
-    var(--darkColor) -1px 0px 0px, 
-    var(--darkColor) 0px -1px 0px,
-    var(--darkColor) 1px 0px 0px,
-    var(--darkColor) 0px 1px 0px, 
+    text-shadow: var(--darkColor) -2px -2px 0px, 
+    var(--darkColor) 2px -2px 0px, 
+    var(--darkColor) -2px 2px 0px, 
+    var(--darkColor) 2px 2px 0px, 
+    var(--darkColor) -2px 0px 0px, 
+    var(--darkColor) 0px -2px 0px,
+    var(--darkColor) 2px 0px 0px,
+    var(--darkColor) 0px 2px 0px, 
     var(--darkColor) 0px 2.3px 0px;
 }
 
@@ -302,26 +319,32 @@
     left: 0;
     width: 50px;
     height: 50px;
-    transform: rotateY(0);
-    /* animation: moveRabbit 10s linear 1s infinite; */
+    animation: moveRabbit 8s linear infinite alternate,
+               jumpRabbit 1s ease-in-out infinite;
 }
 
 @keyframes moveRabbit {
     0% {
         left: 0;
-        transform: rotateY(0);
+        
     }
     50% {
         left : 90%;
-        
-    }
-    51% {
-        left: 90%;
-        transform: rotateY(180deg);
     }
     100%{
         left: 0;
-        transform: rotateY(0);
+    }
+}
+
+@keyframes jumpRabbit {
+    0% {
+        transform: rotate(0.025turn);
+    }
+    50% {
+        transform: rotate(-0.025turn);
+    }
+    100%{
+        transform: rotate(0.025turn);
     }
 }
 
@@ -489,3 +512,171 @@
 }
 
 /**** 미디어쿼리 ****/
+/* 1280px 이하 미디어쿼리 */
+@media screen and (max-width: 1280px) {
+    main {
+        overflow-x: hidden;
+    }
+
+    /* 추천 */
+    .recommend-container {
+        height: 500px;
+    }
+
+    .recommend-leftSwiper {
+        position: absolute;
+        right: 680px;
+    }
+
+    .recommend-centerSwiper {
+        left: auto;
+        right: 20px;
+        transform: translateX(0);
+    }
+
+    .recommend-rightSwiper {
+        display: none;
+    }
+
+    .recommend-container .swiper-control {
+        right: 680px;
+    }
+
+    .recommend-text {
+        height: 200px;
+        left: auto;
+        right: 680px;
+    }
+
+    /* 전체 목록 */
+    .recipe-lists {
+        grid-template-columns: repeat(3, 1fr);
+        grid-column-gap: min(2vw, 50px);
+        grid-row-gap: min(1.5vw, 50px);
+        width: 100%;
+    }
+}
+
+/* 1024px 이하 미디어쿼리 */
+@media screen and (max-width: 1024px) {
+    /* 추천 */
+    .recommend-container {
+        height: 500px;
+    }
+
+    .recommend-leftSwiper {
+        display: none;
+    }
+
+    .recommend-centerSwiper {
+        left: auto;
+        right: 20px;
+        transform: translateX(0);
+    }
+
+    .recommend-container .swiper-control {
+        right: auto;
+        left: 20px;
+    }
+
+    .recommend-text {
+        height: 200px;
+        bottom: auto;
+        top: 0;
+        right: auto;
+        left: 20px;
+    }
+}
+/* 900px 이하 미디어쿼리 */
+@media screen and (max-width: 900px) {
+    /* 추천 */
+    .recommend-container {
+        height: 400px;
+        box-sizing: border-box;
+    }
+
+    .recommend-centerSwiper {
+        width: 80%;
+        left: 50%;
+        top: auto;
+        bottom: 0;
+        right: auto;
+        height: 350px;
+        transform: translateX(-50%);
+    }
+
+    .recommend-container .swiper-control {
+        display: none;
+    }
+
+    .recommend-text {
+        height: auto;
+        bottom: auto;
+        top: 0;
+        right: auto;
+        left: 50%;
+        width: auto;
+        transform: translateX(-50%);
+        z-index: 4;
+    }
+
+    .recommend-title {
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+
+    .recommend-desc {
+        display: none;
+    }
+
+    .write-content > div span {
+        font-size: 18px;
+    }
+
+    .main-writebtn {
+        font-size: 16px;
+        padding : 5px 7px;
+    }
+
+    .list-title {
+        font-size: 26px;
+    }
+    .category-btn {
+        width: 90%;
+    }
+    .recipe-lists {
+        grid-template-columns: repeat(2, 1fr);
+        width: 90%;
+        margin: 0 auto;
+    }
+
+}
+
+/* 640px 이하 미디어쿼리 */
+@media screen and (max-width: 640px) {
+    .main__recommend {
+        margin-bottom: 40px;
+    }
+    .write-content > div span {
+        font-size: 16px;
+    }
+
+    .main-writebtn {
+        font-size: 14px;
+        padding : 5px 7px;
+    }
+
+    .recipe-category {
+        padding-bottom: 30px;
+    }
+
+    .category-btn {
+        width: 80%;
+    }
+
+    .recipe-lists {
+        grid-template-columns: repeat(1, 1fr);
+        width: 80%;
+    }
+
+}

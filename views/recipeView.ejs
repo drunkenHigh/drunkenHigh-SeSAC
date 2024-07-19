@@ -160,6 +160,7 @@
             <hr class="bg-gray-300 my-12">
 
             <!-- 회원에게만 보이게 하기 -->
+             <% if (isLogin) { %>
             <!--Title-->
             <h2 class="font-sans font-bold break-normal text-gray-700 px-2 pb-8 text-xl">저장</h2>
 
@@ -170,11 +171,11 @@
 
                 <div class="pt-8">
 
-                    <button id="save-button" class="shadow bg-yellow-700 hover:bg-yellow-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-4" type="button">
+                    <button id="update-button" class="shadow bg-yellow-700 hover:bg-yellow-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-4" type="button">
                         수정하기
                     </button>
 
-                    <button id="refresh-button" class="shadow bg-yellow-100 hover:bg-yellow-200 focus:shadow-outline focus:outline-none text-gray-700 font-bold py-2 px-4 rounded mr-4" type="button">
+                    <button id="delete-button" class="shadow bg-yellow-100 hover:bg-yellow-200 focus:shadow-outline focus:outline-none text-gray-700 font-bold py-2 px-4 rounded mr-4" type="button">
                         삭제하기
                     </button>
 
@@ -182,6 +183,7 @@
 
             </div>
             <!--/Card-->
+            <% } %>
 
 
             <div class="flex">

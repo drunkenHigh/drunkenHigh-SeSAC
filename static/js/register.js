@@ -21,26 +21,30 @@ regiterFormInput.forEach(ele=>{
             } else {
                 $(this).next().empty();
                 // 아이디 중복검사 넣어야함 -> axios 쓸것
-                // const idCheck = await axios({
-                //     method : 'post',
-                //     url : '/users/register/idCheck',
-                //     data : {user_id : inputValue}
-                // })
+                try {
+                    const idCheck = await axios({
+                        method : 'post',
+                        url : '/users/register/chkid',
+                        data : {user_id : inputValue}
+                    })
 
-                // if(idCheck.data) {
-                //     pass = true
-                //     sendMsg(0, '사용가능한 아이디입니다')
-                //     // 아이디 통과시에만 이미지 파일 올릴 수 있음
-                //     registerFileInput.disabled = false;
-                // } else {
-                    //     pass = false
-                    //     sendMsg(0, '이미 사용중인 아이디입니다')
-                    //     // 아이디 통과시에만 이미지 파일 올릴 수 있음
-                    //     registerFileInput.disabled = true;
-                    // }
+                    if(idCheck.data.success) {
                         pass = true
                         sendMsg(0, '사용가능한 아이디입니다')
-
+                        // 아이디 통과시에만 이미지 파일 올릴 수 있음
+                        registerFileInput.disabled = false;
+                    } 
+                } catch(err){
+                    if(err.response.status === 401){
+                        pass = false
+                        sendMsg(0, '이미 사용중인 아이디입니다')
+                        // 아이디 통과시에만 이미지 파일 올릴 수 있음
+                        registerFileInput.disabled = true;
+                    }
+                    console.log(err);
+                    registerFileInput.disabled = true;
+                    pass = false
+                }
             }
         } else if(inputId === 'user_pw'){
             if(!this.checkValidity() || !valRegExp(inputValue, inputId)){
@@ -58,28 +62,28 @@ regiterFormInput.forEach(ele=>{
             } else {
                 // 닉네임 중복검사 -> axios 쓸것 
                 $(this).next().empty();
-                // 아이디 중복검사 넣어야함 -> axios 쓸것
-                // const nameCheck = await axios({
-                //     method : 'post',
-                //     url : '/users/register/nameCheck',
-                //     data : {user_name : inputValue}
-                // })
+                try {
+                    const nameCheck = await axios({
+                        method : 'post',
+                        url : '/users/register/chkName',
+                        data : {user_name : inputValue}
+                    })
 
-                // if(nameCheck.data) {
-                //     pass = true
-                //     sendMsg(2, '사용가능한 닉네임입니다')
-                //     // 아이디 통과시에만 이미지 파일 올릴 수 있음
-                //     registerFileInput.disabled = false;
-                // } else {
-                //     pass = false
-                //     sendMsg(2, '이미 사용중인 닉네임입니다')
-                //     // 아이디 통과시에만 이미지 파일 올릴 수 있음
-                //     registerFileInput.disabled = true;
-                // }
-                // pass = true
-                // sendMsg(2, '사용가능한 닉네임입니다.')
-                pass = true
-                sendMsg(2, '사용가능한 닉네임입니다.')
+                    if(nameCheck.data.success) {
+                        pass = true
+                        sendMsg(2, '사용가능한 닉네임입니다')
+                        
+                    } 
+                } catch(err){
+                    if(err.response.status === 401){
+                        pass = false
+                        sendMsg(2, '이미 사용중인 닉네임입니다')
+                        
+                    }
+                    console.log(err);
+                    registerFileInput.disabled = true;
+                    pass = false
+                }
             }
         } else if(inputId === 'birthday'){
             let year =  this.value.slice(0,4);
@@ -147,10 +151,14 @@ async function registerSubmit(){
             url : '/users/register',
             data : formData
         })
-
-        document.location.href = '/'
+        const result = registerAxios.data
+        if(result.success){
+            alert('환영합니다!')
+            document.location.href = '/'
+        }
     }catch(err){
         console.error(err);
+        alert('가입할 수 없습니다 작성한 정보를 확인해주세요')
     }
 }
 
@@ -181,31 +189,19 @@ function fileExtCheck(obj) {
     else return false;
 }
 
-
 // 파일 체크
 function fileCheck() {
     const tempProfile = document.querySelector('.filebx-img img')
-    registerFileInput.addEventListener('change', async function(){
-        console.log(this);
+    registerFileInput.addEventListener('change', function(e){
+        let file = this.files[0]
         if(fileExtCheck(this)){
             // 프사 설정한 대로 바꾸게 하기
-            registerForm = document.forms['register'];
-    
-            const formData =  new FormData()
-
-            formData.append('profile_img', registerForm.profile_img.files[0])
-            try {
-                const tempAxios = await axios({
-                    method : 'post',
-                    url : '/users/register/temp',
-                    data : formData
-                })
-                // 임시 저장소에 있는 프로필 이미지 가져와서 비동기적으로 프로필 이미지 변경
-                let tempImg = tempAxios.data.file.filename
-                tempProfile.setAttribute('src', `/uploads/temp/${tempImg}`)
-            } catch(err){
-
-            }
+            let reader = new FileReader();
+            
+            reader.addEventListener('load', function(){
+                tempProfile.setAttribute('src', reader.result)
+            })
+            reader.readAsDataURL(file)
         } else {
             alert('이미지 파일만 올려주세요');
             this.value = '';

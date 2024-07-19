@@ -19,22 +19,10 @@ const getRecipeListAll = async () => {
             ],
             attributes: ['title', 'recipe_num'],
             order: [['createdAt', 'DESC']], // 최신 레시피부터 정렬
+            raw : true
         });
 
-        const listsData = () =>{
-            const data = listsALl.map(ele=>({
-                title : ele.dataValues.title,
-                recipe_num : ele.dataValues.recipe_num,
-                user_name : ele.dataValues.User.user_name,
-                image_url : ele.dataValues.Recipe_Imgs[0].dataValues.image_url
-            }))
-
-            return data
-            }
-
-        const listsDatas = listsData()
-
-        return listsDatas;
+        return listsALl;
     } catch (error) {
         console.error(error);
         throw new Error('Internal Server Error');
@@ -64,6 +52,7 @@ const getRecipeListMain = async (req, res) => {
                 ],
                 attributes: ['title', 'recipe_num'],
                 order: [['createdAt', 'DESC']], // 최신 레시피부터 정렬
+                raw : true
             });
         }else{
             lists = await Recipes.findAll({
@@ -81,7 +70,8 @@ const getRecipeListMain = async (req, res) => {
                     }
                 ],
                 attributes: ['title', 'recipe_num'],
-                order: [['createdAt', 'DESC']] 
+                order: [['createdAt', 'DESC']],
+                raw : true 
             });
         }
         console.log(lists);
