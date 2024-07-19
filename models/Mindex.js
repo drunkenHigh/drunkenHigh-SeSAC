@@ -14,6 +14,7 @@ const sequelize = new Sequelize(
 const RecipesModel = require("./Mrecipe")(sequelize, Sequelize);
 const Recipe_Img_Model = require("./Mrecipe_img")(sequelize, Sequelize);
 const UsersModel = require("./Muser")(sequelize, Sequelize);
+const LikesModel = require('./Mlikes')(sequelize, Sequelize);
 
 // --- sequelize 사용시
 
