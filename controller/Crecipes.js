@@ -1,5 +1,5 @@
-const RecipesModel = require("../models/Mrecipe");
-const Recipe_Img_Model = require("../models/Mrecipe_img");
+// const RecipesModel = require("../models/Mrecipe");
+// const Recipe_Img_Model = require("../models/Mrecipe_img");
 
 const { Recipes, Recipe_Img, Users } = require("../models/Mindex");
 
@@ -14,26 +14,28 @@ exports.getRecipe = async (req, res) => {
     const recipe = await Recipes.findOne({
       where: { recipe_num },
       include: [
-        {
-          model: Users,
-          attributes: ["user_id"],
-        },
+        // {
+        //   model: Users,
+        //   attributes: ["user_id"],
+        // },
         {
           model: Recipe_Img,
           attributes: ["image_url"],
         },
       ],
+      raw: true
     });
+    console.log(">>>> ", recipe)
     res.render("recipeView", {
       isLogin: req.session.loggedin,
       title: "레시피 상세페이지",
-      recipe_title: "title",  //string
-      main_img: "imgPath",  //string
-      main_ing: "vodka",  // string
-      main_ing_detail: "ing detail",  // string
-      sub_ing: "sub ing",  // string
-      recipe_content: ["step1", "step2"], // array
-      sub_image: ["path1", "path2"],  // array
+      recipe_title: recipe.title, //: "title",  //string
+      main_img: recipe['Recipe_Imgs.image_url'], //: "imgPath",  //string
+      main_ing: recipe.main_ingredient, //: "vodka",  // string
+      main_ing_detail: recipe.main_ing_detail, //: "ing detail",  // string
+      sub_ing: recipe.sub_ingredient_detail, //: "sub ing",  // string
+      recipe_content: recipe.content.split('$'), //: ["step1", "step2"], // array
+      sub_image: ['sampele.png'], //: ["path1", "path2"],  // array
       likes_count: 10 // number
     });
     /*
@@ -65,16 +67,9 @@ exports.getRecipe = async (req, res) => {
 
 // 레시피 작성 버튼 클릭시 
 exports.getRecipeWrite = (req, res) => {
-  res.render("recipeView", {
+  res.render("recipeWrite", {
     isLogin: req.session.loggedin,
-    title: "레시피 작성페이지",
-    recipe_title: "title",  //string
-    main_img: "imgPath",  //string
-    main_ing: "vodka",  // string
-    main_ing_detail: "ing detail",  // string
-    sub_ing: "sub ing",  // string
-    recipe_content: ["step1", "step2"], // array
-    sub_image: ["path1", "path2"],  // array
+    title: "레시피 작성페이지"
   });
 };
 
@@ -88,12 +83,22 @@ exports.postRecipeWrite = async (req, res) => {
     // 레시피 데이터베이스에 저장
     const newRecipe = await Recipes.create({
         title,
-        user_num :1,
+        user_num: 2,// req.session.user.user_num,
         content,
         main_ingredient,
         main_ing_detail,
         sub_ingredient_detail
     });
+
+    // recipe_num 을 받기 위한 조회
+    const recipe = await Recipes.findOne({
+      order: [[ 'createdAt', 'DESC' ]],
+      //limit: 1,
+      where: { user_num: 2 },
+      attributes: ['recipe_num']
+      
+    });
+    console.log("recipe >>>>>> ", recipe.recipe_num);
 
     var imgFileArr = req.files; 
     // filename 속성을 추출하는 함수
@@ -115,9 +120,9 @@ exports.postRecipeWrite = async (req, res) => {
     for (i = 0; i < filenames.length; i++) {
       console.log("i >> ", i);
       const newImage = await Recipe_Img.create({
-      recipe_num:req.body.recipe_num,
-      image_url:filenames[i],
-      main_img:req.body.thumnail_num
+        recipe_num: recipe.recipe_num,
+        image_url: filenames[i],
+        main_img: i == 0 ? 1 : 0//req.body.thumnail_num
       });
     }
     res.send("File upload completed");  
@@ -165,6 +170,7 @@ exports.patchRecipe = async (req, res, next) => {
 exports.deleteRecipe = async (req, res) => {
   try {
     const { recipe_num } = req.query;
+    console.log(req.query);
     const isDeleted = await Recipes.destroy({
       where: { recipe_num },
     });
@@ -175,7 +181,7 @@ exports.deleteRecipe = async (req, res) => {
     } else {
       return res.send(false);
     }
-  } catch (error) {
+  } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
   }
