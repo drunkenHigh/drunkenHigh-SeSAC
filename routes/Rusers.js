@@ -31,8 +31,8 @@ router.delete('/mypage')
 
 // // post /user/profile
 //  router.post('/profile', controller.getUsers);
-// // patch /user/profile/edit
-// router.patch('/profile/edit', controller.updateUser);
-// // delete /user/profile/delete
-// router.delete('/profile/delete', controller.deleteUser);
+ // patch /user/profile/edit
+ //router.patch('/profile/edit', controller.updateUser);
+ // delete /user/profile/delete
+ //router.delete('/profile/delete', controller.deleteUser);
 module.exports = router;
