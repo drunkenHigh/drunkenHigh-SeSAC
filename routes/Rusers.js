@@ -1,5 +1,5 @@
 const express = require('express');
-const {getUmain,getUsers, postUsers, getLogin, postLogin,getLogout, postChkId, postChkName} = require('../controller/Cusers');
+const {getUmain,getUsers, postUsers, getLogin, postLogin,getLogout, postChkId, postChkName, getMyprofile} = require('../controller/Cusers');
 const router = express.Router();
 const uploadProfile = require('../middleware/uploadProfile');
 
@@ -22,10 +22,11 @@ router.get('/logout',getLogout)
 router.post('/register/chkid', postChkId)
 router.post('/register/chkName', postChkName)
 
-// // post /user/profile
-//  router.post('/profile', controller.getUsers);
+// // post /users/profile
+ router.get('/profile', getMyprofile);
 // // patch /user/profile/edit
-// router.patch('/profile/edit', controller.updateUser);
+router.patch('/profile/edit', controller.updateUser);
 // // delete /user/profile/delete
-// router.delete('/profile/delete', controller.deleteUser);
+//router.delete('/profile/delete', controller.deleteUser);
+
 module.exports = router;

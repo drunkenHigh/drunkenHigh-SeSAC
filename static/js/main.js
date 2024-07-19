@@ -160,15 +160,16 @@ const recipeBtn = document.querySelectorAll('.category-btn li')
 recipeBtn.forEach(ele=>{
     ele.onclick = async (e) => {
         e.preventDefault();
+        const currentScroll = document.querySelector('.recipe-list__container').offsetTop
         start = 0;
-        const btnTitle = ele.querySelector('.category-title').innerText;
+        const btnTitle = ele.querySelector('.btn-bx').getAttribute('title');
         // 초기화 
         recipeLists.innerHTML = '';
         recipeMoreBtnBx.innerHTML = `<button class="morebtn2 morebtn">+ 더보기</bottion>`
+        window.scrollTo({top : currentScroll, behavior: 'smooth'})
         await getRecipeList(btnTitle)
     }
 })
-
 
 // 레시피 목록 조회 함수
 async function getRecipeList(ingredient) {
@@ -214,7 +215,7 @@ function renderRecipeLists(recipes){
         if(recipe['Recipe_Imgs.image_url']){
             hcode += 
                 `<li>
-                  <a href="/recipes?recipe_num=${recipe.recipe_num}">
+                  <a href="/recipes/read?recipe_num=${recipe.recipe_num}">
                     <figure>
                       <img src="${recipe['Recipe_Imgs.image_url']}" alt="레시피이미지" class="recipe-list__img" />          
                     </figure>
@@ -225,7 +226,7 @@ function renderRecipeLists(recipes){
         } else {
             hcode += 
                 `<li>
-                  <a href="/recipes?recipe_num=${recipe.recipe_num}">
+                  <a href="/recipes/read?recipe_num=${recipe.recipe_num}">
                     <figure>
                       <img src="/public/img/default_img.jpg" alt="레시피이미지" class="recipe-list__img" />          
                     </figure>
@@ -248,7 +249,7 @@ if(recipeMoreBtn){
         try {
             const btnAxios = await axios({
                 method : 'get',
-                url : '/전체'
+                url : '/all'
             })
             const moreData = btnAxios.data
             if(moreData.length > MAXCOUNT) {
