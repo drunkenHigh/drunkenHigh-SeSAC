@@ -1,5 +1,21 @@
 const {Likes, Users, Recipes} = require('../models/Mindex');
 
+// 좋아요 갯수 가져오기
+exports.getLikesCount = async (req, res) => {
+    try {
+        const recipeNum = req.params.recipe_num; // URL 파라미터에서 recipe_num 가져오기
+        const count = await Likes.count({
+            where: { recipe_num: recipeNum }
+        });
+        console.log('count >>', count);
+        res.json({ count });
+    } catch (error) {
+        console.error('Error fetching likes count:', error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+
 // 좋아요 추가 또는 삭제
 exports.postLikes = async (req, res) => {
     if (!req.session.user) {
