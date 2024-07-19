@@ -1,3 +1,5 @@
+window.addEventListener('DOMContentLoaded', ()=>{
+
 const loginRegisterBtn = document.querySelector('.login-register a')
 const loginLink = document.querySelectorAll('.login-link')
 const loginBox = document.querySelector('.login__box')
@@ -62,8 +64,14 @@ async function getLogin(e) {
         const loginContainer = document.querySelector('.login__container') 
         const loginBtn = document.querySelector('.login-btn')
         const loginCloseBtn = document.querySelector('.login__close button')
+        const loginForm = document.querySelector('#login')
 
         loginBtn.addEventListener('click', postLogin)
+        loginForm.addEventListener('keypress', (e)=>{
+            if(e.keyCode === 13){
+                postLogin()
+            }
+        })
         loginCloseBtn.addEventListener('click', ()=>{
             loginContainer.remove();
         })
@@ -102,7 +110,11 @@ async function postLogin(){
             if(result.success){ // 로그인 성공 시
                 alert('환영합니다!')
                 loginContainer.remove();
-                document.location.href = currentURL;
+                if(currentURL.slice(-8) === 'register'){
+                    document.location.href = '/';
+                } else {
+                    document.location.href = currentURL;
+                }
             } 
         } catch(err){
             console.error(err);
@@ -110,3 +122,7 @@ async function postLogin(){
         }
     }
 }
+
+})
+
+

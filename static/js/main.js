@@ -119,9 +119,6 @@ function bubbleFlow(bubble, time, limit){
     }
 }
 
-
-
-
 // 카테고리 버튼 만드는 함수
 function makeCategoryBtn(){
     let hcode =``;
@@ -173,7 +170,6 @@ recipeBtn.forEach(ele=>{
 })
 
 
-
 // 레시피 목록 조회 함수
 async function getRecipeList(ingredient) {
     try{
@@ -182,9 +178,7 @@ async function getRecipeList(ingredient) {
             url : `/${ingredient}`,
         })
         const recipeData = getRecipeAxios.data;
-        console.log(recipeData);
-        console.log(recipeData[0].Recipe_Imgs[0].image_url);
-        console.log(recipeData[0].title);
+
         renderRecipeLists(recipeData.slice(start, start + MAXCOUNT));
         let recipeMoreBtn = recipeMoreBtnBx.querySelector('.morebtn2')
 
@@ -217,16 +211,30 @@ async function getRecipeList(ingredient) {
 function renderRecipeLists(recipes){
     let hcode = ``;
     recipes.forEach(recipe=>{
-        hcode += 
-            `<li>
-              <a href="/recipes?recipe_id=${recipe.recipe_num}">
-                <figure>
-                  <img src="${recipe.Recipe_Imgs[0].image_url}" alt="레시피이미지" class="recipe-list__img" />          
-                </figure>
-                <p class="recipe__writer">${recipe.User.user_name}</p>
-                <p class="recipe__title">${recipe.title}</p>
-              </a>
-            </li>`
+        if(recipe['Recipe_Imgs.image_url']){
+            hcode += 
+                `<li>
+                  <a href="/recipes?recipe_num=${recipe.recipe_num}">
+                    <figure>
+                      <img src="${recipe['Recipe_Imgs.image_url']}" alt="레시피이미지" class="recipe-list__img" />          
+                    </figure>
+                    <p class="recipe__writer">${recipe['User.user_name']}</p>
+                    <p class="recipe__title">${recipe.title}</p>
+                  </a>
+                </li>`
+        } else {
+            hcode += 
+                `<li>
+                  <a href="/recipes?recipe_num=${recipe.recipe_num}">
+                    <figure>
+                      <img src="/public/img/default_img.jpg" alt="레시피이미지" class="recipe-list__img" />          
+                    </figure>
+                    <p class="recipe__writer">${recipe['User.user_name']}</p>
+                    <p class="recipe__title">${recipe.title}</p>
+                  </a>
+                </li>`
+
+        }
     })
     
     recipeLists.innerHTML += hcode;

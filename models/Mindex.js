@@ -46,6 +46,8 @@ UsersModel.hasMany(RecipesModel, {
   // user 테이블에서 참조될 키는 'user_num'
   foreignKey: "user_num",
   sourceKey: "user_num",
+  onDelete: 'cascade',
+  onUpdate: 'cascade'
 });
 RecipesModel.belongsTo(UsersModel, {
   foreignKey: "user_num",
@@ -58,12 +60,28 @@ RecipesModel.hasMany(Recipe_Img_Model, {
   foreignKey: "recipe_num",
   // recipe 테이블에서 참조될 키는 'recipe_num'
   sourceKey: "recipe_num",
+  onDelete: 'cascade',
+  onUpdate: 'cascade'
 });
 Recipe_Img_Model.belongsTo(RecipesModel, {
   // recipe_img 테이블에 'recipe_num' fk 생성
   foreignKey: "recipe_num",
   // 참조하게 될 recipe 의 키는 'recipe_num'
   targetKey: "recipe_num",
+});
+
+// 좋아요
+LikesModel.belongsTo(UsersModel, {
+  foreignKey: 'user_num'
+});
+LikesModel.belongsTo(RecipesModel, {
+  foreignKey: 'recipe_num'
+});
+UsersModel.hasMany(LikesModel, {
+  foreignKey: 'user_num'
+});
+RecipesModel.hasMany(LikesModel, {
+  foreignKey: 'recipe_num'
 });
 
 db.sequelize = sequelize;

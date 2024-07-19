@@ -27,7 +27,7 @@ exports.postLogin = async (req, res) => {
             where:{
                 user_id
             },
-            attributes:['user_id','user_name','user_pw']
+            attributes:['user_id','user_name','user_pw', 'user_num']
         });
 
         if (!user) {
@@ -43,7 +43,8 @@ exports.postLogin = async (req, res) => {
         }else {
             req.session.user = {
                 user_id: user.user_id,
-                user_name: user.user_name
+                user_name: user.user_name,
+                user_num: user.user_num
             };
             
             req.session.loggedin = true;            
@@ -221,3 +222,5 @@ exports.getMyprofile = async (req, res) => {
     //     res.render('');
     // }
    }
+
+   

@@ -153,6 +153,7 @@ async function registerSubmit(){
         })
         const result = registerAxios.data
         if(result.success){
+            alert('환영합니다!')
             document.location.href = '/'
         }
     }catch(err){
