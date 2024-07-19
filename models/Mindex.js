@@ -75,21 +75,23 @@ Recipe_Img_Model.belongsTo(RecipesModel, {
 LikesModel.belongsTo(UsersModel, {
   foreignKey: 'user_num',
   sourceKey: 'user_num',
-  onDelete: 'cascade',
-  onUpdate: 'cascade'
+  
 });
 LikesModel.belongsTo(RecipesModel, {
   foreignKey: 'recipe_num',
   sourceKey: 'recipe_num',
-  onDelete: 'cascade',
-  onUpdate: 'cascade'
+  
 });
 
 UsersModel.hasMany(LikesModel, {
-  foreignKey: 'user_num'
+  foreignKey: 'user_num',
+  onDelete: 'cascade',
+  onUpdate: 'cascade'
 });
 RecipesModel.hasMany(LikesModel, {
-  foreignKey: 'recipe_num'
+  foreignKey: 'recipe_num',
+  onDelete: 'cascade',
+  onUpdate: 'cascade'
 });
 
 db.sequelize = sequelize;
