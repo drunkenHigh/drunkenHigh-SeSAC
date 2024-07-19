@@ -225,7 +225,7 @@
                     >
                     <figure>
                         <img
-                        src="<%= listsALl[i].Recipe_Imgs.image_url %>"
+                        src="<%= listsALl[i]['Recipe_Imgs.image_url'] %>"
                         alt="레시피이미지"
                         class="recipe-list__img"
                         />
@@ -253,7 +253,6 @@
       </section>
     </main>
     <%- include('./partials/footer.ejs') %>
-    <script src="/public/js/common.js"></script>
     <script src="/public/js/cookie.js"></script>
     <script src="/public/js/main.js"></script>
   </body>
