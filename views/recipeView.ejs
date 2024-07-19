@@ -8,25 +8,14 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     
     <!--Replace with your tailwind.css once created-->
-    <style>
-        .max-h-64 {
-            max-height: 16rem;
-        }
-        /*Quick overrides of the form input as using the CDN version*/
-        .form-input,
-        .form-textarea,
-        .form-select,
-        .form-multiselect {
-            background-color: #edf2f7;
-        }
-    </style>
+    <link rel="stylesheet" href="/public/css/write.css">
+
 </head>
 <body class="bg-gray-100 text-gray-900 tracking-wider leading-normal">
    <%- include('./partials/header.ejs') %>
     
     <!--Container-->
-    
-    <div class="container w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-16 mt-16">
+    <div class="container w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-16 mt-0">
         <div class="w-full lg:w-1/5 px-6 text-xl text-gray-800 leading-normal">
             <p class="text-base font-bold py-2 lg:pb-6 text-gray-700">Menu</p>
             <div class="block lg:hidden sticky inset-0">
