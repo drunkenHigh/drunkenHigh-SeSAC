@@ -1,0 +1,14 @@
+@import url(./common/reset.css);
+@import url(./common/core.css);
+@import url(./common/common.css);
+
+.max-h-64 {
+    max-height: 16rem;
+}
+/*Quick overrides of the form input as using the CDN version*/
+.form-input,
+.form-textarea,
+.form-select,
+.form-multiselect {
+    background-color: #edf2f7;
+}

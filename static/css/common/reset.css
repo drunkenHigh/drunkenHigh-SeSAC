@@ -23,7 +23,7 @@ a {
 /* 3. root - html 글자 크기 세팅 */
 html {
     /* rem단위 계산하기 쉽도록 10px 로 정함 */
-    font-size: 10px;
+    /* font-size: 10px; */
 }
 
 /* 4. 이미지 리셋 */

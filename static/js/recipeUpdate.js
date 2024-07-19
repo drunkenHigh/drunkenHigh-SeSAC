@@ -123,7 +123,8 @@ resetSubImageEvent();
 // 단계 추가하기 버튼 누르면 입력폼 추가
 const addStepButton = document.querySelector('#add-step');
 const recipeStepForm = document.querySelector('#add-step-wrap');
-let recipeStep = 1;
+let recipeStep = document.querySelector('.recipe-contents').childElementCount;
+
 addStepButton.addEventListener('click', () => {
     recipeStep++;
     const addStepHtml = `<div id="step-${recipeStep}" class="recipe-contents">
@@ -183,10 +184,14 @@ deleteStepButton.addEventListener('click', () => {
     resetSubImageEvent();
 })
 
+// recipe_num 가져오기
+const url = new URL(window.location.href);
+const recipe_num = url.parmas;
+console.log(recipe_num);
 
 // ==== 저장 =====
 // axios로 레시피 정보 보내기 
-const writeRecipe = async (recipeObj) => {
+const updateRecipe = async (recipeObj) => {
     try {
       const formData = new FormData();
   
@@ -208,8 +213,8 @@ const writeRecipe = async (recipeObj) => {
       
       
       await axios({
-        method: "post",
-        url: "/recipe/write",
+        method: "patch",
+        url: `/recipe/update?recipe_num=${recipe_num}`,
         data : formData,
         headers: { 
             //"Content-Type": "multipart/form-data" 
@@ -260,7 +265,6 @@ saveButton.addEventListener('click', () => {
             // 조회 페이지에서 어떻게 렌더링할지 정해지면 raw html 수정하기!
             //console.log(`TEST >>>> ${recipeStepNum}`, recipeSubImg);
             recipeRawHtml += (recipeContentText + "$");
-            recipeRawHtml.slice(0,-1);
             recipeSubImgs.push(recipeSubImg);
         })
 
@@ -275,7 +279,7 @@ saveButton.addEventListener('click', () => {
             recipeSubImgs
         }
         console.log(recipeObj.recipeTitle, recipeObj.mainIng, recipeObj.mainIngDetail, recipeObj.subIngString, recipeObj.mainImage);
-        writeRecipe(recipeObj);
+        updateRecipe(recipeObj);
 })
 
 
