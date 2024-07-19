@@ -64,7 +64,7 @@ app.get('*', (req, res) => {
 
 
 sequelize
-    .sync({ force: true })
+    .sync({ force: false })
     .then(() => {
         app.listen(port, () => {
             console.log('Database connected!');
