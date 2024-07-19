@@ -42,7 +42,7 @@
                         <% if(listsALl.length > 10){ %>
                         <% for(let i = 0; i < 10 ; i++){ %>
                             <li class="swiper-slide">
-                                <a href="/recipes/read?recipe_num=<%= listsALl[i].recipe_num%>">
+                                <a href="/recipe/read?recipe_num=<%= listsALl[i].recipe_num%>">
                                     <div class="slide-subbg"></div>
                                     <figure>
                                         <%if(listsALl[i]['Recipe_Imgs.image_url']){%>
@@ -56,7 +56,7 @@
                         <%}} else {%> 
                         <% for(let i = 0; i < listsALl.length ; i++){ %>    
                             <li class="swiper-slide">
-                                <a href="/recipes/read?recipe_num=<%= listsALl[i].recipe_num%>">
+                                <a href="/recipe/read?recipe_num=<%= listsALl[i].recipe_num%>">
                                     <div class="slide-subbg"></div>
                                     <figure>
                                         <%if(listsALl[i]['Recipe_Imgs.image_url']){%>
@@ -80,7 +80,7 @@
                     <% for(let i = 1; i <= 10 ; i++){ %>
                         <% let index = i % 10; %>
                             <li class="swiper-slide">
-                                <a href="/recipes/read?recipe_num=<%= listsALl[i].recipe_num%>">
+                                <a href="/recipe/read?recipe_num=<%= listsALl[i].recipe_num%>">
                                     <div class="slide-bg">
                                         <p class="receipe__title"><%= listsALl[index].title %></p>
                                     </div>
@@ -97,7 +97,7 @@
                         <% for(let i = 0; i < listsALl.length ; i++){ %>    
                             <% let index = i % 10; %>
                             <li class="swiper-slide">
-                                <a href="/recipes/read?recipe_num=<%= listsALl[i].recipe_num%>">
+                                <a href="/recipe/read?recipe_num=<%= listsALl[i].recipe_num%>">
                                     <div class="slide-bg">
                                         <p class="receipe__title"><%= listsALl[index].title %></p>
                                     </div>
@@ -123,7 +123,7 @@
                     <% for(let i = 0; i < 10 ; i++){ %>
                         <% let index = (i + 2) % 10; %>
                         <li class="swiper-slide">
-                            <a href="/recipes/read?recipe_num=<%= listsALl[i].recipe_num%>">
+                            <a href="/recipe/read?recipe_num=<%= listsALl[i].recipe_num%>">
                                 <div class="slide-subbg"></div>
                                 <figure>
                                     <%if(listsALl[i]['Recipe_Imgs.image_url']){%>
@@ -138,7 +138,7 @@
                     <% for(let i = 0; i < listsALl.length ; i++){ %>  
                         <% let index = (i + 2) % 10; %>  
                         <li class="swiper-slide">
-                            <a href="/recipes/read?recipe_num=<%= listsALl[i].recipe_num%>">
+                            <a href="/recipe/read?recipe_num=<%= listsALl[i].recipe_num%>">
                                 <div class="slide-subbg"></div>
                                 <figure>
                                     <%if(listsALl[i]['Recipe_Imgs.image_url']){%>
@@ -200,7 +200,7 @@
             <% for(let i = 0; i < 8; i++){ %>
             <li>
               <a
-                href="/recipes/read?recipe_num=<%= listsALl[i].recipe_num%>"
+                href="/recipe/read?recipe_num=<%= listsALl[i].recipe_num%>"
               >
                 <figure>
                     <%if(listsALl[i]['Recipe_Imgs.image_url']){%>
@@ -221,7 +221,7 @@
                 <% for(let i = 0; i < listsALl.length; i++){ %>
                 <li>
                     <a
-                    href="/recipes/read?recipe_num=<%= listsALl[i].recipe_num%>"
+                    href="/recipe/read?recipe_num=<%= listsALl[i].recipe_num%>"
                     >
                     <figure>
                         <img

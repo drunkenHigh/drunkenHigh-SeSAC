@@ -215,7 +215,7 @@ function renderRecipeLists(recipes){
         if(recipe['Recipe_Imgs.image_url']){
             hcode += 
                 `<li>
-                  <a href="/recipes/read?recipe_num=${recipe.recipe_num}">
+                  <a href="/recipe/read?recipe_num=${recipe.recipe_num}">
                     <figure>
                       <img src="${recipe['Recipe_Imgs.image_url']}" alt="레시피이미지" class="recipe-list__img" />          
                     </figure>
@@ -226,7 +226,7 @@ function renderRecipeLists(recipes){
         } else {
             hcode += 
                 `<li>
-                  <a href="/recipes/read?recipe_num=${recipe.recipe_num}">
+                  <a href="/recipe/read?recipe_num=${recipe.recipe_num}">
                     <figure>
                       <img src="/public/img/default_img.jpg" alt="레시피이미지" class="recipe-list__img" />          
                     </figure>
