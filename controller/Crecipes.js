@@ -88,16 +88,17 @@ exports.getRecipeUpdate = async (req, res) => {
     ],
     raw: true
   });
+  console.log(recipe);
   res.render('recipeUpdate', {
     isLogin: req.session.loggedin,
-    title: "레시피 수정페이지",
     recipe_title: recipe.title, //: "title",  //string
     main_img: recipe['Recipe_Imgs.image_url'], //: "imgPath",  //string
     main_ingredient: recipe.main_ingredient, //: "vodka",  // string
     main_ing_detail: recipe.main_ing_detail, //: "ing detail",  // string
     sub_ing: recipe.sub_ingredient_detail, //: "sub ing",  // string
     recipe_content: recipe.content.split('$'), //: ["step1", "step2"], // array
-    sub_image: ['sample.png'], //: ["path1", "path2"],  // array
+    sub_image: ['sample.png', '2.png'], //: ["path1", "path2"],  // array
+    step_num: recipe.content.split('$').length
   });
 };
 // 레시피 작성페이지에서 저장 버튼 클릭시 

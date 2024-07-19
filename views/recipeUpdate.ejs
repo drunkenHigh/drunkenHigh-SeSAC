@@ -2,13 +2,10 @@
 <html lang="en">
 <head>
     <%- include('include/include', { title: '레시피 수정' })%>
-    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>
-    <link href="https://unpkg.com/@tailwindcss/custom-forms/dist/custom-forms.min.css" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     
     <!--Replace with your tailwind.css once created-->
     <link rel="stylesheet" href="/public/css/write.css">
+    
 
 </head>
 <body class="bg-gray-100 text-gray-900 tracking-wider leading-normal">
@@ -98,7 +95,7 @@
                             </label>
                         </div>
                         <div class="md:w-2/3">
-                            <input class="form-input block w-full focus:bg-white" id="recipe-title" type="text" value="" placeholder="<%= title %>" required>
+                            <input class="form-input block w-full focus:bg-white" id="recipe-title" type="text" value="" placeholder="<%= recipe_title %>" required>
                             <p class="py-2 text-sm text-gray-600">독창적인 제목을 적어주세요</p>
                         </div>
                     </div>
@@ -222,7 +219,7 @@
                                 </span>
                             </div>
                             <div class="md:w-2/3">
-                                <textarea class="form-textarea block w-full focus:bg-white" id="my-textarea" value="" rows="3"><%= content[i] %></textarea>
+                                <textarea class="form-textarea block w-full focus:bg-white" id="my-textarea" value="" rows="3"><%= recipe_content[i] %></textarea>
                                 <p class="py-2 text-sm text-gray-600">예시: 잭 다니엘스 테네시 허니</p>
                             </div>
                         </div>
@@ -244,7 +241,7 @@
                                             <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">클릭하여 업로드 해주세요</span></p>
                                             <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG or JPEG (MAX. 800x400px).</p>
                                         </div>
-                                        <img class="object-scale-down rounded-lg max-h-full p-5 hover:opacity-50" src="<%= sub_imgs[i] %>" alt="">
+                                        <img class="object-scale-down rounded-lg max-h-full p-5 hover:opacity-50" src="<%= sub_image[i] %>" alt="">
                                         <input class="sub-image" hidden name="sub_image_<%= i+1 %>" id="sub-image-<%= i+1 %>"  aria-describedby="file_input_help" type="file">
                                     </label>
                                 </div> 
