@@ -1,5 +1,12 @@
 use sesac_project1;
 
+drop table recipe_img;
+drop table recipes;
+drop table users;
+drop table likes;
+
+show tables;
+
 insert into users (user_id, user_name, profile_img, user_pw, birth_day)
 values
 ('user1234', '김메롱', null, 'aaaa1111', '20000101'),
@@ -58,14 +65,18 @@ value
 
 select * from recipe_img;
 
-
-insert into likes (user_num, recipe_num) values 
-('1', '1'),
-('1', '2');
-
 select * from likes where user_num = '1' and recipe_num = '1';
 
 select * from likes;
+
+desc recipes;
+desc likes;
+desc recipe_img;
+
+SELECT `Recipes`.`title`, `Recipes`.`recipe_num`, `user`.`user_num` AS `user.user_num`, `user`.`user_name` AS `user.user_name`, `Recipe_Imgs`.`image_num` AS `Recipe_Imgs.image_num`, `Recipe_Imgs`.`image_url` AS `Recipe_Imgs.image_url` FROM `Recipes` AS `Recipes` LEFT OUTER JOIN `users` AS `user` ON `Recipes`.`user_num` = `user`.`user_num` LEFT OUTER JOIN `Recipe_Img` AS `Recipe_Imgs` ON `Recipes`.`recipe_num` = `Recipe_Imgs`.`recipe_num` AND `Recipe_Imgs`.`main_img` = 1 ORDER BY `Recipes`.`createdAt` DESC;
+
+insert into likes (user_num, recipe_num)
+values('1', '1');
 
 -- select count(*) from likes where recipe_num = '1'; 
 select count(recipe_num) from likes group by(recipe_num) order by recipe_num asc limit 10;
@@ -77,6 +88,34 @@ on r.recipe_num = l.recipe_num
 group by ri.image_url, r.title, r.recipe_num
 order by (l.recipe_num) asc 
 limit 10;
+
+
+
+
+        
+        
+SELECT 
+    Recipes.recipe_num, 
+    Recipes.title, 
+    Recipe_Img.image_url, 
+    T.likeCount
+FROM 
+    (SELECT 
+        recipe_num, 
+        COUNT(recipe_num) AS likeCount 
+     FROM Likes 
+     GROUP BY recipe_num 
+     ORDER BY likeCount DESC 
+     LIMIT 10) AS T
+JOIN Recipes ON Recipes.recipe_num = T.recipe_num
+LEFT JOIN Recipe_Img ON Recipe_Img.recipe_num = Recipes.recipe_num
+ORDER BY T.likeCount DESC;
+
+
+
+
+
+
 
 
 
