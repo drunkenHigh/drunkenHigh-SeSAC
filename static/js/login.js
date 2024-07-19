@@ -1,3 +1,5 @@
+window.addEventListener('DOMContentLoaded', ()=>{
+
 const loginRegisterBtn = document.querySelector('.login-register a')
 const loginLink = document.querySelectorAll('.login-link')
 const loginBox = document.querySelector('.login__box')
@@ -120,5 +122,7 @@ async function postLogin(){
         }
     }
 }
+
+})
 
 
