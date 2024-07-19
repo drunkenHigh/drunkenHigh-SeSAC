@@ -14,6 +14,7 @@ const sequelize = new Sequelize(
 const RecipesModel = require("./Mrecipe")(sequelize, Sequelize);
 const Recipe_Img_Model = require("./Mrecipe_img")(sequelize, Sequelize);
 const UsersModel = require("./Muser")(sequelize, Sequelize);
+const LikesModel = require('./Mlikes')(sequelize, Sequelize);
 
 // --- sequelize 사용시
 
@@ -72,11 +73,18 @@ Recipe_Img_Model.belongsTo(RecipesModel, {
 
 // 좋아요
 LikesModel.belongsTo(UsersModel, {
-  foreignKey: 'user_num'
+  foreignKey: 'user_num',
+  sourceKey: 'user_num',
+  onDelete: 'cascade',
+  onUpdate: 'cascade'
 });
 LikesModel.belongsTo(RecipesModel, {
-  foreignKey: 'recipe_num'
+  foreignKey: 'recipe_num',
+  sourceKey: 'recipe_num',
+  onDelete: 'cascade',
+  onUpdate: 'cascade'
 });
+
 UsersModel.hasMany(LikesModel, {
   foreignKey: 'user_num'
 });
@@ -88,6 +96,7 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 db.Recipes = RecipesModel;
 db.Recipe_Img = Recipe_Img_Model;
+db.Likes = LikesModel;
 
 db.Users = UsersModel;
 
