@@ -16,10 +16,13 @@ router.post('/:recipe_num/likes', postLikes);
 // get /recipe 레시피 "작성 화면" 보여주기
 router.get("/write", controller.getRecipeWrite);
 
-// post 레시피작성 페이지에서 "작성 완료" 버튼 클릭시
+// 수정 버튼클릭시
+router.get("/write/:recipe_num", controller.getRecipeUpdate);
+
+// post 레시피작성 페이지에서 "저장" 버튼 클릭시
 router.post("/write", mdware.upload, controller.postRecipeWrite);
 
-// patch /recipe/update?recipe_num=
+// patch 레시피수정 페이지에서 "수정하기" 버튼 클릭시
 router.patch("/update", controller.patchRecipe);
 
 // delete /recipe?recipe_num=
