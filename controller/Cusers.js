@@ -137,11 +137,14 @@ exports.postChkName = async (req, res) => {
 // 마이페이지 ---- 태완
 // myprofile controller 추가
 exports.getMyprofile = async (req, res) => {
-    const isLogin = req.session.loggedin;
+
+    const isLogin = true; //req.session.loggedin;
     if(isLogin) {
         // // session 으로 user 정보 받아오기
-        const user_id = req.session.user.user_id;
-        // const user_id = "user1";
+        // const user_id = req.session.user_id;
+        const user_id = "user2";
+
+    
         // user_name, profile_img 찾기
         const userInfo = await Users.findOne({
             where: {
@@ -166,7 +169,7 @@ exports.getMyprofile = async (req, res) => {
             recipeInfo.recipe_title = recipe.title;
             recipeInfo.main_ing = recipe.main_ingredient;
             recipeInfo.likes_count = recipe.likes_count;
-            //recipeInfo.write_data = recipe.created_at --> 확인필요
+            recipeInfo.write_date = recipe.createdAt;
             recipe_list.push(recipeInfo);
             // console.log("ㅆㄸㄴㅆ >>>>>>>> ", recipe.created_at);
         })
@@ -197,6 +200,71 @@ exports.getMyprofile = async (req, res) => {
         });
     } else {
         // 로그인 페이지
-        res.redirect('/')
+
+        res.redirect('/');
     }
-}
+   }
+
+   exports.deleteMyprofile = async (req, res) => {
+    try {
+        const { user_id } = req.body;
+        console.log(req.query);
+        const isDeleted = await Users.destroy({
+            where: { user_id },
+        });
+        console.log(isDeleted); 
+
+        if (isDeleted) {
+            return res.send(true);
+        } else {
+            return res.send(false);
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+    }
+   }
+
+    exports.patchMyprofile = async (req, res) => {
+        try {
+
+            const { user_id,
+                old_pw,
+                new_pw,
+                user_name } = req.body;
+            
+            const user = await Users.findOne({
+                where:{
+                    user_id
+                },
+                attributes:['user_pw']
+            });
+
+            // 비밀번호 비교
+            const isPasswordValid = await comparePw(user_pw, user.user_pw);
+            if (isPasswordValid) {
+                const isUpdated = await Users.update(
+                    {
+                        user_name,
+                        user_pw: hashPw(new_pw)
+                    },
+                    {
+                        where: { user_id }
+                    }
+                )
+            } else {
+                return res.send(false)
+            }
+
+            
+            // 암호화 + 프로필 이미지 + 닉네임 중복검사
+            if (isUpdated) {
+                return res.send(true);
+            } else {
+                return res.send(false);
+            }
+        } catch(err) {
+            console.error(err);
+            res.status(500).send("Internal Server Error");
+        }
+    }

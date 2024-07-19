@@ -51,18 +51,7 @@ $(window).scroll(function(){
 });
 
 // user id 받아오기
-// let user_id = 0;
-// axios({
-//     method: 'GET',
-//     url: `/user`
-    
-// }).then((res) => {
-//     console.log(res.data);
-//     //user_id = res.data;
-    
-// }).catch((err) => {
-//     console.error(err);
-// })
+const userId = document.querySelector('#user-id').innerText
 
 
 // 작성한 레시피 목록 불러오기
@@ -83,7 +72,7 @@ const waitForUserChange = () => {
 
             <!--Card-->
             <div id='change-profile-info' class="p-8 mt-6 lg:mt-0 rounded bg-white">
-                <form>
+                <form enctype="multipart/form-data">
                     <div class="md:flex mb-6">
                         <div class="md:w-1/3">
                             <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textarea">
@@ -92,8 +81,28 @@ const waitForUserChange = () => {
                         </div>
                         <div class="md:w-2/3">
                             <label class="block mb-2 text-sm font-medium " for="file_input">사진을 올려주세요</label>
-                            <input id="profile-image" class="block w-full text-sm bg-[#edf2f7] cursor-pointer focus:outline-none " aria-describedby="file_input_help" id="file_input" type="file">
-                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">5MB 이하의 .jpeg, .jpg, .png 파일만 올려주세요</p>
+
+                            <div class="flex items-center justify-center w-full">
+                                    <!--
+                                    <label for="profile-image" class="flex flex-col items-center justify-center w-full h-64 border-2 border-[#D9601A] border-dashed rounded-lg cursor-pointer bg-white hover:bg-white">
+                                        <div id="profile-image" class="flex flex-col items-center justify-center">
+                                            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                            </svg>
+                                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">클릭하여 업로드 해주세요</span></p>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG or JPEG (MAX. 800x400px).</p>
+                                        </div>
+                                        <img class="hidden object-scale-down rounded-lg max-h-full p-5 hover:opacity-50" src="" alt="">
+                                        <input hidden name="profile_image" id="profile-image"  aria-describedby="file_input_help" type="file">
+                                    </label>
+                                    -->
+
+                                    <label class="block mb-2 text-sm font-medium " for="file_input">사진을 올려주세요</label>
+                                    <input id="profile-image" class="block w-full text-sm bg-[#edf2f7] cursor-pointer focus:outline-none " aria-describedby="file_input_help" id="file_input" type="file">
+                                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">5MB 이하의 .jpeg, .jpg, .png 파일만 올려주세요</p>
+                            </div> 
+
+                            
                         </div>
                     </div>
                     <div class="md:flex mb-6">
@@ -114,7 +123,7 @@ const waitForUserChange = () => {
                         </div>
                         <div class="md:w-2/3">
                             <input type="password" class="form-input block w-full" id="old-pw" value="" rows="1"></input>
-                            <p class="py-2 text-sm text-gray-600">비밀번호 제한 조건</p>
+                            <p class="py-2 text-sm text-gray-600">비밀번호는 8~16자의 영문자, 숫자, 특수문자를 포함해야 합니다.</p>
                         </div>
                     </div>
                     <div class="md:flex mb-6">
@@ -125,7 +134,7 @@ const waitForUserChange = () => {
                         </div>
                         <div class="md:w-2/3">
                             <input type="password" class="form-input block w-full" id="changed-pw" value="" rows="1"></input>
-                            <p class="py-2 text-sm text-gray-600">비밀번호 제한 조건</p>
+                            <p class="py-2 text-sm text-gray-600">비밀번호는 8~16자의 영문자, 숫자, 특수문자를 포함해야 합니다.</p>
                         </div>
                     </div>
                 
@@ -144,15 +153,39 @@ const waitForUserChange = () => {
             <!--/Card-->`;            
             changeUserInfoWrap.insertAdjacentHTML("afterend", changeUserInfoHtml);
             changeUserFlag = true;
-            resolve();
+            resolve();          
         }, { once: true });
     });
 };
 
 
+// const profileImagePreview = () => {
+//     // 메인 이미지 선택하면 미리보기 하기
+//     const profileImageUpload = document.querySelector('#profile-image');
+//     const profileImage = document.querySelector('#profile-image label');
+//     const profileImageText = document.querySelector('#profile-image-text');
+//     profileImageUpload.addEventListener('change', (e) => {
+//         const files = e.currentTarget.files;
+//         let reader = new FileReader();
+    
+//         reader.onload = function(e) {
+//             profileImage.removeChild(profileImage.querySelector('img'));
+//             let img = document.createElement("img");
+//             img.setAttribute("src", e.target.result);
+//             img.setAttribute("class", "object-scale-down rounded-lg max-h-full p-5 hover:opacity-50");
+//             profileImageText.classList.add("hidden");
+//             profileImage.appendChild(img);
+//         };
+//         reader.readAsDataURL(e.target.files[0])
+//         console.log(files);
+//     })
+// }
+// profileImagePreview();
+
+
+
 const setupChangeUserInfoSaveButton = async () => {
     await waitForUserChange();
-
     const changeUserInfoSaveButton = document.querySelector('#save-change-info');
     changeUserInfoSaveButton.addEventListener('click', () => {
         // 프로필 이미지 저장
@@ -166,18 +199,25 @@ const setupChangeUserInfoSaveButton = async () => {
         // 변경된 비밀번호 저장  --> 보안화 고민 필요
         const changedPw = document.querySelector('#changed-pw').value;
 
+        const formData =  new FormData();
+        formData.append('user_id', userId);
+        formData.append('old_pw', originalPw);
+        formData.append('new_pw', changedPw);
+        formData.append('user_name', changedUsername);
+        formData.append('profile_img', profileImage);
+        
         axios ({
-            method: 'PATCH',
-            url: '/users/profile/edit',
-            data: {
-                profileImage,
-                old_pw: originalPw,
-                new_pw: changedPw,
-                name: changedUsername
-            }
+            method: 'POST',
+            url: '/users/mypage/edit',
+            data: formData
+            //headers: { 'content-type': 'application/x-www-form-urlencoded' }
         }).then(res => {
             console.log(res.data);
-            if (res.data.result) alert('Edited!');  
+            if (res.data.result) {
+                alert('회원정보가 수정되었습니다!');
+            } else {
+                alert('오류가 발생했습니다. 비밀번호를 확인해주세요!')
+            }
         });
     })
 };
@@ -185,19 +225,22 @@ const setupChangeUserInfoSaveButton = async () => {
 setupChangeUserInfoSaveButton();
 
 
-// 회원탈퇴 누르면 delette로 axios 전송
-function profileDelete() {
+// 회원탈퇴 누르면 delete로 axios 전송
+const profileDelete = async () => {
     axios({
         method: 'DELETE',
-        url: '/user/delete',
+        url: '/users/mypage',
         data: {
-            id: document.getElementById('id').value
+            user_id: userId
+        },
+        headers : {
+            "Content-type": "application/json"
         }
     })
     .then((res) => {
         console.log(res.data)
-        if (res.data.result) {
-            alert('Deleted!');
+        if (res.data) {
+            alert('탈퇴 되었습니다!');
             document.location.href = '/';
         }
     });
