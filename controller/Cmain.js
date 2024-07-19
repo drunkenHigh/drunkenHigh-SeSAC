@@ -36,7 +36,7 @@ const getRecipeListMain = async (req, res) => {
         console.log(req.params.main_ingredient);
         const { main_ingredient } = req.params;
         let lists;
-        if(main_ingredient==='전체'){
+        if(main_ingredient==='all'){
             lists = await Recipes.findAll({
                 include: [
                     {

@@ -21,12 +21,6 @@ const LikesModel = (sequelize, DataTypes) => {
         {
             freezeTableName: true,
             timestamps: false,
-            indexes: [
-                {
-                    unique: true,
-                    fields: ['user_num', 'recipe_num']
-                }
-            ]
         }
     );
     return Likes;
