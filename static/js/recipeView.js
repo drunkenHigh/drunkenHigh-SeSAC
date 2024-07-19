@@ -86,7 +86,7 @@ const updateButton = document.querySelector('#update-button');
 updateButton.addEventListener('click', async () => {
     if(confirm("수정하시겠습니까?")) {
         // 수정 페이지로 이동
-        window.location.href = `/write?recipe_num=${recipe_num}`;
+        window.location.href = `/recipe/write?recipe_num=${recipe_num}`;
     }
 }, {once:true})
 
