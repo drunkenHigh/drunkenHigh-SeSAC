@@ -59,7 +59,7 @@ $(window).scroll(function(){
 
 
 const url = new URL(window.location.href);
-const recipe_id = url.searchParams.get('recipe_id');
+const recipe_num = url.searchParams.get('recipe_num');
 
 
 // 삭제 버튼
@@ -69,7 +69,7 @@ deleteButton.addEventListener('click', async () => {
         method: 'delete',
         url: "/write/delete",
         data: {
-            recipe_id
+            recipe_num
         },
         headers: {
             'content-type': 'application/json'
@@ -89,7 +89,7 @@ const updateButton = document.querySelector('#update-button');
 updateButton.addEventListener('click', async () => {
     if(confirm("수정하시겠습니까?")) {
         // 수정 페이지로 이동
-        window.location.href = `/write?recipe_id=${recipe_id}`;
+        window.location.href = `/write?recipe_num=${recipe_num}`;
     }
 }, {once:true})
 

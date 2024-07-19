@@ -163,6 +163,9 @@ const setupChangeUserInfoSaveButton = async () => {
         // 변경된 닉네임 저장
         const changedUsername = document.querySelector('#changed-nickname').value;
         
+        // 원래 비밀번호
+        const originalPw = document.querySelector('#old-pw').value;
+
         // 변경된 비밀번호 저장  --> 보안화 고민 필요
         const changedPw = document.querySelector('#changed-pw').value;
 
@@ -171,7 +174,8 @@ const setupChangeUserInfoSaveButton = async () => {
             url: '/user/edit',
             data: {
                 profileImage,
-                pw: changedPw,
+                old_pw: originalPw,
+                new_pw: changedPw,
                 name: changedUsername
             }
         }).then(res => {
