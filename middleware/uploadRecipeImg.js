@@ -1,12 +1,19 @@
 const multer = require("multer");
 const path = require("path");
-// const express = require('express');
-// const app = express();
-// app.use('/uploads', express.static(__dirname + '/uploads/recipe'));
+
 console.log("middleware connected.");
 
-// 이미지 저장하기
 
+
+const { Recipes, Recipe_Img, Users } = require("../models/Mindex");
+
+// recipe_num 을 받기 위한 조회
+// user_n
+
+
+
+
+// 이미지 저장하기
 // multer 미들 웨어 등록
 const uploadFile = multer({
     storage: multer.diskStorage({
@@ -14,11 +21,19 @@ const uploadFile = multer({
       done(null, "uploads/recipe"); // 파일을 저장할 경로
     },
     filename(req, file, done) {
+        
+        const recipe = Recipes.findOne({
+          order: [[ 'createdAt', 'DESC' ]],
+          where: { user_num: 2 },
+          attributes: ['recipe_num']
+        });
+        // console.log("asdfadfasfa >>>>> ", recipe.recipe_num);
         const ext = path.extname(file.originalname);
         let fileCount = 0;
         for (const key in req.files) {
+          
           fileCount += req.files[key].length;
-          done(null, path.basename("recipe_num2-img" + fileCount , ext) + ext); // 저장할 파일명
+          done(null, path.basename(`${recipe.recipe_num}-img` + fileCount , ext) + ext); // 저장할 파일명
         }
     },
     }),

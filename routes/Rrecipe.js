@@ -19,6 +19,6 @@ router.post("/write", mdware.upload, controller.postRecipeWrite);
 router.patch("/update", controller.patchRecipe);
 
 // delete /recipe?recipe_num=
-router.delete("/delete", controller.deleteRecipe);
+router.delete("/read", controller.deleteRecipe);
 
 module.exports = router;

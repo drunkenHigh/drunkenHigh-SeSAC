@@ -1,5 +1,5 @@
 const express = require('express');
-const {getUmain,getUsers, postUsers, getLogin, postLogin,getLogout, postChkId, postChkName} = require('../controller/Cusers');
+const {getUmain,getUsers, postUsers, getLogin, postLogin,getLogout, postChkId, postChkName, getMyprofile} = require('../controller/Cusers');
 const router = express.Router();
 const uploadProfile = require('../middleware/uploadProfile');
 
@@ -21,6 +21,13 @@ router.get('/logout',getLogout)
 // 중복검사
 router.post('/register/chkid', postChkId)
 router.post('/register/chkName', postChkName)
+
+
+// get 
+router.get('/mypage', getMyprofile);
+
+// delete
+router.delete('/mypage')
 
 // // post /user/profile
 //  router.post('/profile', controller.getUsers);
