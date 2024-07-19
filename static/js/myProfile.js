@@ -68,8 +68,6 @@ $(window).scroll(function(){
 // 작성한 레시피 목록 불러오기
 
 
-
-
 // 회원정보 수정 버튼 누르면 수정 폼 나타나게 하기
 const changeUserInfoButton = document.querySelector('#change-user-info');
 const changeUserInfoWrap = document.querySelector('#change-user-info-wrap');
@@ -95,7 +93,7 @@ const waitForUserChange = () => {
                         <div class="md:w-2/3">
                             <label class="block mb-2 text-sm font-medium " for="file_input">사진을 올려주세요</label>
                             <input id="profile-image" class="block w-full text-sm bg-[#edf2f7] cursor-pointer focus:outline-none " aria-describedby="file_input_help" id="file_input" type="file">
-                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG, JPG or JPEG (MAX. 800x400px).</p>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">5MB 이하의 .jpeg, .jpg, .png 파일만 올려주세요</p>
                         </div>
                     </div>
                     <div class="md:flex mb-6">
@@ -105,8 +103,7 @@ const waitForUserChange = () => {
                             </label>
                         </div>
                         <div class="md:w-2/3">
-                            <textarea class="form-textarea block w-full focus:bg-white" id="changed-nickname" value="" rows="1"></textarea>
-                            <p class="py-2 text-sm text-gray-600">특수문자 불가</p>
+                            <textarea class="form-textarea block w-full" id="changed-nickname" value="" rows="1"></textarea>
                         </div>
                     </div>
                     <div class="md:flex mb-6">
@@ -116,7 +113,7 @@ const waitForUserChange = () => {
                             </label>
                         </div>
                         <div class="md:w-2/3">
-                            <input type="password" class="form-input block w-full focus:bg-white" id="old-pw" value="" rows="1"></input>
+                            <input type="password" class="form-input block w-full" id="old-pw" value="" rows="1"></input>
                             <p class="py-2 text-sm text-gray-600">비밀번호 제한 조건</p>
                         </div>
                     </div>
@@ -127,7 +124,7 @@ const waitForUserChange = () => {
                             </label>
                         </div>
                         <div class="md:w-2/3">
-                            <input type="password" class="form-input block w-full focus:bg-white" id="changed-pw" value="" rows="1"></input>
+                            <input type="password" class="form-input block w-full" id="changed-pw" value="" rows="1"></input>
                             <p class="py-2 text-sm text-gray-600">비밀번호 제한 조건</p>
                         </div>
                     </div>
@@ -171,7 +168,7 @@ const setupChangeUserInfoSaveButton = async () => {
 
         axios ({
             method: 'PATCH',
-            url: '/user/edit',
+            url: '/users/profile/edit',
             data: {
                 profileImage,
                 old_pw: originalPw,

@@ -1,76 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <%- include('include/include', { title: '마이페이지' })%>
-    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>
-    <link href="https://unpkg.com/@tailwindcss/custom-forms/dist/custom-forms.min.css" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    
-    <!--Replace with your tailwind.css once created-->
-    <link rel="stylesheet" href="/public/css/write.css">
-
+    <%- include('include/include', { title : 'DRUNKEN HIGH | 마이페이지'  })%>
+    <link rel="stylesheet" href="/public/css/profile.css" />
 </head>
 <body class="bg-white text-gray-900 tracking-wider leading-normal">
     <%- include('./partials/header.ejs') %>
-    
+    <main>
     <!--Container-->
-    <div class="container w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-16 mt-0">
-        <div class="w-full lg:w-1/5 px-6 text-xl text-gray-800 leading-normal">
-            <p class="text-base font-bold py-2 lg:pb-6 text-gray-700">Menu</p>
-            <div class="block lg:hidden sticky inset-0">
-                <button id="menu-toggle" class="flex w-full justify-end px-3 py-3 bg-white lg:bg-transparent border rounded border-gray-600 hover:border-yellow-600 appearance-none focus:outline-none">
-                    <svg class="fill-current h-3 float-right" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                    </svg>
-                </button>
-            </div>
-            <div class="w-full sticky inset-0 hidden max-h-64 lg:h-auto overflow-x-hidden overflow-y-auto lg:overflow-y-hidden lg:block mt-0 my-2 lg:my-0 border border-gray-400 lg:border-transparent bg-white shadow lg:shadow-none lg:bg-transparent z-20" style="top:6em;" id="menu-content">
-                <ul class="list-reset py-2 md:py-0">
-                    <li class="py-1 md:my-2 hover:bg-yellow-100 lg:hover:bg-transparent border-l-4 border-transparent font-bold border-yellow-600">
-                        <a href='#profile-info' class="block pl-4 align-middle text-gray-700 no-underline hover:text-yellow-600">
-                            <span class="pb-1 md:pb-0 text-sm">회원 정보</span>
-                        </a>
-                    </li>
-                    <li class="py-1 md:my-2 hover:bg-yellow-100 lg:hover:bg-transparent border-l-4 border-transparent">
-                        <a href='#main-ing' class="block pl-4 align-middle text-gray-700 no-underline hover:text-yellow-600">
-                            <span class="pb-1 md:pb-0 text-sm">제목과 주재료</span>
-                        </a>
-                    </li>
-                    <li class="py-1 md:my-2 hover:bg-yellow-100 lg:hover:bg-transparent border-l-4 border-transparent">
-                        <a href='#recipe-img' class="block pl-4 align-middle text-gray-700 no-underline hover:text-yellow-600">
-                            <span class="pb-1 md:pb-0 text-sm">사진</span>
-                        </a>
-                    </li>
-                    <li class="py-1 md:my-2 hover:bg-yellow-100 lg:hover:bg-transparent border-l-4 border-transparent">
-                        <a href='#recipe-cont' class="block pl-4 align-middle text-gray-700 no-underline hover:text-yellow-600">
-                            <span class="pb-1 md:pb-0 text-sm">레시피</span>
-                        </a>
-                    </li>
-
-                    <li class="py-1 md:my-2 hover:bg-yellow-100 lg:hover:bg-transparent border-l-4 border-transparent">
-                        <a href='#save-recipe' class="block pl-4 align-middle text-gray-700 no-underline hover:text-yellow-600">
-                            <span class="pb-1 md:pb-0 text-sm">저장</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
+    <div class="container w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-16">
         <!--Section container-->
         <section class="w-full lg:w-4/5">
-
             <!--Title-->
-            <h1 class="flex items-center font-sans font-bold break-normal text-gray-700 px-2 text-xl mt-12 lg:mt-0 md:text-2xl">
+            <h1 class="flex items-center font-sans font-bold break-normal px-2 text-xl mt-12 lg:mt-0 md:text-2xl profile-title">
 				마이페이지
 			</h1>
-
             <!--divider-->
             <hr class="bg-gray-300 my-12">
-
             <!--Title-->
             <h2 id='profile-info' class="font-sans font-bold break-normal text-gray-700 px-2 pb-8 text-xl">회원 정보</h2>
-
             <!--Card-->
             <div class="p-8 mt-6 lg:mt-0 leading-normal rounded shadow bg-white font-bold">
                 <div class="md:flex mb-6">
@@ -78,7 +26,15 @@
                         <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textfield">
                             프로필 사진
                         </label>
-                        <img class="object-scale-down rounded-full max-h-full" src="<%= profile_img %>" alt="profile image">
+                        <% if(profile_img){ %>
+                            <figure class="profile-imgbx">
+                                <img class="object-scale-down rounded-full max-h-full profile-img" src="<%= profile_img %>" alt="profile image">
+                            </figure>
+                        <% } else {%>
+                            <figure class="profile-imgbx">
+                                <img class="object-scale-down rounded-full max-h-full profile-img" src="/public/img/user.jpg" alt="profile image">
+                            </figure>
+                        <% } %>
                     </div>
                     <div class="md:w-2/3">
                         <!-- 이름 -->
@@ -116,14 +72,10 @@
                     </div>
                 </div>
             </div>
-            
-
             <!--divider-->
             <hr class="bg-gray-300 my-12">
-
             <!--Title-->
             <h2 class="font-sans font-bold break-normal text-gray-700 px-2 pb-8 text-xl">작성한 레시피 목록</h2>
-
             <!--Card-->
             <div id='main-ing' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
                     <% recipe_list.forEach((recipe, index) => { %>
@@ -203,16 +155,9 @@
          </div>
 
       </div>
+    </main>
       <!--/container-->
     <%- include('./partials/footer.ejs') %>
-
-
-    
-        
-    <!-- jQuery -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="module" src="../public/js/myProfile.js"></script>
-
-    
 </body>
 </html>
