@@ -74,22 +74,22 @@ Recipe_Img_Model.belongsTo(RecipesModel, {
 // 좋아요
 LikesModel.belongsTo(UsersModel, {
   foreignKey: 'user_num',
-  sourceKey: 'user_num',
-  
+  targetKey: 'user_num'
 });
 LikesModel.belongsTo(RecipesModel, {
   foreignKey: 'recipe_num',
-  sourceKey: 'recipe_num',
-  
+  targetKey: 'recipe_num'
 });
 
 UsersModel.hasMany(LikesModel, {
   foreignKey: 'user_num',
+  sourceKey: 'user_num',
   onDelete: 'cascade',
   onUpdate: 'cascade'
 });
 RecipesModel.hasMany(LikesModel, {
   foreignKey: 'recipe_num',
+  sourceKey: 'recipe_num',
   onDelete: 'cascade',
   onUpdate: 'cascade'
 });
