@@ -21,7 +21,6 @@ const getRecipeListAll = async () => {
             order: [['createdAt', 'DESC']], // 최신 레시피부터 정렬
         });
 
-        // 배열객체 만드는 함수
         const listsData = () =>{
             const data = listsALl.map(ele=>({
                 title : ele.dataValues.title,
@@ -31,7 +30,7 @@ const getRecipeListAll = async () => {
             }))
 
             return data
-         }
+            }
 
         const listsDatas = listsData()
 
