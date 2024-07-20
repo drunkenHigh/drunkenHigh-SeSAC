@@ -1,6 +1,6 @@
 // 모델 가져오기
 const { Recipes, Users, Recipe_Img } = require('../models/Mindex');
-const image_path = '/uploads/recipe';
+const image_path = '/uploads/recipe/';
 
 // 전체 레시피 리스트 가져오기 (이미지, 제목, 작성자) // 테스트 완료!!!
 const getRecipeListAll = async () => {
@@ -22,7 +22,7 @@ const getRecipeListAll = async () => {
             order: [['createdAt', 'DESC']], // 최신 레시피부터 정렬
             raw : true
         });
-        console.log(listsALl);
+        
         return listsALl;
     } catch (error) {
         console.error(error);
@@ -87,10 +87,10 @@ const getRecipeListMain = async (req, res) => {
 const main = async (req, res) => {
     try {
         const listsALl = await getRecipeListAll();
-        res.render('index', { listsALl, isLogin :req.session.loggedin})
+        res.render('index', { listsALl, isLogin :req.session.loggedin, image_path})
     } catch (error) {
         console.error(error);
-        res.render('index', { listsALl : null, isLogin : req.session.loggedin})
+        res.render('index', { listsALl : null, isLogin : req.session.loggedin, image_path})
         // res.status(500).send('Internal Server Error');
 
     }

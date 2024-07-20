@@ -46,7 +46,7 @@
                                     <div class="slide-subbg"></div>
                                     <figure>
                                         <%if(listsALl[i]['Recipe_Imgs.image_url']){%>
-                                        <img src="<%= listsALl[i]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
+                                        <img src="<%= image_path%><%= listsALl[i]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
                                         <%}else {%>
                                         <img src="/public/img/default_img.jpg" alt="레시피이미지" class="recipe-list__img" />          
                                         <%}%>
@@ -60,7 +60,7 @@
                                     <div class="slide-subbg"></div>
                                     <figure>
                                         <%if(listsALl[i]['Recipe_Imgs.image_url']){%>
-                                        <img src="<%= listsALl[i]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
+                                        <img src="<%= image_path%><%= listsALl[i]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
                                         <%}else {%>
                                         <img src="/public/img/default_img.jpg" alt="레시피이미지" class="recipe-list__img" />          
                                         <%}%>
@@ -86,7 +86,7 @@
                                     </div>
                                     <figure>
                                         <%if(listsALl[i]['Recipe_Imgs.image_url']){%>
-                                        <img src="<%= listsALl[index]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
+                                        <img src="<%= image_path%><%= listsALl[index]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
                                         <%}else {%>
                                         <img src="/public/img/default_img.jpg" alt="레시피이미지" class="recipe-list__img" />          
                                         <%}%>
@@ -103,7 +103,7 @@
                                     </div>
                                     <figure>
                                         <%if(listsALl[i]['Recipe_Imgs.image_url']){%>
-                                        <img src="<%= listsALl[index]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
+                                        <img src="<%= image_path%><%= listsALl[index]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
                                         <%}else {%>
                                         <img src="/public/img/default_img.jpg" alt="레시피이미지" class="recipe-list__img" />          
                                         <%}%>
@@ -127,7 +127,7 @@
                                 <div class="slide-subbg"></div>
                                 <figure>
                                     <%if(listsALl[i]['Recipe_Imgs.image_url']){%>
-                                    <img src="<%= listsALl[index]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
+                                    <img src="<%= image_path%><%= listsALl[index]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
                                     <%}else {%>
                                     <img src="/public/img/default_img.jpg" alt="레시피이미지" class="recipe-list__img" />          
                                     <%}%>
@@ -141,9 +141,10 @@
                             <a href="/recipe/read?recipe_num=<%= listsALl[i].recipe_num%>">
                                 <div class="slide-subbg"></div>
                                 <figure>
-                                    <%if(listsALl[i]['Recipe_Imgs.image_url']){%>
-                                    <img src="<%= listsALl[i]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
-                                    <%}else {%>
+                                    <%if(listsALl[index]){%>
+                                        <%if(listsALl[index]['Recipe_Imgs.image_url']){%>
+                                        <img src="<%= image_path%><%= listsALl[index]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
+                                    <%}}else {%>
                                     <img src="/public/img/default_img.jpg" alt="레시피이미지" class="recipe-list__img" />          
                                     <%}%>
                                 </figure>
@@ -204,9 +205,9 @@
               >
                 <figure>
                     <%if(listsALl[i]['Recipe_Imgs.image_url']){%>
-                    <img src="<%= listsALl[i]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
+                        <img src="<%= image_path%><%= listsALl[i]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
                     <%}else {%>
-                    <img src="/public/img/default_img.jpg" alt="레시피이미지" class="recipe-list__img" />          
+                        <img src="/public/img/default_img.jpg" alt="레시피이미지" class="recipe-list__img" />          
                     <%}%>
                 </figure>
                 <p class="recipe__writer">
@@ -224,11 +225,11 @@
                     href="/recipe/read?recipe_num=<%= listsALl[i].recipe_num%>"
                     >
                     <figure>
-                        <img
-                        src="<%= listsALl[i]['Recipe_Imgs.image_url'] %>"
-                        alt="레시피이미지"
-                        class="recipe-list__img"
-                        />
+                        <%if(listsALl[i]['Recipe_Imgs.image_url']){%>
+                            <img src="<%= image_path%><%= listsALl[i]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
+                        <%}else {%>
+                            <img src="/public/img/default_img.jpg" alt="레시피이미지" class="recipe-list__img" />          
+                        <%}%>
                     </figure>
                     <p class="recipe__writer">
                         <%= listsALl[i]['User.user_name'] %>
