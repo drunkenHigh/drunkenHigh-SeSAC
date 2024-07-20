@@ -91,6 +91,32 @@ updateButton.addEventListener('click', async () => {
 }, {once:true})
 
 // 좋아요 기능: 미완성 -------------------------
+
+
+const btn = document.getElementById('like');
+        btn.addEventListener('click', ()=>{
+            btn.classList.toggle('active')
+        })
+
+
+const getLikesCount = async () => {
+    await axios({
+        method: 'get',
+        url: `/recipe/${recipe_num}/count`,
+    }).then((res) => {
+        const likeButton = document.querySelector('#like');
+        const likeCount = document.querySelector('#likes-count');
+
+        if(res.data.alreadyLiked) {
+            likeButton.classList.add('bg-red');
+        } else {
+            likeButton.classList.add('bg-white');
+        }
+        likeCount.innerText = res.data.count;
+    })
+}
+getLikesCount();
+
 let main = {
 
     init: function () {
