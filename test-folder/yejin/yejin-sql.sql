@@ -57,7 +57,6 @@ CREATE TABLE RECIPES(
     USER_NUM  INT NOT NULL,
     TITLE TEXT NOT NULL,
     CONTENT TEXT NOT NULL,
-    LIKES_COUNT INT default 0,
     MAIN_INGREDIENT VARCHAR(50) NOT NULL,
     MAIN_ING_DETAIL TEXT NULL,
     sub_ingredient_detail TEXT NULL,
@@ -70,6 +69,7 @@ CREATE TABLE RECIPE_IMG(
 	IMAGE_NUM INT auto_increment primary key,
     RECIPE_NUM INT NOT NULL ,
     IMAGE_URL VARCHAR(255) ,
+    
     MAIN_IMG INT default '0',
     foreign key(RECIPE_NUM) references RECIPES(RECIPE_NUM) on update cascade on delete cascade
 );
