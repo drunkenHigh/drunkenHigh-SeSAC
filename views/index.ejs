@@ -142,7 +142,7 @@
                                 <div class="slide-subbg"></div>
                                 <figure>
                                     <%if(listsALl[i]['Recipe_Imgs.image_url']){%>
-                                    <img src="<%= listsALl[index]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
+                                    <img src="<%= listsALl[i]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
                                     <%}else {%>
                                     <img src="/public/img/default_img.jpg" alt="레시피이미지" class="recipe-list__img" />          
                                     <%}%>
@@ -231,7 +231,7 @@
                         />
                     </figure>
                     <p class="recipe__writer">
-                        <%= listsALl[i].User.user_name %>
+                        <%= listsALl[i]['User.user_name'] %>
                         </p>
                     <p class="recipe__title">
                         <%= listsALl[i].title %>

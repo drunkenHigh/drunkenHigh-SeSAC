@@ -1,5 +1,6 @@
 // 모델 가져오기
 const { Recipes, Users, Recipe_Img } = require('../models/Mindex');
+const image_path = '/uploads/recipe';
 
 // 전체 레시피 리스트 가져오기 (이미지, 제목, 작성자) // 테스트 완료!!!
 const getRecipeListAll = async () => {
@@ -21,7 +22,7 @@ const getRecipeListAll = async () => {
             order: [['createdAt', 'DESC']], // 최신 레시피부터 정렬
             raw : true
         });
-
+        console.log(listsALl);
         return listsALl;
     } catch (error) {
         console.error(error);

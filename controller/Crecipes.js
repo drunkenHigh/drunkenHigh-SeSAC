@@ -1,5 +1,5 @@
 
-const { Recipes, Recipe_Img, Users } = require("../models/Mindex");
+const { Recipes, Recipe_Img, Users, Likes } = require("../models/Mindex");
 
 // get /recipe/read?recipe_num=1 레시피 상세보기 페이지 
 // select * from where rcp_id=?
@@ -23,7 +23,9 @@ exports.getRecipe = async (req, res) => {
       plain: true, // 단일 객체로 반환
       nest: true // 중첩된 객체로 반환하도록 설정
     });
-    // console.log(">>>> ", recipe)
+    const likesCount = await Likes.count({
+      where : { recipe_num }
+    })
 
   let imageUrls;
   let subImageUrls;
@@ -50,6 +52,7 @@ exports.getRecipe = async (req, res) => {
       sub_ing: recipe.sub_ingredient_detail, //: "sub ing",  // string
       recipe_content: recipe.content.split('$'), //: ["step1", "step2"], // array
       sub_image: subImageUrls, //: ["path1", "path2"],  // array    
+      likes_count : likesCount
     });
   } catch (err) {
     console.error(err);
@@ -60,7 +63,7 @@ exports.getRecipe = async (req, res) => {
 
 // 레시피 작성 버튼 클릭시 
 exports.getRecipeWrite = (req, res) => {
-  var user_session = req.session.user_num;
+  let user_session = req.session.user.user_num;
   if (!user_session) {
     console.error("유저 정보가 없습니다. 로그인 해주세요.", user_session);
   }
@@ -73,19 +76,22 @@ exports.getRecipeWrite = (req, res) => {
 // post 레시피 작성 페이지에서 "저장" 버튼 클릭시
 exports.postRecipeWrite = async (req, res) => {
   try {
-    var user_session = req.session.user.user_num;
-    if (!user_session) {
-      console.error("유저 정보가 없습니다. 로그인 해주세요.", user_session);
+
+    let isLogin = req.session.loggedin
+    let user_num = req.session.user.user_num
+    if (!isLogin) {
+      console.error("유저 정보가 없습니다. 로그인 해주세요.");
+
     }
     console.log("레시피 저장 버튼 클릭 postRecipe >> \n", req.body);
-    // console.log("user > ",req.session.user_num);
+    
     const { title, content, main_ingredient, main_ing_detail,
       sub_ingredient_detail, mainImage } = req.body;
 
     // 레시피 데이터베이스에 저장
     const newRecipe = await Recipes.create({
       title,
-      user_num: user_session,
+      user_num,
       content,
       main_ingredient,
       main_ing_detail,
@@ -95,7 +101,7 @@ exports.postRecipeWrite = async (req, res) => {
     // recipe_num 을 받기 위한 조회
     const recipe = await Recipes.findOne({
       order: [['createdAt', 'DESC']],
-      where: { user_num: user_session },
+      where: { user_num },
       attributes: ['recipe_num']
 
     });
