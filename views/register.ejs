@@ -8,8 +8,8 @@
     <%- include('./partials/login.ejs')%>
     <%- include('./partials/header.ejs')%>
     <main>
+        <h2 class="register__title">회원가입</h2>
         <section class="register__container">
-            <h2 class="register__title">회원가입</h2>
             <form id="register" name="register" enctype="multipart/form-data">
                 <div class="register-inputbx">
                     <label for="user_id">아이디<span>(필수)</span></label>
@@ -65,10 +65,11 @@
                 <button type="button" class="register__btn">가입하기</button>
             </form>
         </section>
+        <section id="conf"></section>
     </main>
     <%- include('./partials/footer.ejs') %>
     <script src="/public/js/common.js"></script>
+    <script src="/public/js/register_data.js"></script>
     <script src="/public/js/register.js"></script>
-    <script src="/public/js/login.js"></script>
 </body>
 </html>
