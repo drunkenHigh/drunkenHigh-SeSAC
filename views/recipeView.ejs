@@ -1,64 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <%- include('include/include', { title: '레시피 작성' })%>
-    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>
-    <link href="https://unpkg.com/@tailwindcss/custom-forms/dist/custom-forms.min.css" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    
+    <%- include('include/include', { title: '레시피' })%> 
     <!--Replace with your tailwind.css once created-->
-    <link rel="stylesheet" href="/public/css/write.css">
+    <link rel="stylesheet" href="/public/css/view.css">
 
 </head>
-<body class="bg-gray-100 text-gray-900 tracking-wider leading-normal">
+<body class="text-gray-900 tracking-wider leading-normal">
    <%- include('./partials/header.ejs') %>
    <%- include('./partials/login.ejs') %>
+   <main>
     <!--Container-->
     <div class="container w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-16 mt-0">
-        <div class="w-full lg:w-1/5 px-6 text-xl text-gray-800 leading-normal">
-            <p class="text-base font-bold py-2 lg:pb-6 text-gray-700">Menu</p>
-            <div class="block lg:hidden sticky inset-0">
-                <button id="menu-toggle" class="flex w-full justify-end px-3 py-3 bg-white lg:bg-transparent border rounded border-gray-600 hover:border-yellow-600 appearance-none focus:outline-none">
-                    <svg class="fill-current h-3 float-right" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                    </svg>
-                </button>
-            </div>
-            <!--
-            <div class="w-full sticky inset-0 hidden max-h-64 lg:h-auto overflow-x-hidden overflow-y-auto lg:overflow-y-hidden lg:block mt-0 my-2 lg:my-0 border border-gray-400 lg:border-transparent bg-white shadow lg:shadow-none lg:bg-transparent z-20" style="top:6em;" id="menu-content">
-                <ul class="list-reset py-2 md:py-0">
-                    <li class="py-1 md:my-2 hover:bg-yellow-100 lg:hover:bg-transparent border-l-4 border-transparent font-bold border-yellow-600">
-                        <a href='#warning' class="block pl-4 align-middle text-gray-700 no-underline hover:text-yellow-600">
-                            <span class="pb-1 md:pb-0 text-sm">재료 정보</span>
-                        </a>
-                    </li>
-                    <li class="py-1 md:my-2 hover:bg-yellow-100 lg:hover:bg-transparent border-l-4 border-transparent">
-                        <a href='#main-ing' class="block pl-4 align-middle text-gray-700 no-underline hover:text-yellow-600">
-                            <span class="pb-1 md:pb-0 text-sm">레시피</span>
-                        </a> 
-                        <li class="py-1 md:my-2 hover:bg-yellow-100 lg:hover:bg-transparent border-l-4 border-transparent">
-                            <span class="pb-1 md:pb-0 text-sm">1</span></li>
-                        <li class="py-1 md:my-2 hover:bg-yellow-100 lg:hover:bg-transparent border-l-4 border-transparent">
-                            <span class="pb-1 md:pb-0 text-sm">2</span>
-                        </li>
-                    </li>
-                    <li class="py-1 md:my-2 hover:bg-yellow-100 lg:hover:bg-transparent border-l-4 border-transparent">
-                        <a href='#save-recipe' class="block pl-4 align-middle text-gray-700 no-underline hover:text-yellow-600">
-                            <span class="pb-1 md:pb-0 text-sm">수정 및 삭제</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        -->
-        </div>
-    
-
         <!--Section container-->
         <section class="w-full lg:w-4/5">
 
             <!--Title-->
-            <h1 class="flex items-center font-sans font-bold break-normal text-gray-700 px-2 text-xl mt-12 lg:mt-0 md:text-2xl">
+            <h1 class="flex items-center font-sans font-bold break-normal px-2 text-xl mt-12 lg:mt-0 md:text-2xl recipe-title">
 				<%= recipe_title %>
 			</h1>
 
@@ -178,10 +136,6 @@
             </div>
             <!--/Card-->
             <% } %>
-
-
-            
-
         </section>
         <!--/Section container-->
 
@@ -192,13 +146,10 @@
 
       </div>
       <!--/container-->
+    </main>
     <%- include('./partials/footer.ejs') %>
-
-
-    
         
-    <!-- jQuery -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    
     <script type="module" src="../public/js/recipeView.js"></script>
 
     
