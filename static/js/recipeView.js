@@ -65,20 +65,22 @@ const recipe_num = url.searchParams.get('recipe_num');
 // 삭제 버튼
 const deleteButton = document.querySelector('#delete-button');
 deleteButton.addEventListener('click', async () => {
-    await axios({
-        method: 'delete',
-        url: `/recipe/read?recipe_num=${recipe_num}`
-        // headers: {
-        //     'content-type': 'application/json'
-        // }
-    }).then((res) => {
-        if(res.data) {
-            if(confirm("삭제되었습니다!")) {
-                // 홈으로 이동
-                window.location.href = "/";
+    if(confirm('삭제하시겠습니까?')) {
+        await axios({
+            method: 'delete',
+            url: `/recipe/read?recipe_num=${recipe_num}`
+            // headers: {
+            //     'content-type': 'application/json'
+            // }
+        }).then((res) => {
+            if(res.data) {
+                if(confirm("삭제되었습니다!")) {
+                    // 홈으로 이동
+                    window.location.href = "/";
+                }
             }
-        }
-    })
+        })
+    }
 }, {once: true})
 
 // 수정 버튼
@@ -94,73 +96,41 @@ updateButton.addEventListener('click', async () => {
 
 
 const btn = document.getElementById('like');
-        btn.addEventListener('click', ()=>{
-            btn.classList.toggle('active')
-        })
-
+const likeCount = document.querySelector('#likes-count');
 
 const getLikesCount = async () => {
     await axios({
         method: 'get',
-        url: `/recipe/${recipe_num}/count`,
+        url: `/recipe/count/${recipe_num}`,
     }).then((res) => {
-        const likeButton = document.querySelector('#like');
-        const likeCount = document.querySelector('#likes-count');
 
         if(res.data.alreadyLiked) {
-            likeButton.classList.add('bg-red');
+            // likeButton.classList.remove('fill-gray-500');
+            // likeButton.classList.add('fill-red-500');
+            likeButton.classList.replace('fill-gray-200', 'fill-red-500');
         } else {
-            likeButton.classList.add('bg-white');
+            //likeButton.classList.add('bg-white');
         }
-        likeCount.innerText = res.data.count;
     })
 }
 getLikesCount();
 
-let main = {
-
-    init: function () {
-    },
-
-    plusLike : function (form) {
-        const data = form.postId.value;
-        form.postId.value= form.postId.value.trim();
-        const likeCount = document.getElementById("likeCount");
-
-        axios.post(
-            url = "/likes",
-            data,
-            {
-                headers: {
-                    'Content-Type': 'application/json'}
-            }
-        ).then((response) => {
-            console.log("좋아요 성공");
-            console.log(response);
-            console.log(response.status);
-            console.log(response.data);
-            console.log(response.data.resultCode);
-            console.log(response.data.result.count);
-            console.log(response.data.result.userName);
-            console.log(response.data.result.likeId);
-            console.log(response.data.result.postId);
-            //좋아요
-            likeCount.innerHTML = response.data.result.count;
-            }
-        ).catch((error) => {
-            console.log(error.response.data.result);
-            console.log(error.response);
-            console.log(error.toJSON());
-            if (error.response.data.result["errorCode"] == "ALREADY_LIKED") {
-                alert("이미 해당 글에 좋아요를 누르셨습니다");
-                window.location.href = '/post/getOne/'+form.postId.value;
-            } else if (error.response.data.result["errorCode"] == "USERNAME_NOT_FOUND") {
-                alert("로그인 후에 이용해주세요!");
-                window.location.href = '/users/login';  // 아니면 메인페이지로
-            }
-        });
-    }
-};
-
-main.init();
-// -------------------------
+const likeButton = document.querySelector('#like');
+btn.addEventListener('click', async ()=>{
+    await axios({
+        method: 'post',
+        url: `/recipe/likes/${recipe_num}`,
+    }).then((res) => {
+        console.log("res.data.likes >>>> ", res.data.likes);
+        if(res.data.message === "destroy") {
+            likeButton.classList.replace('fill-red-500', 'fill-gray-200');
+        } else {
+            likeButton.classList.replace('fill-gray-200', 'fill-red-500');
+        }
+        likeCount.innerText = parseInt(likeCount.innerText) + res.data.likes;
+    }).catch((err) => {
+        if (err.response.status == 401) {
+            alert('좋아요는 로그인 후 가능합니다!');
+        }
+    })
+})

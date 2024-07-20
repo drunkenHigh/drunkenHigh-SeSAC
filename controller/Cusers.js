@@ -195,6 +195,7 @@ exports.getMyprofile = async (req, res) => {
             profile_img,
             recipe_list,
             isLogin
+            
         });
     } else {
         // 로그인 페이지
