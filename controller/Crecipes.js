@@ -73,7 +73,7 @@ exports.getRecipeWrite = (req, res) => {
 // post 레시피 작성 페이지에서 "저장" 버튼 클릭시
 exports.postRecipeWrite = async (req, res) => {
   try {
-    var user_session = req.session.user_num_num;
+    var user_session = req.session.user.user_num;
     if (!user_session) {
       console.error("유저 정보가 없습니다. 로그인 해주세요.", user_session);
     }

@@ -4,11 +4,27 @@ const {Likes, Users, Recipes} = require('../models/Mindex');
 exports.getLikesCount = async (req, res) => {
     try {
         const recipeNum = req.params.recipe_num; // URL 파라미터에서 recipe_num 가져오기
+        const userNum = req.session.user.usernum;
+
+        // 기존 좋아요 여부 확인
+        const checkLikes = await Likes.findOne({
+            where: {
+                recipe_num: recipeNum,
+                user_num: userNum
+            },
+            attributes: ['user_num', 'recipe_num'],
+            raw: true
+        });
         const count = await Likes.count({
             where: { recipe_num: recipeNum }
         });
         console.log('count >>', count);
-        res.json({ count });
+        if (checkLikes) {
+            res.json({ count:2, alreadyLiked: true });
+        } else {
+            res.json({ count:2, alreadyLiked: false });
+        }
+        
     } catch (error) {
         console.error('Error fetching likes count:', error);
         res.status(500).send('Internal Server Error');
@@ -23,12 +39,12 @@ exports.postLikes = async (req, res) => {
     }
     try {
       console.log('req.params >> ',req.params);
-      const recipenum = req.params.recipe_num;  // URL 경로에서 recipe_num 가져오기
+      const recipeNum = req.params.recipe_num;  // URL 경로에서 recipe_num 가져오기
       const usernum = req.session.user.usernum;
       // 기존 좋아요 여부 확인
       const checkLikes = await Likes.findOne({
           where: {
-              recipe_num: recipenum,
+              recipe_num: recipeNum,
               user_num: usernum
            },
           attributes: ['user_num', 'recipe_num'],

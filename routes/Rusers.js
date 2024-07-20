@@ -22,23 +22,15 @@ router.get('/logout',getLogout)
 router.post('/register/chkid', postChkId)
 router.post('/register/chkName', postChkName)
 
-// // post /users/profile
- router.get('/profile', getMyprofile);
 
-
-// get 
+// get /users/mypage
 router.get('/mypage', getMyprofile);
 
-// delete
+// delete /users/mypage
 router.delete('/mypage', deleteMyprofile);
 
+// patch /users/mypage
 router.post('/mypage/edit', uploadProfile.single('profile_img'), patchMyprofile);
 
-// // post /user/profile
-//  router.post('/profile', controller.getUsers);
-// // patch /user/profile/edit
-// router.patch('/profile/edit', controller.updateUser);
-// // delete /user/profile/delete
-//router.delete('/profile/delete', controller.deleteUser);
 
 module.exports = router;

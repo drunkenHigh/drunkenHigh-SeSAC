@@ -19,7 +19,7 @@ exports.postLogin = async (req, res) => {
             where:{
                 user_id
             },
-            attributes:['user_id','user_name','user_pw']
+            attributes:['user_id','user_name','user_pw', 'user_num']
         });
         if (!user) {
             return res.status(401).json({ success: false, message: '등록되지 않은 사용자입니다.' });
@@ -29,10 +29,11 @@ exports.postLogin = async (req, res) => {
         if (!isPasswordValid) {
             // 비밀번호가 일치하지 않으면 401 에러 응답
             return res.status(401).json({ success: false, message: '비밀번호가 일치하지 않습니다.' });
-        }else {
+        } else {
             req.session.user = {
                 user_id: user.user_id,
-                user_name: user.user_name
+                user_name: user.user_name,
+                user_num: user.user_num
             };
             req.session.loggedin = true;
             res.json({ success: true });
@@ -138,11 +139,11 @@ exports.postChkName = async (req, res) => {
 // myprofile controller 추가
 exports.getMyprofile = async (req, res) => {
 
-    const isLogin = true; //req.session.loggedin;
+    const isLogin = req.session.loggedin;
     if(isLogin) {
         // // session 으로 user 정보 받아오기
-        // const user_id = req.session.user_id;
-        const user_id = "user2";
+        const user_id = req.session.user.user_id;
+        // const user_id = "user2";
 
     
         // user_name, profile_img 찾기
@@ -171,7 +172,6 @@ exports.getMyprofile = async (req, res) => {
             recipeInfo.likes_count = recipe.likes_count;
             recipeInfo.write_date = recipe.createdAt;
             recipe_list.push(recipeInfo);
-            // console.log("ㅆㄸㄴㅆ >>>>>>>> ", recipe.created_at);
         })
         const recipeImg = await RecipesImg.findAll({
             where: {
@@ -188,9 +188,7 @@ exports.getMyprofile = async (req, res) => {
                 }
             })
         })
-        // // -- test --
-        // console.log(recipe_list);
-        // // ---------
+        
         res.render('myProfile', {
             user_id,
             user_name,
@@ -200,7 +198,6 @@ exports.getMyprofile = async (req, res) => {
         });
     } else {
         // 로그인 페이지
-
         res.redirect('/');
     }
    }
@@ -240,29 +237,46 @@ exports.getMyprofile = async (req, res) => {
                 attributes:['user_pw']
             });
 
+            // 프로필 이미지 초기화
+            let profile_img = '';
+            // 파일이 업로드 된 경우에만 경로 설정
+            if(req.file){
+                profile_img = req.file.path;
+            }
+
             // 비밀번호 비교
-            const isPasswordValid = await comparePw(user_pw, user.user_pw);
+            const hashedPw = await hashPw(new_pw);
+            const isPasswordValid = await comparePw(old_pw, user.user_pw);
             if (isPasswordValid) {
                 const isUpdated = await Users.update(
                     {
                         user_name,
-                        user_pw: hashPw(new_pw)
+                        user_pw: hashedPw,
+                        profile_img
                     },
                     {
                         where: { user_id }
                     }
                 )
+                if(isUpdated) {
+                    return res.send(true);
+                } else {
+                    console.log("mypage / isUpdated >>>>>>", isUpdated);
+                    return res.send(false);
+                }
             } else {
-                return res.send(false)
+                console.log("mypage / isPasswordValid >>>>>>", isPasswordValid);
+
+                return res.send(false);
             }
 
             
-            // 암호화 + 프로필 이미지 + 닉네임 중복검사
-            if (isUpdated) {
-                return res.send(true);
-            } else {
-                return res.send(false);
-            }
+            // 닉네임 중복검사
+            // if (isUpdated) {
+            //     return res.send(true);
+            // } else {
+            //     return res.send(false);
+            // }
         } catch(err) {
             console.error(err);
             res.status(500).send("Internal Server Error");

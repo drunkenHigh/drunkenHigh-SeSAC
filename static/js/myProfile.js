@@ -182,48 +182,82 @@ const waitForUserChange = () => {
 // }
 // profileImagePreview();
 
+const checkNameCheck = async () => {
+    return new Promise((resolve) => {
+        const changedUsername = document.querySelector('#changed-nickname');
+        changedUsername.onblur = async function() {
+            console.log("ONBLUR EVENT >>>> ");
+            let inputUserName = changedUsername.value;
+            await axios({
+                method: 'POST',
+                url: '/users/register/chkName',
+                data: { user_name: inputUserName },
+                header: { 'content-type': 'application/json'}
+            }).then((nameCheck) => {
+                console.log("username check >>>>> ", nameCheck.data);
+                let nameCheckHtml = '';
+                if(nameCheck.data.success) {
+                    nameCheckHtml = '<p class="py-2 text-sm text-gray-600">사용가능한 닉네임입니다.</p>';
+                } else {
+                    nameCheckHtml = '<p class="py-2 text-sm text-gray-600">이미 사용중인 닉네임입니다.</p>';
+                }
+                changedUsername.insertAdjacentHTML('afterend', nameCheckHtml);
+            }).catch((err) => {
+                console.error(err);
+            })
+        }
+        resolve();
+    })
+}
 
 
 const setupChangeUserInfoSaveButton = async () => {
-    await waitForUserChange();
-    const changeUserInfoSaveButton = document.querySelector('#save-change-info');
-    changeUserInfoSaveButton.addEventListener('click', () => {
-        // 프로필 이미지 저장
-        const profileImage = document.querySelector('#change-profile-info input').files[0];
-        // 변경된 닉네임 저장
-        const changedUsername = document.querySelector('#changed-nickname').value;
-        
-        // 원래 비밀번호
-        const originalPw = document.querySelector('#old-pw').value;
+    return new Promise((resolve) => {
+        const changeUserInfoSaveButton = document.querySelector('#save-change-info');
+        changeUserInfoSaveButton.addEventListener('click', () => {
+            // 프로필 이미지 저장
+            const profileImage = document.querySelector('#change-profile-info input').files[0];
+            // 변경된 닉네임 저장
+            const changedUsername = document.querySelector('#changed-nickname').value;
+            
+            // 원래 비밀번호
+            const originalPw = document.querySelector('#old-pw').value;
 
-        // 변경된 비밀번호 저장  --> 보안화 고민 필요
-        const changedPw = document.querySelector('#changed-pw').value;
+            // 변경된 비밀번호 저장  --> 보안화 고민 필요
+            const changedPw = document.querySelector('#changed-pw').value;
 
-        const formData =  new FormData();
-        formData.append('user_id', userId);
-        formData.append('old_pw', originalPw);
-        formData.append('new_pw', changedPw);
-        formData.append('user_name', changedUsername);
-        formData.append('profile_img', profileImage);
-        
-        axios ({
-            method: 'POST',
-            url: '/users/mypage/edit',
-            data: formData
-            //headers: { 'content-type': 'application/x-www-form-urlencoded' }
-        }).then(res => {
-            console.log(res.data);
-            if (res.data.result) {
-                alert('회원정보가 수정되었습니다!');
-            } else {
-                alert('오류가 발생했습니다. 비밀번호를 확인해주세요!')
-            }
-        });
+            const formData =  new FormData();
+            formData.append('user_id', userId);
+            formData.append('old_pw', originalPw);
+            formData.append('new_pw', changedPw);
+            formData.append('user_name', changedUsername);
+            formData.append('profile_img', profileImage);
+            
+            axios ({
+                method: 'POST',
+                url: '/users/mypage/edit',
+                data: formData
+                //headers: { 'content-type': 'application/x-www-form-urlencoded' }
+            }).then(res => {
+                console.log(res.data);
+                if (res.data.result) {
+                    alert('회원정보가 수정되었습니다!');
+                } else {
+                    alert('오류가 발생했습니다. 비밀번호를 확인해주세요!')
+                }
+            });
+        })
+        resolve();
     })
 };
 
-setupChangeUserInfoSaveButton();
+const run = async () => {
+    await waitForUserChange();
+    await checkNameCheck();
+    await setupChangeUserInfoSaveButton();
+};
 
+run();
 
 // 회원탈퇴 누르면 delete로 axios 전송
 const profileDelete = async () => {
