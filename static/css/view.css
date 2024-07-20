@@ -1,0 +1,11 @@
+@import url(./common/reset.css);
+@import url(./common/core.css);
+@import url(./common/common.css);
+
+.container {
+    justify-content: center;
+}
+
+.recipe-title {
+    color : var(--darkColor);
+}

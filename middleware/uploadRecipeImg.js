@@ -17,11 +17,13 @@ const uploadFile = multer({
   filename: async (req, file, done) => {
     try{
       const recipe = await Recipes.findOne({
-      order: [[ 'createdAt', 'DESC' ]],
-      attributes: ['recipe_num']
+        order: [[ 'createdAt', 'DESC' ]],
+        attributes: ['recipe_num']
       });
-      const recipeNum = recipe ? recipe.recipe_num + 1 : 'Null';
+
+      const recipeNum = recipe ? recipe.recipe_num + 1 : 1;
       const ext = path.extname(file.originalname);
+      
       let fileCount = 0;
       for (const key in req.files) {
         fileCount += req.files[key].length;
