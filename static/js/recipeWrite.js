@@ -253,16 +253,22 @@ saveButton.addEventListener('click', () => {
         const recipeContents = document.querySelectorAll('.recipe-contents');
         let recipeRawHtml = "";
         let recipeSubImgs = [];
-        recipeContents.forEach((recipeContent) => {
+        recipeContents.forEach((recipeContent, index) => {
             const recipeStepNum = recipeContent.querySelector('label').innerText;
             const recipeContentText = recipeContent.querySelector('textarea').value;
             const recipeSubImg = recipeContent.querySelector('input').files[0];
             // 조회 페이지에서 어떻게 렌더링할지 정해지면 raw html 수정하기!
             //console.log(`TEST >>>> ${recipeStepNum}`, recipeSubImg);
-            recipeRawHtml += (recipeContentText + "$");
-            recipeRawHtml.slice(0,-1);
+            if(index != recipeContents.length-1) {
+                recipeRawHtml += (recipeContentText + "$");
+            } else {
+                recipeRawHtml += (recipeContentText);
+            }
             recipeSubImgs.push(recipeSubImg);
         })
+        //recipeRawHtml.slice(0,-1);
+        console.log("afasfawefaerfaer >>>>> ", recipeRawHtml);
+
 
         console.log("TEST >>>>>>> ", recipeSubImgs[0]);
         const recipeObj = {

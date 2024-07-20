@@ -63,14 +63,17 @@ exports.getRecipe = async (req, res) => {
 
 // 레시피 작성 버튼 클릭시 
 exports.getRecipeWrite = (req, res) => {
-  let user_session = req.session.user.user_num;
-  if (!user_session) {
-    console.error("유저 정보가 없습니다. 로그인 해주세요.", user_session);
+  if (!req.session.loggedin) {
+    //console.error("유저 정보가 없습니다. 로그인 해주세요.", user_session);
+    res.redirect("/");
+  } else {
+    let user_session = req.session.user.user_num;
+    res.render("recipeWrite", {
+      isLogin: req.session.loggedin,
+      title: "레시피 작성페이지"
+    });
   }
-  res.render("recipeWrite", {
-    isLogin: req.session.loggedin,
-    title: "레시피 작성페이지"
-  });
+  
 };
 
 // post 레시피 작성 페이지에서 "저장" 버튼 클릭시
@@ -132,7 +135,7 @@ exports.postRecipeWrite = async (req, res) => {
         main_img: i == 0 ? 1 : 0
       });
     }
-    res.send("File upload completed");
+    res.send("saved");
 
   } catch (error) {
     console.error("postRecipeWrite 오류발생:", error);

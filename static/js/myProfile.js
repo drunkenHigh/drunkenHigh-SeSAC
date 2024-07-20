@@ -54,9 +54,6 @@ $(window).scroll(function(){
 const userId = document.querySelector('#user-id').innerText
 
 
-// 작성한 레시피 목록 불러오기
-
-
 // 회원정보 수정 버튼 누르면 수정 폼 나타나게 하기
 const changeUserInfoButton = document.querySelector('#change-user-info');
 const changeUserInfoWrap = document.querySelector('#change-user-info-wrap');
@@ -256,8 +253,10 @@ const run = async () => {
     await checkNameCheck();
     await setupChangeUserInfoSaveButton();
 };
-
 run();
+
+
+
 
 // 회원탈퇴 누르면 delete로 axios 전송
 const profileDelete = async () => {

@@ -1,7 +1,7 @@
 const express = require("express");
 const controller = require("../controller/Crecipes");
 const controller_img = require("../controller/Crecipes_image");
-const {postLikes, getLikesCount} = require('../controller/Clikes');
+const {postAlreadyLiked, getLikesCount} = require('../controller/Clikes');
 
 const mdware = require("../middleware/uploadRecipeImg");
 const router = express.Router();
@@ -10,17 +10,17 @@ const router = express.Router();
 router.get("/read", controller.getRecipe);
 
 // 좋아요 추가, 삭제
-router.post('/:recipe_num/likes', postLikes);
+router.post('/likes/:recipe_num', postAlreadyLiked);
 
 // 좋아요 조회
-router.get('/:recipe_num/count', getLikesCount);
+router.get('/count/:recipe_num', getLikesCount);
 
 // get /recipe 레시피 "작성 화면" 보여주기
 router.get("/write", controller.getRecipeWrite);
 
 // get 레시피 수정 페이지
 router.get("/write/:recipe_num", controller.getRecipeUpdate);
-
+ 
 // post 레시피 작성 페이지에서 "저장" 버튼 클릭시
 router.post("/write", mdware.upload, controller.postRecipeWrite);
 
