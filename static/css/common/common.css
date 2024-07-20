@@ -200,18 +200,24 @@
     gap: 0 25px;
 }
 
-.header__nav span:nth-child(2) {
+.header__nav span {
     color : var(--mainColor);
     font-size: 20px;
 }
 
 .header__nav a {
     font-size: 14px;
+    display: flex;
+    align-items: center;
 }
 
-.header__nav a:hover span:nth-child(2) {
+.header__nav a:hover span {
     color : var(--darkColor);
     transition: color .4s;
+}
+
+.header__submenu {
+    display: none;
 }
 
 .ham-btn {
@@ -241,7 +247,7 @@ main {
 
 .login__content {
     text-align: left;
-    height: 50vh;
+    height: 450px;
     width: 550px;
 }
 
@@ -401,10 +407,6 @@ main {
         height: 15px;
     }
 
-    .header__submenu {
-        display: inline;
-    }
-
     .ham-btn span {
         position: absolute;
         width: 100%;
@@ -466,6 +468,13 @@ main {
         gap: 10px 0;
     }
 
+    .header__nav .header__submenu {
+        display: inline;
+        color : #333;
+        font-size: 14px;
+        margin-right: 5px;
+    }
+
     .cookie__content {
         width: 80%;
     }
@@ -488,6 +497,5 @@ main {
 
     .login__content {
         width: 90%;
-        height: 90%;
     }
 }

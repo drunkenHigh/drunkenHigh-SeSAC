@@ -211,13 +211,15 @@ async function getRecipeList(ingredient) {
 // 리스트 렌더링 함수
 function renderRecipeLists(recipes){
     let hcode = ``;
+    const image_path = '/uploads/recipe/';
+
     recipes.forEach(recipe=>{
         if(recipe['Recipe_Imgs.image_url']){
             hcode += 
                 `<li>
                   <a href="/recipe/read?recipe_num=${recipe.recipe_num}">
                     <figure>
-                      <img src="${recipe['Recipe_Imgs.image_url']}" alt="레시피이미지" class="recipe-list__img" />          
+                      <img src="${image_path}${recipe['Recipe_Imgs.image_url']}" alt="레시피이미지" class="recipe-list__img" />          
                     </figure>
                     <p class="recipe__writer">${recipe['User.user_name']}</p>
                     <p class="recipe__title">${recipe.title}</p>
