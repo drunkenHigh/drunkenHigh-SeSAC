@@ -93,8 +93,6 @@ const waitForUserChange = () => {
                                         <input hidden name="profile_image" id="profile-image"  aria-describedby="file_input_help" type="file">
                                     </label>
                                     -->
-
-                                    <label class="block mb-2 text-sm font-medium " for="file_input">사진을 올려주세요</label>
                                     <input id="profile-image" class="block w-full text-sm bg-[#edf2f7] cursor-pointer focus:outline-none " aria-describedby="file_input_help" id="file_input" type="file">
                                     <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">5MB 이하의 .jpeg, .jpg, .png 파일만 올려주세요</p>
                             </div> 
@@ -110,6 +108,7 @@ const waitForUserChange = () => {
                         </div>
                         <div class="md:w-2/3">
                             <textarea class="form-textarea block w-full" id="changed-nickname" value="" rows="1"></textarea>
+                            <p class="py-2 text-sm text-green-600"></p>
                         </div>
                     </div>
                     <div class="md:flex mb-6">
@@ -120,7 +119,6 @@ const waitForUserChange = () => {
                         </div>
                         <div class="md:w-2/3">
                             <input type="password" class="form-input block w-full" id="old-pw" value="" rows="1"></input>
-                            <p class="py-2 text-sm text-gray-600">비밀번호는 8~16자의 영문자, 숫자, 특수문자를 포함해야 합니다.</p>
                         </div>
                     </div>
                     <div class="md:flex mb-6">
@@ -192,15 +190,23 @@ const checkNameCheck = async () => {
                 header: { 'content-type': 'application/json'}
             }).then((nameCheck) => {
                 console.log("username check >>>>> ", nameCheck.data);
-                let nameCheckHtml = '';
                 if(nameCheck.data.success) {
-                    nameCheckHtml = '<p class="py-2 text-sm text-gray-600">사용가능한 닉네임입니다.</p>';
+                    console.log(this);
+                    $(this).next().text('사용가능한 닉네임입니다')
+                    $(this).next().removeClass('text-red-600')
+                    $(this).next().addClass('text-green-600')
                 } else {
-                    nameCheckHtml = '<p class="py-2 text-sm text-gray-600">이미 사용중인 닉네임입니다.</p>';
+                    $(this).next().text('이미 사용중인 닉네임입니다')
+                    $(this).next().removeClass('text-green-600')   
+                    $(this).next().addClass('text-red-600')   
                 }
-                changedUsername.insertAdjacentHTML('afterend', nameCheckHtml);
             }).catch((err) => {
                 console.error(err);
+                if(err.response.status === 401){
+                    $(this).next().text('이미 사용중인 닉네임입니다.')
+                    $(this).next().removeClass('text-green-600')   
+                    $(this).next().addClass('text-red-600')   
+                }
             })
         }
         resolve();
@@ -209,6 +215,15 @@ const checkNameCheck = async () => {
 
 
 const setupChangeUserInfoSaveButton = async () => {
+    // 정규식
+    const valRegExp = (value) => {
+        let reg;
+        let regex = new RegExp(reg);
+
+        reg = /^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+
+        return reg.test(value)
+    }
     return new Promise((resolve) => {
         const changeUserInfoSaveButton = document.querySelector('#save-change-info');
         changeUserInfoSaveButton.addEventListener('click', () => {
@@ -222,6 +237,11 @@ const setupChangeUserInfoSaveButton = async () => {
 
             // 변경된 비밀번호 저장  --> 보안화 고민 필요
             const changedPw = document.querySelector('#changed-pw').value;
+            if(!changedPw.trim() === ''){
+                if(!valRegExp(changedPw)){
+                    alert('비밀번호가 적합하지 않습니다.')
+                }
+            }
 
             const formData =  new FormData();
             formData.append('user_id', userId);
@@ -237,12 +257,15 @@ const setupChangeUserInfoSaveButton = async () => {
                 //headers: { 'content-type': 'application/x-www-form-urlencoded' }
             }).then(res => {
                 console.log(res.data);
-                if (res.data.result) {
+                if (res.data) {
                     alert('회원정보가 수정되었습니다!');
+                    document.location.href = window.location.href;
                 } else {
                     alert('오류가 발생했습니다. 비밀번호를 확인해주세요!')
                 }
-            });
+            }).catch(err=>{
+                console.error(err);
+            })
         })
         resolve();
     })
@@ -254,8 +277,6 @@ const run = async () => {
     await setupChangeUserInfoSaveButton();
 };
 run();
-
-
 
 
 // 회원탈퇴 누르면 delete로 axios 전송

@@ -174,15 +174,26 @@
 
 }
 
+.recipe__likescounts {
+    position: absolute;
+    top: 5px;
+    right: 20px;
+    color : #fff;
+    font-size: 14px;
+}
+
+.recipe__likescounts .fa-heart {
+    color : red;
+}
+
 .recommend-container .swiper-slide p {
     position: absolute;
     color : #fff;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 30px;
+    font-size: 26px;
     right: 20px;
     font-weight: bold;
-
 }
 
 .recommend-container .swiper-control {
@@ -526,13 +537,13 @@
     }
 
     .recommend-leftSwiper {
-        position: absolute;
-        right: 680px;
+        display: none;
     }
 
     .recommend-centerSwiper {
         left: auto;
-        right: 20px;
+        right: 60px;
+        width: 620px;
         transform: translateX(0);
     }
 
@@ -544,10 +555,17 @@
         right: 680px;
     }
 
+    .recommend-container .swiper-control {
+        right: auto;
+        left: 20px;
+    }
+
     .recommend-text {
         height: 200px;
-        left: auto;
-        right: 680px;
+        bottom: auto;
+        top: 0;
+        right: auto;
+        left: 20px;
     }
 
     /* 전체 목록 */
@@ -566,28 +584,9 @@
     .recommend-container {
         height: 500px;
     }
-
-    .recommend-leftSwiper {
-        display: none;
-    }
-
     .recommend-centerSwiper {
-        left: auto;
         right: 20px;
-        transform: translateX(0);
-    }
-
-    .recommend-container .swiper-control {
-        right: auto;
-        left: 20px;
-    }
-
-    .recommend-text {
-        height: 200px;
-        bottom: auto;
-        top: 0;
-        right: auto;
-        left: 20px;
+        width: 570px;
     }
 }
 /* 900px 이하 미디어쿼리 */

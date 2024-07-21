@@ -14,7 +14,6 @@ let cnt = 1;
 // 추천 리스트 스와이퍼
 // 중앙 스와이퍼
 let centerSwiper = new Swiper('.recommend-container .recommend-centerSwiper', {
-    spaceBetween : 10,
     loop : true,
     speed : 700,
     autoplay : {
@@ -28,6 +27,23 @@ let centerSwiper = new Swiper('.recommend-container .recommend-centerSwiper', {
     navigation : {
         nextEl : '.swiper-btnGroup .swiper-button-next',
         prevEl : '.swiper-btnGroup .swiper-button-prev'
+    },
+    breakpoints : {
+        320 : {
+            slidePerView : 1,
+            spaceBetween : 5,
+            allowTouchMove : true
+        },
+        1024 : {
+            slidePerView : 3,
+            spaceBetween : 20,
+            allowTouchMove : true
+        },
+        1280 : {
+            slidePerView :1,
+            spaceBetween : 10,
+            allowTouchMove : true
+        }
     },
     slidePerView : 1,
 })
@@ -269,4 +285,3 @@ if(recipeMoreBtn){
         }
     })
 }
-

@@ -1,5 +1,5 @@
 const { DataTypes, where } = require('sequelize');
-const { sequelize } = require('../models/Mindex');
+const { sequelize, Recipe_Img, Likes } = require('../models/Mindex');
 const UsersModel = require('../models/Muser');
 const Users = UsersModel(sequelize, DataTypes);
 const { hashPw, comparePw } = require('../middleware/encrypt')
@@ -9,6 +9,9 @@ const RecipesImageModel = require('../models/Mrecipe_img');
 const RecipesImg = RecipesImageModel(sequelize, DataTypes);
 const {Op} = require('sequelize');
 const validator = require('validator');
+
+const image_path = '/uploads/recipe/';
+
 exports.getLogin = async (req, res) => {
     res.send('login')
 }
@@ -138,13 +141,11 @@ exports.postChkName = async (req, res) => {
 // 마이페이지 ---- 태완
 // myprofile controller 추가
 exports.getMyprofile = async (req, res) => {
-
     const isLogin = req.session.loggedin;
     if(isLogin) {
         // // session 으로 user 정보 받아오기
         const user_id = req.session.user.user_id;
         // const user_id = "user2";
-
     
         // user_name, profile_img 찾기
         const userInfo = await Users.findOne({
@@ -165,12 +166,12 @@ exports.getMyprofile = async (req, res) => {
         let recipeNumList = [];
         recipeList.forEach((recipe) => {
             let recipeInfo = new Object();
+            const { year, month, day } = extractDateTime(recipe.createdAt);
             recipeInfo.recipe_num = recipe.recipe_num;
             recipeNumList.push(recipe.recipe_num);
             recipeInfo.recipe_title = recipe.title;
             recipeInfo.main_ing = recipe.main_ingredient;
-            recipeInfo.likes_count = recipe.likes_count;
-            recipeInfo.write_date = recipe.createdAt;
+            recipeInfo.write_date = `${year}.${month}.${day}`;
             recipe_list.push(recipeInfo);
         })
         const recipeImg = await RecipesImg.findAll({
@@ -180,22 +181,45 @@ exports.getMyprofile = async (req, res) => {
                 }
             }
         })
+
         // recipe_list 에 각 레시피의 메인 이미지 경로 추가하기
         recipeImg.forEach((imgPath) => {
             recipe_list.forEach((recipeObj) => {
-                if(imgPath.main_img === 1) {
-                    recipeObj.main_img = imgPath.image_url;
+                const matchingImg = recipeImg.find(imgPath => imgPath.recipe_num === recipeObj.recipe_num && imgPath.main_img === 1);
+                if (matchingImg) {
+                    recipeObj.main_img = matchingImg.image_url;
+                } else {
+                    recipeObj.main_img = '/public/img/default_img.jpg'; // 기본 이미지 설정
                 }
             })
         })
+        // 각 레시피별로 좋아요 수를 가져와서 recipe_list에 추가하기
+        for (let i = 0; i < recipe_list.length; i++) {
+            const recipeNum = recipe_list[i].recipe_num;
+            const likeCount = await Likes.count({
+                where: {
+                    recipe_num: recipeNum
+                }
+            });
+            recipe_list[i].likes_count = likeCount;
+        }
+
+        function extractDateTime(createdAt) {
+            const date = new Date(createdAt);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+
+            return { year, month, day }
+        }
         
         res.render('myProfile', {
             user_id,
             user_name,
             profile_img,
             recipe_list,
-            isLogin
-            
+            isLogin,
+            image_path 
         });
     } else {
         // 로그인 페이지
@@ -223,63 +247,114 @@ exports.getMyprofile = async (req, res) => {
     }
    }
 
-    exports.patchMyprofile = async (req, res) => {
-        try {
-
-            const { user_id,
-                old_pw,
-                new_pw,
-                user_name } = req.body;
+    // exports.patchMyprofile = async (req, res) => {
+    //     try {
+    //         console.log(req.body);
+    //         const { user_id,
+    //             old_pw,
+    //             new_pw,
+    //             user_name } = req.body;
             
-            const user = await Users.findOne({
-                where:{
-                    user_id
-                },
-                attributes:['user_pw']
-            });
+    //         const user = await Users.findOne({
+    //             where:{
+    //                 user_id
+    //             },
+    //             attributes:['user_pw']
+    //         });
 
-            // 프로필 이미지 초기화
-            let profile_img = '';
-            // 파일이 업로드 된 경우에만 경로 설정
-            if(req.file){
-                profile_img = req.file.path;
-            }
+    //         // 프로필 이미지 초기화
+    //         let profile_img = '';
+    //         // 파일이 업로드 된 경우에만 경로 설정
+    //         if(req.file){
+    //             profile_img = req.file.path;
+    //         }
 
-            // 비밀번호 비교
+    //         // 비밀번호 비교
+    //         const hashedPw = await hashPw(new_pw);
+    //         const isPasswordValid = await comparePw(old_pw, user.user_pw);
+    //         if (isPasswordValid) {
+    //             const isUpdated = await Users.update(
+    //                 {
+    //                     user_name,
+    //                     user_pw: hashedPw,
+    //                     profile_img
+    //                 },
+    //                 {
+    //                     where: { user_id }
+    //                 }
+    //             )
+    //             if(isUpdated) {
+    //                 return res.send(true);
+    //             } else {
+    //                 console.log("mypage / isUpdated >>>>>>", isUpdated);
+    //                 return res.send(false);
+    //             }
+    //         } else {
+    //             console.log("mypage / isPasswordValid >>>>>>", isPasswordValid);
+
+    //             return res.send(false);
+    //         }
+
+    //     } catch(err) {
+    //         console.error(err);
+    //         res.status(500).send("Internal Server Error");
+    //     }
+    // }
+
+
+exports.patchMyprofile = async (req, res) => {
+    try {
+        const { user_id, old_pw, new_pw, user_name } = req.body;
+        
+        const user = await Users.findOne({
+            where:{
+                user_id
+            },
+            attributes:['user_pw', 'user_name', 'profile_img']
+        });
+
+        // 프로필 이미지 초기화
+        let profile_img;
+        // 파일이 업로드 된 경우에만 경로 설정
+        if(req.file){
+            profile_img = req.file.path;
+        } else {
+            profile_img = user.profile_img
+        }
+       
+        let updatedFields = {
+            profile_img
+        };
+
+        if (user_name) {
+            updatedFields.user_name = user_name;
+        }
+
+        // 비밀번호 변경 여부 확인
+        if (new_pw && old_pw) { // 새 비밀번호와 기존 비밀번호가 모두 존재하는 경우에만 비밀번호 업데이트
             const hashedPw = await hashPw(new_pw);
             const isPasswordValid = await comparePw(old_pw, user.user_pw);
             if (isPasswordValid) {
-                const isUpdated = await Users.update(
-                    {
-                        user_name,
-                        user_pw: hashedPw,
-                        profile_img
-                    },
-                    {
-                        where: { user_id }
-                    }
-                )
-                if(isUpdated) {
-                    return res.send(true);
-                } else {
-                    console.log("mypage / isUpdated >>>>>>", isUpdated);
-                    return res.send(false);
-                }
+                updatedFields.user_pw = hashedPw;
             } else {
                 console.log("mypage / isPasswordValid >>>>>>", isPasswordValid);
-
-                return res.send(false);
+                return res.send(false); // 비밀번호가 일치하지 않을 경우 처리
             }
-
-            
-            // 닉네임 중복검사
-            // if (isUpdated) {
-            //     return res.send(true);
-            // } else {
-            //     return res.send(false);
-            // }
-        } catch(err) {
-            console.error(err);
-            res.status(500).send("Internal Server Error");
         }
+
+        const isUpdated = await Users.update(updatedFields, {
+            where: { user_id }
+        });
+
+        if (isUpdated) {
+            return res.send(true); // 성공적으로 업데이트된 경우 처리
+        } else {
+            console.log("mypage / isUpdated >>>>>>", isUpdated);
+            return res.send(false); // 업데이트 실패 시 처리
+        }
+    } catch(err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
     }
+};
+    
