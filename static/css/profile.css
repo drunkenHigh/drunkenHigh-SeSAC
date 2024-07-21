@@ -33,8 +33,8 @@
 }
 
 .profile-imgbx {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     overflow: hidden;
 }
@@ -51,4 +51,11 @@
 
 .form-input:focus, .form-textarea:focus {
     box-shadow: none;
+}
+
+#recipe-contents button {
+    background-color: var(--darkColor);
+}
+#recipe-contents button:hover {
+    background-color: var(--mainColor);
 }

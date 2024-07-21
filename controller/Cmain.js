@@ -1,5 +1,5 @@
 // 모델 가져오기
-const { Recipes, Users, Recipe_Img } = require('../models/Mindex');
+const { Recipes, Users, Recipe_Img, Likes, sequelize } = require('../models/Mindex');
 const image_path = '/uploads/recipe/';
 
 // 전체 레시피 리스트 가져오기 (이미지, 제목, 작성자) // 테스트 완료!!!
@@ -29,6 +29,36 @@ const getRecipeListAll = async () => {
         throw new Error('Internal Server Error');
     }
 };
+
+
+// 좋아요 순으로 리스트 가져오기
+const getlikeCountList = async (req, res) =>{
+    try {
+        const likeLists = await Recipes.findAll({
+            include : [
+                {
+                    model : Recipe_Img,
+                    attributes : ['image_url'],
+                    where : { main_img : 1 },
+                    required : false,
+                }, 
+            ],
+            attributes : [
+                'title', 
+                'recipe_num',
+                [sequelize.literal('(SELECT COUNT(*) FROM Likes WHERE Likes.recipe_num = Recipes.recipe_num)'), 'like_count']
+            ],
+            order: [[sequelize.literal('like_count'), 'DESC']],
+            limit : 10,
+            raw : true
+        })
+
+        return likeLists;
+    } catch(err){
+        console.log(err);
+        throw new Error('Internal Server Error')
+    }
+}
 
 
 // 주재료에 대한 레시피 리스트 가져오기 (이미지, 제목, 작성자)
@@ -87,7 +117,8 @@ const getRecipeListMain = async (req, res) => {
 const main = async (req, res) => {
     try {
         const listsALl = await getRecipeListAll();
-        res.render('index', { listsALl, isLogin :req.session.loggedin, image_path})
+        const bestLists = await getlikeCountList();
+        res.render('index', { listsALl, isLogin :req.session.loggedin, image_path, bestLists})
     } catch (error) {
         console.error(error);
         res.render('index', { listsALl : null, isLogin : req.session.loggedin, image_path})

@@ -30,37 +30,38 @@
                             </svg>
                         </span>
                         <span class="title-emoji">👍</span>
-                        <span class="title-text">추천 레시피</span>
+                        <span class="title-text">BEST 10</span>
                     </span>
                 </h2>
-                <p class="recommend-desc">오늘의 추천 레시피를 만나보세요!</p>
+                <p class="recommend-desc">지금 인기있는 레시피를 만나보세요!</p>
             </div>
             <!-- left swiper -->
             <div class="recommend-leftSwiper">
                 <ul class="swiper-wrapper">
-                    <% if(listsALl){ %>
-                        <% if(listsALl.length > 10){ %>
-                        <% for(let i = 0; i < 10 ; i++){ %>
+                    <% const order = [9,0,1,2,3,4,5,6,7,8] %>  
+                    <% if(bestLists){ %>
+                        <% if(bestLists.length >= 10){ %> 
+                        <% order.forEach(index => { %>
                             <li class="swiper-slide">
-                                <a href="/recipe/read?recipe_num=<%= listsALl[i].recipe_num%>">
+                                <a href="/recipe/read?recipe_num=<%= bestLists[index].recipe_num%>">
                                     <div class="slide-subbg"></div>
                                     <figure>
-                                        <%if(listsALl[i]['Recipe_Imgs.image_url']){%>
-                                        <img src="<%= image_path%><%= listsALl[i]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
+                                        <%if(bestLists[index]['Recipe_Imgs.image_url']){%>
+                                        <img src="<%= image_path%><%= bestLists[index]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
                                         <%}else {%>
                                         <img src="/public/img/default_img.jpg" alt="레시피이미지" class="recipe-list__img" />          
                                         <%}%>
                                     </figure>
                                 </a>
                             </li>
-                        <%}} else {%> 
-                        <% for(let i = 0; i < listsALl.length ; i++){ %>    
+                        <%})} else {%> 
+                        <% for(let i = 0; i < bestLists.length ; i++){ %>    
                             <li class="swiper-slide">
-                                <a href="/recipe/read?recipe_num=<%= listsALl[i].recipe_num%>">
+                                <a href="/recipe/read?recipe_num=<%= bestLists[i].recipe_num%>">
                                     <div class="slide-subbg"></div>
                                     <figure>
-                                        <%if(listsALl[i]['Recipe_Imgs.image_url']){%>
-                                        <img src="<%= image_path%><%= listsALl[i]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
+                                        <%if(bestLists[i]['Recipe_Imgs.image_url']){%>
+                                        <img src="<%= image_path%><%= bestLists[i]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
                                         <%}else {%>
                                         <img src="/public/img/default_img.jpg" alt="레시피이미지" class="recipe-list__img" />          
                                         <%}%>
@@ -75,18 +76,22 @@
             <!-- center swiper -->
             <div class="recommend-centerSwiper">
                 <ul class="swiper-wrapper">
-                    <% if(listsALl){ %>
-                    <% if(listsALl.length > 10){ %>
-                    <% for(let i = 1; i <= 10 ; i++){ %>
-                        <% let index = i % 10; %>
+                    <% if(bestLists){ %>
+                    <% if(bestLists.length >= 10){ %>
+                    <% for(let i = 0; i < 10 ; i++){ %>
                             <li class="swiper-slide">
-                                <a href="/recipe/read?recipe_num=<%= listsALl[i].recipe_num%>">
+                                <a href="/recipe/read?recipe_num=<%= bestLists[i].recipe_num%>">
+                                    
                                     <div class="slide-bg">
-                                        <p class="receipe__title"><%= listsALl[index].title %></p>
+                                        <div class="recipe__likescounts">
+                                            <span class="fa-solid fa-heart"></span>
+                                            <span><%= bestLists[i].like_count%>명이 좋아합니다</span>
+                                        </div>
+                                        <p class="receipe__title"><%= bestLists[i].title %></p>
                                     </div>
                                     <figure>
-                                        <%if(listsALl[i]['Recipe_Imgs.image_url']){%>
-                                        <img src="<%= image_path%><%= listsALl[index]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
+                                        <%if(bestLists[i]['Recipe_Imgs.image_url']){%>
+                                        <img src="<%= image_path%><%= bestLists[i]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
                                         <%}else {%>
                                         <img src="/public/img/default_img.jpg" alt="레시피이미지" class="recipe-list__img" />          
                                         <%}%>
@@ -94,16 +99,19 @@
                                 </a>
                             </li> 
                     <%}} else { %> 
-                        <% for(let i = 0; i < listsALl.length ; i++){ %>    
-                            <% let index = i % 10; %>
+                        <% for(let i = 0; i < bestLists.length ; i++){ %>    
                             <li class="swiper-slide">
-                                <a href="/recipe/read?recipe_num=<%= listsALl[i].recipe_num%>">
+                                <a href="/recipe/read?recipe_num=<%= bestLists[i].recipe_num%>">
                                     <div class="slide-bg">
-                                        <p class="receipe__title"><%= listsALl[index].title %></p>
+                                        <div class="receipe__likescounts">
+                                            <span class="fa-solid fa-heart"></span>
+                                            <span><%= bestLists[i].like_count%>명이 좋아합니다</span>
+                                        </div>
+                                        <p class="receipe__title"><%= bestLists[i].title %></p>
                                     </div>
                                     <figure>
-                                        <%if(listsALl[i]['Recipe_Imgs.image_url']){%>
-                                        <img src="<%= image_path%><%= listsALl[index]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
+                                        <%if(bestLists[i]['Recipe_Imgs.image_url']){%>
+                                        <img src="<%= image_path%><%= bestLists[i]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
                                         <%}else {%>
                                         <img src="/public/img/default_img.jpg" alt="레시피이미지" class="recipe-list__img" />          
                                         <%}%>
@@ -118,32 +126,32 @@
             <!-- right swiper -->
             <div class="recommend-rightSwiper">
                 <ul class="swiper-wrapper">
-                    <% if(listsALl){ %>
-                    <% if(listsALl.length > 10){ %>
-                    <% for(let i = 0; i < 10 ; i++){ %>
-                        <% let index = (i + 2) % 10; %>
+                    <% if(bestLists){ %>
+                    <% if(bestLists.length >= 10){ %>
+                    <% for(let i = 1; i <= 10 ; i++){ %>
+                        <% let index = i % 10; %>
                         <li class="swiper-slide">
-                            <a href="/recipe/read?recipe_num=<%= listsALl[i].recipe_num%>">
+                            <a href="/recipe/read?recipe_num=<%= bestLists[index].recipe_num%>">
                                 <div class="slide-subbg"></div>
                                 <figure>
-                                    <%if(listsALl[i]['Recipe_Imgs.image_url']){%>
-                                    <img src="<%= image_path%><%= listsALl[index]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
+                                    <%if(bestLists[index]['Recipe_Imgs.image_url']){%>
+                                    <img src="<%= image_path%><%= bestLists[index]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
                                     <%}else {%>
                                     <img src="/public/img/default_img.jpg" alt="레시피이미지" class="recipe-list__img" />          
                                     <%}%>
                                 </figure>
                             </a>
                         </li>
-                    <%}} else if(listsALl.length < 10 && listsALl.length > 1) {%> 
-                    <% for(let i = 0; i < listsALl.length ; i++){ %>  
-                        <% let index = (i + 2) % 10; %>  
+                    <%}} else if(bestLists.length < 10 && listsALl.length > 1) {%> 
+                    <% for(let i = 1; i < bestLists.length ; i++){ %>  
+                        <% let index = i % 10; %>  
                         <li class="swiper-slide">
-                            <a href="/recipe/read?recipe_num=<%= listsALl[i].recipe_num%>">
+                            <a href="/recipe/read?recipe_num=<%= bestLists[index].recipe_num%>">
                                 <div class="slide-subbg"></div>
                                 <figure>
-                                    <%if(listsALl[index]){%>
-                                        <%if(listsALl[index]['Recipe_Imgs.image_url']){%>
-                                        <img src="<%= image_path%><%= listsALl[index]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
+                                    <%if(bestLists[index]){%>
+                                        <%if(bestLists[index]['Recipe_Imgs.image_url']){%>
+                                        <img src="<%= image_path%><%= bestLists[index]['Recipe_Imgs.image_url'] %>" alt="레시피이미지" class="recipe-list__img" />          
                                     <%}}else {%>
                                     <img src="/public/img/default_img.jpg" alt="레시피이미지" class="recipe-list__img" />          
                                     <%}%>

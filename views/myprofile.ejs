@@ -83,9 +83,7 @@
                     <% recipe_list.forEach((recipe, index) => { %>
                         <div class="md:flex mb-6">
                             <div class="md:w-1/3">
-                                <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textfield">
-                                    <%= recipe.main_img %>
-                                </label>
+                                <img src="<%= image_path%><%= recipe.main_img %>" alt="레시피이미지" class="recipe-list__img" />
                             </div>
                             <div id="recipe-1" class="recipe-contents">
                                 <div class="md:block mb-6">
@@ -98,6 +96,9 @@
                                             <span class="px-2"><%= recipe.likes_count %></span>
                                         </div>
                                     </h3>
+                                    <button onclick="location.href='/recipe/write/<%=recipe.recipe_num%>'" id="save-button-<%= index %>" class="shadow bg-yellow-700 hover:bg-yellow-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded ml-4 mt-8" type="button">
+                                        수정
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -105,9 +106,7 @@
                             <div class="md:w-1/3"></div>
                             <div class="md:w-2/3">
                                 <!-- 상세페이지 작성 후 다시 수정 필요 -->
-                                    <button onclick="location.href='/recipe/write/<%=recipe.recipe_num%>'" id="save-button-<%= index %>" class="shadow bg-yellow-700 hover:bg-yellow-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-4" type="button">
-                                        수정
-                                    </button>
+                                    
                             </div>
                         </div>
                         <br/>

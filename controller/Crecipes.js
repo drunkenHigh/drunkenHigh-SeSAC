@@ -8,12 +8,14 @@ exports.getRecipe = async (req, res) => {
     console.log("레시피 상세페이지 >> ", req.query);
     const { recipe_num } = req.query;
     const image_path = '/uploads/recipe';
+    const user_id = req.session.user ? req.session.user.user_id : null;
+    
     const recipe = await Recipes.findOne({
       where: { recipe_num },
       include: [
         {
           model: Users,
-          attributes: ["user_id"],
+          attributes: ["user_id", "user_name"],
         },
         {
           model: Recipe_Img,
@@ -29,7 +31,7 @@ exports.getRecipe = async (req, res) => {
 
   let imageUrls;
   let subImageUrls;
-  if (recipe['Recipe_Imgs'] == null) {
+  if (recipe['Recipe_Imgs']) {
     imageUrls = recipe['Recipe_Imgs'].map(img => img.image_url);
     subImageUrls = imageUrls.slice(1).map(url => `${image_path}/${url}`);
   }else {
@@ -38,13 +40,18 @@ exports.getRecipe = async (req, res) => {
   }
     const content_list = recipe.content.split('$').slice(0, -1);
 
-    console.log("content list > ", content_list);
     console.log("main Image String >", `${image_path}/${imageUrls[0]}`);
     console.log("sub Image list >", subImageUrls);
 
+    // createdAt에서 년, 월, 일 정보 추출
+    const write_time = recipe.createdAt.toLocaleDateString('ko-KR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    });
+
     res.render("recipeView", {
       isLogin: req.session.loggedin,
-      title: "레시피 상세페이지",
       recipe_title: recipe.title, //: "title",  //string
       main_img: `${image_path}/${imageUrls[0]}`, //: "imgPath",  //string   
       main_ing: recipe.main_ingredient, //: "vodka",  // string
@@ -52,7 +59,11 @@ exports.getRecipe = async (req, res) => {
       sub_ing: recipe.sub_ingredient_detail, //: "sub ing",  // string
       recipe_content: recipe.content.split('$'), //: ["step1", "step2"], // array
       sub_image: subImageUrls, //: ["path1", "path2"],  // array    
-      likes_count : likesCount
+      likes_count : likesCount,
+      user_id,
+      user_name : recipe.User.user_name,
+      write_time,
+      recipe_user : recipe.User.user_id,
     });
   } catch (err) {
     console.error(err);
@@ -144,9 +155,9 @@ exports.postRecipeWrite = async (req, res) => {
 };
 // get 레시피 수정 페이지
 exports.getRecipeUpdate = async (req, res) => {
-  var user_session = req.session.user_num;
-  if (!user_session) {
-    console.error("유저 정보가 없습니다. 로그인 해주세요.", user_session);
+  let isLogin = req.session.loggedin;
+  if (!isLogin) {
+    console.error("유저 정보가 없습니다. 로그인 해주세요.");
   }
   console.log("params > ", req.params);
   const { recipe_num } = req.params;
@@ -198,19 +209,22 @@ exports.getRecipeUpdate = async (req, res) => {
     sub_ing: recipe.sub_ingredient_detail, //: "sub ing",  // string
     recipe_content: content_list, //: ["step1", "step2"], // array
     sub_image: subImageUrls, //: ["path1", "path2"],  // array    
-    step_num: recipe.content.split('$').length
+    step_num: recipe.content.split('$').length,
+    recipe_num
   });
 };
 // patch 레시피 수정 페이지에서 "수정하기" 버튼 클릭시
-exports.patchRecipe = async (req, res, next) => {
-  var user_session = req.session.user_num;
-  if (!user_session) {
-    console.error("유저 정보가 없습니다. 로그인 해주세요.", user_session);
+exports.patchRecipe = async (req, res) => {
+  let isLogin = req.session.loggedin;
+  if (!isLogin) {
+    console.error("유저 정보가 없습니다. 로그인 해주세요.");
   }
-  console.log(`update >>> `, req.query);
-  const {recipe_num} = req.query;
+  // console.log(`update >>> `, req.params);
+  // const recipe_num = req.params;
+
+  console.log('입력', req.body);
   const { title, content, main_ingredient, main_ing_detail,
-    sub_ingredient_detail, mainImage } = req.body;
+    sub_ingredient_detail, mainImage, recipe_num } = req.body;
   try {
     const result = await Recipes.update(
       {
@@ -249,6 +263,8 @@ exports.patchRecipe = async (req, res, next) => {
       });
     }
 
+    res.send('saved')
+    
   } catch (error) {
     console.error(error);
   }

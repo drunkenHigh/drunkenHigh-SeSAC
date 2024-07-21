@@ -191,8 +191,9 @@ console.log(recipe_num);
 
 // ==== 저장 =====
 // axios로 레시피 정보 보내기 
-const updateRecipe = async (recipeObj) => {
+const updateRecipe = async (recipeObj, recipe_num) => {
     try {
+      console.log('저장', recipeObj);
       const formData = new FormData();
   
       formData.append("title", recipeObj.recipeTitle);
@@ -205,6 +206,7 @@ const updateRecipe = async (recipeObj) => {
     //     formData.append(`content_${index}`, recipeStep);
     //   })
     formData.append("content", recipeObj.recipeRawHtml);
+    formData.append("recipe_num", recipe_num);
 
 
       recipeObj.recipeSubImgs.forEach((sub_imgs, index) => {
@@ -213,11 +215,11 @@ const updateRecipe = async (recipeObj) => {
       
       
       await axios({
-        method: "patch",
-        url: `/recipe/update?recipe_num=${recipe_num}`,
+        method: "post",
+        url: `/recipe/update`,
         data : formData,
         headers: { 
-            //"Content-Type": "multipart/form-data" 
+            "Content-Type": "multipart/form-data" 
         },
       }).then((res) => {
         console.log("res.data >>> ", res.data);
@@ -225,7 +227,7 @@ const updateRecipe = async (recipeObj) => {
         if(res.data === "saved") {
             if(confirm("저장되었습니다!")) {
                 // 홈으로 이동
-                window.location.href = "/";
+                window.location.href = `/recipe/read?recipe_num=${recipe_num}`;
             }
         }
       });
@@ -241,10 +243,12 @@ const updateRecipe = async (recipeObj) => {
 const formData = new FormData();
 const saveButton = document.querySelector('#save-button');
 
-saveButton.addEventListener('click', () => {
+saveButton.addEventListener('click', async () => {
     console.log('click btn', saveButton);
         // recipe 제목을 저장
         const recipeTitle = document.querySelector('#recipe-title').value;
+        const recipeNum = document.querySelector('#recipe-title').getAttribute('data-num');
+        console.log(recipeNum);
         // 주재료 저장
         const mainIng = document.querySelector('#main-ing-select select').value;
         // 주재료 상세설명 저장
@@ -279,7 +283,7 @@ saveButton.addEventListener('click', () => {
             recipeSubImgs
         }
         console.log(recipeObj.recipeTitle, recipeObj.mainIng, recipeObj.mainIngDetail, recipeObj.subIngString, recipeObj.mainImage);
-        updateRecipe(recipeObj);
+        await updateRecipe(recipeObj, recipeNum);
 })
 
 

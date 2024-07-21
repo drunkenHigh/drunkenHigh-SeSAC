@@ -64,33 +64,37 @@ const recipe_num = url.searchParams.get('recipe_num');
 
 // 삭제 버튼
 const deleteButton = document.querySelector('#delete-button');
-deleteButton.addEventListener('click', async () => {
-    if(confirm('삭제하시겠습니까?')) {
-        await axios({
-            method: 'delete',
-            url: `/recipe/read?recipe_num=${recipe_num}`
-            // headers: {
-            //     'content-type': 'application/json'
-            // }
-        }).then((res) => {
-            if(res.data) {
-                if(confirm("삭제되었습니다!")) {
-                    // 홈으로 이동
-                    window.location.href = "/";
+if(deleteButton){
+    deleteButton.addEventListener('click', async () => {
+        if(confirm('삭제하시겠습니까?')) {
+            await axios({
+                method: 'delete',
+                url: `/recipe/read?recipe_num=${recipe_num}`
+                // headers: {
+                //     'content-type': 'application/json'
+                // }
+            }).then((res) => {
+                if(res.data) {
+                    if(confirm("삭제되었습니다!")) {
+                        // 홈으로 이동
+                        window.location.href = "/";
+                    }
                 }
-            }
-        })
-    }
-}, {once: true})
+            })
+        }
+    }, {once: true})
+}
 
 // 수정 버튼
 const updateButton = document.querySelector('#update-button');
-updateButton.addEventListener('click', async () => {
-    if(confirm("수정하시겠습니까?")) {
-        // 수정 페이지로 이동
-        window.location.href = `/recipe/write?recipe_num=${recipe_num}`;
-    }
-}, {once:true})
+if(updateButton){
+    updateButton.addEventListener('click', async () => {
+        if(confirm("수정하시겠습니까?")) {
+            // 수정 페이지로 이동
+            window.location.href = `/recipe/write/${recipe_num}`;
+        }
+    }, {once:true})
+}
 
 // 좋아요 기능: 미완성 -------------------------
 
