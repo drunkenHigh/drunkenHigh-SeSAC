@@ -80,9 +80,9 @@ const waitForUserChange = () => {
                             <label class="block mb-2 text-sm font-medium " for="file_input">사진을 올려주세요</label>
 
                             <div class="flex items-center justify-center w-full">
-                                    <!--
-                                    <label for="profile-image" class="flex flex-col items-center justify-center w-full h-64 border-2 border-[#D9601A] border-dashed rounded-lg cursor-pointer bg-white hover:bg-white">
-                                        <div id="profile-image" class="flex flex-col items-center justify-center">
+                                    
+                                    <label id="profile-image-label" for="profile-image-input" class="flex flex-col items-center justify-center w-full h-64 border-2 border-[#D9601A] border-dashed rounded-lg cursor-pointer bg-white hover:bg-white">
+                                        <div id="profile-image-text" class="flex flex-col items-center justify-center">
                                             <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
                                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
                                             </svg>
@@ -90,11 +90,8 @@ const waitForUserChange = () => {
                                             <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG or JPEG (MAX. 800x400px).</p>
                                         </div>
                                         <img class="hidden object-scale-down rounded-lg max-h-full p-5 hover:opacity-50" src="" alt="">
-                                        <input hidden name="profile_image" id="profile-image"  aria-describedby="file_input_help" type="file">
+                                        <input hidden name="profile_image" id="profile-image-input"  aria-describedby="file_input_help" type="file">
                                     </label>
-                                    -->
-                                    <input id="profile-image" class="block w-full text-sm bg-[#edf2f7] cursor-pointer focus:outline-none " aria-describedby="file_input_help" id="file_input" type="file">
-                                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">5MB 이하의 .jpeg, .jpg, .png 파일만 올려주세요</p>
                             </div> 
 
                             
@@ -152,6 +149,28 @@ const waitForUserChange = () => {
         }, { once: true });
     });
 };
+
+const resetProfileImageEvent = async () => {
+    let profileImageUpload = document.querySelector('#profile-image-input');
+    const profileImage = document.querySelector(`#profile-image-label`);
+    const profileImageText = document.querySelector(`#profile-image-text`)
+    profileImageUpload.addEventListener('change', (e) => {
+        const files = e.currentTarget.files;
+        let reader = new FileReader();
+    
+        reader.onload = function(e) {
+            profileImage.removeChild(profileImage.querySelector('img'));
+            let img = document.createElement("img");
+            img.setAttribute("src", e.target.result);
+            img.setAttribute("class", "object-scale-down rounded-lg max-h-full p-2 hover:opacity-50");
+            profileImageText.classList.add("hidden");
+            profileImage.appendChild(img);
+        };
+        reader.readAsDataURL(e.target.files[0])
+    })
+    
+}
+
 
 
 const checkNameCheck = async () => {
@@ -245,6 +264,7 @@ const setupChangeUserInfoSaveButton = async () => {
 
 const run = async () => {
     await waitForUserChange();
+    await resetProfileImageEvent();
     await checkNameCheck();
     await setupChangeUserInfoSaveButton();
 };

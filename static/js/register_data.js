@@ -5,8 +5,7 @@ const rcode = {
         <p class="terms_chk_all"> <span class="input_chk">
                 <input type="checkbox" id="chk_all" name="chk_all">
                 <!-- [D] ie7/8에서 checked일때 label에 클래스 on추가해주세요.  -->
-                <label for="chk_all"><span class="chk_all_txt">이용약관, 개인정보 수집 및 이용,<br class="m_br">
-                        에 모두 동의합니다.</span></label>
+                <label for="chk_all"><span class="chk_all_txt">이용약관, 개인정보 수집 및 이용에 모두 동의합니다.</span></label>
             </span> </p>
         <ul class="terms_bx_list">
             <li class="terms_bx"> <span class="input_chk">
