@@ -119,7 +119,7 @@ resetSubImageEvent();
 // 단계 추가하기 버튼 누르면 입력폼 추가
 const addStepButton = document.querySelector('#add-step');
 const recipeStepForm = document.querySelector('#add-step-wrap');
-let recipeStep = document.querySelector('.recipe-contents').childElementCount;
+let recipeStep = document.querySelector('#recipe-cont form').childElementCount - 1;
 
 addStepButton.addEventListener('click', () => {
     recipeStep++;

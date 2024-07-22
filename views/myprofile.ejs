@@ -83,10 +83,10 @@
                     <% recipe_list.forEach((recipe, index) => { %>
                         <div class="md:flex mb-6">
                             <div class="md:w-1/3">
-                                <% if(recipe.main_img){%>
+                                <% if (recipe.main_img == "/public/img/default_img.jpg") { %>
+                                    <img onclick="location.href='/recipe/read?recipe_num=<%=recipe.recipe_num%>'" src="<%= recipe.main_img %>" alt="레시피이미지" class="recipe-list__img" />
+                                <% } else { %>
                                     <img onclick="location.href='/recipe/read?recipe_num=<%=recipe.recipe_num%>'" src="<%= image_path%><%= recipe.main_img %>" alt="레시피이미지" class="recipe-list__img" />
-                                    <% } else {%>
-                                    <img onclick="location.href='/recipe/read?recipe_num=<%=recipe.recipe_num%>'" src="/public/img/default_img.jpg" alt="레시피이미지" class="recipe-list__img" />
                                 <% } %>
                             </div>
                             <div id="recipe-1" class="recipe-contents">
