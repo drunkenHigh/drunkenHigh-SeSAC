@@ -53,7 +53,6 @@ $(window).scroll(function(){
 
 // 주재료 옵션 선택하면 주재료 상세 보이게 하기    
 const mainIng = document.querySelector('#main-ing-select');
-// const mainIgDetail = document.querySelector('#main-ing-detail');
 const mainIngDetailHtml = `<div class="md:flex mb-6" id="main-ing-detail">
                 <div class="md:w-1/3">
                     <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textarea">
@@ -66,7 +65,6 @@ const mainIngDetailHtml = `<div class="md:flex mb-6" id="main-ing-detail">
                 </div>
             </div>`;
 mainIng.addEventListener("change", () => {
-    console.log("Main ind selected");
     mainIng.insertAdjacentHTML("afterend", mainIngDetailHtml);
 }, {once: true});
 
@@ -88,7 +86,6 @@ mainImageUpload.addEventListener('change', (e) => {
         mainImage.appendChild(img);
     };
     reader.readAsDataURL(e.target.files[0])
-    console.log(files);
 })
 
 // 부재료 이미지 미리보기 기능
@@ -97,7 +94,6 @@ function resetSubImageEvent() {
     subImageUpload = document.querySelectorAll('.sub-image');
     subImageUpload.forEach((element, index) => {
         const subImage = document.querySelector(`#step-${index+1} label`);
-        console.log(`subImage ${index+1} >>>> `, subImage);
         const subImageText = document.querySelector(`#sub-image-text-${index+1}`)
         element.addEventListener('change', (e) => {
             const files = e.currentTarget.files;
@@ -112,7 +108,6 @@ function resetSubImageEvent() {
                 subImage.appendChild(img);
             };
             reader.readAsDataURL(e.target.files[0])
-            console.log(files);        
         })
     })
 }
@@ -196,9 +191,6 @@ const writeRecipe = async (recipeObj) => {
       formData.append("main_image", recipeObj.mainImage);
       formData.append("sub_ingredient_detail", recipeObj.subIngString);
 
-    //   recipeObj.recipeRawHtml.forEach((recipeStep, index) => {
-    //     formData.append(`content_${index}`, recipeStep);
-    //   })
     formData.append("content", recipeObj.recipeRawHtml);
 
 
@@ -215,7 +207,6 @@ const writeRecipe = async (recipeObj) => {
             //"Content-Type": "multipart/form-data" 
         },
       }).then((res) => {
-        console.log("res.data >>> ", res.data);
         // 저장하면 홈으로 이동
         if(res.data === "saved") {
             if(confirm("저장되었습니다!")) {
@@ -229,15 +220,12 @@ const writeRecipe = async (recipeObj) => {
     }
   };
 
-// import path from "path";
-// console.log(__dirname);
+
 // 저장 버튼을 누를 시
-//import * as FormData from 'form_data';
 const formData = new FormData();
 const saveButton = document.querySelector('#save-button');
 
 saveButton.addEventListener('click', () => {
-    console.log('click btn', saveButton);
         // recipe 제목을 저장
         const recipeTitle = document.querySelector('#recipe-title').value;
         // 주재료 저장
@@ -248,7 +236,6 @@ saveButton.addEventListener('click', () => {
         const subIngString = document.querySelector('#sub-ing-detail').value;
         // 대표 이미지 저장
         const mainImage = document.querySelector('#main-image').files[0];
-        //console.log(mainImage);
         // 레시피 내용 저장
         const recipeContents = document.querySelectorAll('.recipe-contents');
         let recipeRawHtml = "";
@@ -257,8 +244,6 @@ saveButton.addEventListener('click', () => {
             const recipeStepNum = recipeContent.querySelector('label').innerText;
             const recipeContentText = recipeContent.querySelector('textarea').value;
             const recipeSubImg = recipeContent.querySelector('input').files[0];
-            // 조회 페이지에서 어떻게 렌더링할지 정해지면 raw html 수정하기!
-            //console.log(`TEST >>>> ${recipeStepNum}`, recipeSubImg);
             if(index != recipeContents.length-1) {
                 recipeRawHtml += (recipeContentText + "$");
             } else {
@@ -266,11 +251,7 @@ saveButton.addEventListener('click', () => {
             }
             recipeSubImgs.push(recipeSubImg);
         })
-        //recipeRawHtml.slice(0,-1);
-        console.log("afasfawefaerfaer >>>>> ", recipeRawHtml);
 
-
-        console.log("TEST >>>>>>> ", recipeSubImgs[0]);
         const recipeObj = {
             recipeTitle, 
             mainIng, 
@@ -280,7 +261,6 @@ saveButton.addEventListener('click', () => {
             recipeRawHtml,
             recipeSubImgs
         }
-        console.log(recipeObj.recipeTitle, recipeObj.mainIng, recipeObj.mainIngDetail, recipeObj.subIngString, recipeObj.mainImage);
         writeRecipe(recipeObj);
 })
 

@@ -154,34 +154,10 @@ const waitForUserChange = () => {
 };
 
 
-// const profileImagePreview = () => {
-//     // 메인 이미지 선택하면 미리보기 하기
-//     const profileImageUpload = document.querySelector('#profile-image');
-//     const profileImage = document.querySelector('#profile-image label');
-//     const profileImageText = document.querySelector('#profile-image-text');
-//     profileImageUpload.addEventListener('change', (e) => {
-//         const files = e.currentTarget.files;
-//         let reader = new FileReader();
-    
-//         reader.onload = function(e) {
-//             profileImage.removeChild(profileImage.querySelector('img'));
-//             let img = document.createElement("img");
-//             img.setAttribute("src", e.target.result);
-//             img.setAttribute("class", "object-scale-down rounded-lg max-h-full p-5 hover:opacity-50");
-//             profileImageText.classList.add("hidden");
-//             profileImage.appendChild(img);
-//         };
-//         reader.readAsDataURL(e.target.files[0])
-//         console.log(files);
-//     })
-// }
-// profileImagePreview();
-
 const checkNameCheck = async () => {
     return new Promise((resolve) => {
         const changedUsername = document.querySelector('#changed-nickname');
         changedUsername.onblur = async function() {
-            console.log("ONBLUR EVENT >>>> ");
             let inputUserName = changedUsername.value;
             await axios({
                 method: 'POST',
@@ -189,9 +165,7 @@ const checkNameCheck = async () => {
                 data: { user_name: inputUserName },
                 header: { 'content-type': 'application/json'}
             }).then((nameCheck) => {
-                console.log("username check >>>>> ", nameCheck.data);
                 if(nameCheck.data.success) {
-                    console.log(this);
                     $(this).next().text('사용가능한 닉네임입니다')
                     $(this).next().removeClass('text-red-600')
                     $(this).next().addClass('text-green-600')
@@ -235,7 +209,7 @@ const setupChangeUserInfoSaveButton = async () => {
             // 원래 비밀번호
             const originalPw = document.querySelector('#old-pw').value;
 
-            // 변경된 비밀번호 저장  --> 보안화 고민 필요
+            // 변경된 비밀번호 저장  
             const changedPw = document.querySelector('#changed-pw').value;
             if(!changedPw.trim() === ''){
                 if(!valRegExp(changedPw)){
@@ -254,9 +228,7 @@ const setupChangeUserInfoSaveButton = async () => {
                 method: 'POST',
                 url: '/users/mypage/edit',
                 data: formData
-                //headers: { 'content-type': 'application/x-www-form-urlencoded' }
             }).then(res => {
-                console.log(res.data);
                 if (res.data) {
                     alert('회원정보가 수정되었습니다!');
                     document.location.href = window.location.href;
@@ -292,7 +264,6 @@ const profileDelete = async () => {
         }
     })
     .then((res) => {
-        console.log(res.data)
         if (res.data) {
             alert('탈퇴 되었습니다!');
             document.location.href = '/';

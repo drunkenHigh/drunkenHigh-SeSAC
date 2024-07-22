@@ -50,14 +50,6 @@ $(window).scroll(function(){
     }                   
 });
 
-
-
-// 추가해야 하는 기능
-// - 해당글의 작성자만 수정/삭제 보이게 하기
-// - 깔쌈한 시각화 방법 고민해보기
-// - 좋아요 기능 완성하기
-
-
 const url = new URL(window.location.href);
 const recipe_num = url.searchParams.get('recipe_num');
 
@@ -70,9 +62,6 @@ if(deleteButton){
             await axios({
                 method: 'delete',
                 url: `/recipe/read?recipe_num=${recipe_num}`
-                // headers: {
-                //     'content-type': 'application/json'
-                // }
             }).then((res) => {
                 if(res.data) {
                     if(confirm("삭제되었습니다!")) {
@@ -96,8 +85,6 @@ if(updateButton){
     }, {once:true})
 }
 
-// 좋아요 기능: 미완성 -------------------------
-
 
 const btn = document.getElementById('like');
 const likeCount = document.querySelector('#likes-count');
@@ -109,12 +96,8 @@ const getLikesCount = async () => {
     }).then((res) => {
 
         if(res.data.alreadyLiked) {
-            // likeButton.classList.remove('fill-gray-500');
-            // likeButton.classList.add('fill-red-500');
             likeButton.classList.replace('fill-gray-200', 'fill-red-500');
-        } else {
-            //likeButton.classList.add('bg-white');
-        }
+        } 
     })
 }
 getLikesCount();
@@ -125,7 +108,6 @@ btn.addEventListener('click', async ()=>{
         method: 'post',
         url: `/recipe/likes/${recipe_num}`,
     }).then((res) => {
-        console.log("res.data.likes >>>> ", res.data.likes);
         if(res.data.message === "destroy") {
             likeButton.classList.replace('fill-red-500', 'fill-gray-200');
         } else {

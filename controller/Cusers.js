@@ -145,7 +145,6 @@ exports.getMyprofile = async (req, res) => {
     if(isLogin) {
         // // session 으로 user 정보 받아오기
         const user_id = req.session.user.user_id;
-        // const user_id = "user2";
     
         // user_name, profile_img 찾기
         const userInfo = await Users.findOne({
@@ -227,14 +226,13 @@ exports.getMyprofile = async (req, res) => {
     }
    }
 
-   exports.deleteMyprofile = async (req, res) => {
+exports.deleteMyprofile = async (req, res) => {
     try {
         const { user_id } = req.body;
         console.log(req.query);
         const isDeleted = await Users.destroy({
             where: { user_id },
         });
-        console.log(isDeleted); 
 
         if (isDeleted) {
             return res.send(true);
@@ -245,62 +243,9 @@ exports.getMyprofile = async (req, res) => {
         console.error(err);
         res.status(500).send("Internal Server Error");
     }
-   }
+}
 
-    // exports.patchMyprofile = async (req, res) => {
-    //     try {
-    //         console.log(req.body);
-    //         const { user_id,
-    //             old_pw,
-    //             new_pw,
-    //             user_name } = req.body;
-            
-    //         const user = await Users.findOne({
-    //             where:{
-    //                 user_id
-    //             },
-    //             attributes:['user_pw']
-    //         });
-
-    //         // 프로필 이미지 초기화
-    //         let profile_img = '';
-    //         // 파일이 업로드 된 경우에만 경로 설정
-    //         if(req.file){
-    //             profile_img = req.file.path;
-    //         }
-
-    //         // 비밀번호 비교
-    //         const hashedPw = await hashPw(new_pw);
-    //         const isPasswordValid = await comparePw(old_pw, user.user_pw);
-    //         if (isPasswordValid) {
-    //             const isUpdated = await Users.update(
-    //                 {
-    //                     user_name,
-    //                     user_pw: hashedPw,
-    //                     profile_img
-    //                 },
-    //                 {
-    //                     where: { user_id }
-    //                 }
-    //             )
-    //             if(isUpdated) {
-    //                 return res.send(true);
-    //             } else {
-    //                 console.log("mypage / isUpdated >>>>>>", isUpdated);
-    //                 return res.send(false);
-    //             }
-    //         } else {
-    //             console.log("mypage / isPasswordValid >>>>>>", isPasswordValid);
-
-    //             return res.send(false);
-    //         }
-
-    //     } catch(err) {
-    //         console.error(err);
-    //         res.status(500).send("Internal Server Error");
-    //     }
-    // }
-
+    
 
 exports.patchMyprofile = async (req, res) => {
     try {
@@ -337,7 +282,6 @@ exports.patchMyprofile = async (req, res) => {
             if (isPasswordValid) {
                 updatedFields.user_pw = hashedPw;
             } else {
-                console.log("mypage / isPasswordValid >>>>>>", isPasswordValid);
                 return res.send(false); // 비밀번호가 일치하지 않을 경우 처리
             }
         }
@@ -349,7 +293,6 @@ exports.patchMyprofile = async (req, res) => {
         if (isUpdated) {
             return res.send(true); // 성공적으로 업데이트된 경우 처리
         } else {
-            console.log("mypage / isUpdated >>>>>>", isUpdated);
             return res.send(false); // 업데이트 실패 시 처리
         }
     } catch(err) {

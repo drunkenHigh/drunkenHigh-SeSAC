@@ -12,7 +12,6 @@ console.log("middleware connected2.");
         },
         filename(req, file, done) {
             const ext = path.extname(file.originalname);
-            console.log("ext >>>>", ext);
             done(null, req.body.user_id + Date.now() + ext); // 저장할 파일명
         }
     }),
