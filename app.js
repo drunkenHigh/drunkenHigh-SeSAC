@@ -65,15 +65,20 @@ app.use('/users', router_users);
 app.get('*', (req, res) => {
   res.render('404')
 })
+app.listen(port, () => {
+              console.log('Database connected!');
+              console.log(`Server running in PORT: ${port}`);
+});
+    
 
-sequelize
-    .sync({ force: false })
-    .then(() => {
-        app.listen(port, () => {
-            console.log('Database connected!');
-            console.log(`Server running in PORT: ${port}`);
-        });
-    })
-    .catch((err) => {
-        console.error(err)
-    });
+// sequelize
+//     .sync({ force: true })
+//     .then(() => {
+//         app.listen(port, () => {
+//             console.log('Database connected!');
+//             console.log(`Server running in PORT: ${port}`);
+//         });
+//     })
+//     .catch((err) => {
+//         console.error(err)
+//     });

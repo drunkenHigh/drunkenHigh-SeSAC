@@ -50,26 +50,6 @@ $(window).scroll(function(){
     }                   
 });
 
-
-// 주재료 옵션 선택하면 주재료 상세 보이게 하기    
-const mainIng = document.querySelector('#main-ing-select');
-// const mainIgDetail = document.querySelector('#main-ing-detail');
-const mainIngDetailHtml = `<div class="md:flex mb-6" id="main-ing-detail">
-                <div class="md:w-1/3">
-                    <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textarea">
-                        주재료 상세
-                    </label>
-                </div>
-                <div class="md:w-2/3">
-                    <textarea class="form-textarea block w-full focus:bg-white" id="my-textarea" value="" rows="2"></textarea>
-                    <p class="py-2 text-sm text-gray-600">예시: 잭 다니엘스 테네시 허니</p>
-                </div>
-            </div>`;
-mainIng.addEventListener("change", () => {
-    mainIng.insertAdjacentHTML("afterend", mainIngDetailHtml);
-}, {once: true});
-
-
 // 메인 이미지 선택하면 미리보기 하기
 const mainImageUpload = document.querySelector('#main-image');
 const mainImage = document.querySelector('#recipe-img label');
@@ -123,6 +103,7 @@ let recipeStep = document.querySelector('#recipe-cont form').childElementCount -
 
 addStepButton.addEventListener('click', () => {
     recipeStep++;
+    
     const addStepHtml = `<div id="step-${recipeStep}" class="recipe-contents">
                         <div class="md:flex mb-6">
                             <div class="md:w-1/3">
@@ -233,13 +214,14 @@ const updateRecipe = async (recipeObj, recipe_num) => {
 // 저장 버튼을 누를 시
 const formData = new FormData();
 const saveButton = document.querySelector('#save-button');
-
+let mainIngSelect = document.querySelector('#main-ing-select select').value;
 saveButton.addEventListener('click', async () => {
         // recipe 제목을 저장
         const recipeTitle = document.querySelector('#recipe-title').value;
         const recipeNum = document.querySelector('#recipe-title').getAttribute('data-num');
         // 주재료 저장
-        const mainIng = document.querySelector('#main-ing-select select').value;
+        mainIngSelect = document.querySelector('#main-ing-select select').value;
+        
         // 주재료 상세설명 저장
         let mainIngDetail;
         if (document.getElementById('#my-textarea')) {
@@ -271,7 +253,7 @@ saveButton.addEventListener('click', async () => {
 
         const recipeObj = {
             recipeTitle, 
-            mainIng, 
+            mainIng: mainIngSelect, 
             mainIngDetail, 
             subIngString, 
             mainImage,
@@ -280,7 +262,6 @@ saveButton.addEventListener('click', async () => {
         }
         await updateRecipe(recipeObj, recipeNum);
 })
-
 
 
 // 다시 작성하기 버튼을 누를 시
