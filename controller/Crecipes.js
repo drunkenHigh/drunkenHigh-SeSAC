@@ -30,7 +30,8 @@ exports.getRecipe = async (req, res) => {
 
   let imageUrls;
   let subImageUrls;
-  if (recipe['Recipe_Imgs']) {
+
+  if (recipe['Recipe_Imgs'].length > 0) {
     imageUrls = recipe['Recipe_Imgs'].map(img => img.image_url);
     subImageUrls = imageUrls.slice(1).map(url => `${image_path}/${url}`);
   }else {
@@ -178,7 +179,7 @@ exports.getRecipeUpdate = async (req, res) => {
   const image_path = '/uploads/recipe';
   let imageUrls;
   let subImageUrls;
-  if (recipe['Recipe_Imgs']) {
+  if (recipe['Recipe_Imgs'].length > 0) {
     imageUrls = recipe['Recipe_Imgs'].map(img => img.image_url);
     subImageUrls = imageUrls.slice(1).map(url => `${image_path}/${url}`);
   } else {

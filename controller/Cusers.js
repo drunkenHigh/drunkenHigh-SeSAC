@@ -185,6 +185,7 @@ exports.getMyprofile = async (req, res) => {
         recipeImg.forEach((imgPath) => {
             recipe_list.forEach((recipeObj) => {
                 const matchingImg = recipeImg.find(imgPath => imgPath.recipe_num === recipeObj.recipe_num && imgPath.main_img === 1);
+                console.log('match 이미지', matchingImg);
                 if (matchingImg) {
                     recipeObj.main_img = matchingImg.image_url;
                 } else {
@@ -203,6 +204,7 @@ exports.getMyprofile = async (req, res) => {
             recipe_list[i].likes_count = likeCount;
         }
 
+
         function extractDateTime(createdAt) {
             const date = new Date(createdAt);
             const year = date.getFullYear();
@@ -211,6 +213,8 @@ exports.getMyprofile = async (req, res) => {
 
             return { year, month, day }
         }
+
+        console.log('레시피이미지',recipe_list);
         
         res.render('myProfile', {
             user_id,
