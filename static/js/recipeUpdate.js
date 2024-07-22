@@ -66,7 +66,6 @@ const mainIngDetailHtml = `<div class="md:flex mb-6" id="main-ing-detail">
                 </div>
             </div>`;
 mainIng.addEventListener("change", () => {
-    console.log("Main ind selected");
     mainIng.insertAdjacentHTML("afterend", mainIngDetailHtml);
 }, {once: true});
 
@@ -88,7 +87,6 @@ mainImageUpload.addEventListener('change', (e) => {
         mainImage.appendChild(img);
     };
     reader.readAsDataURL(e.target.files[0])
-    console.log(files);
 })
 
 // 부재료 이미지 미리보기 기능
@@ -97,7 +95,6 @@ function resetSubImageEvent() {
     subImageUpload = document.querySelectorAll('.sub-image');
     subImageUpload.forEach((element, index) => {
         const subImage = document.querySelector(`#step-${index+1} label`);
-        console.log(`subImage ${index+1} >>>> `, subImage);
         const subImageText = document.querySelector(`#sub-image-text-${index+1}`)
         element.addEventListener('change', (e) => {
             const files = e.currentTarget.files;
@@ -112,7 +109,6 @@ function resetSubImageEvent() {
                 subImage.appendChild(img);
             };
             reader.readAsDataURL(e.target.files[0])
-            console.log(files);        
         })
     })
 }
@@ -187,13 +183,11 @@ deleteStepButton.addEventListener('click', () => {
 // recipe_num 가져오기
 const url = new URL(window.location.href);
 const recipe_num = url.parmas;
-console.log(recipe_num);
 
 // ==== 저장 =====
 // axios로 레시피 정보 보내기 
 const updateRecipe = async (recipeObj, recipe_num) => {
     try {
-      console.log('저장', recipeObj);
       const formData = new FormData();
   
       formData.append("title", recipeObj.recipeTitle);
@@ -222,7 +216,6 @@ const updateRecipe = async (recipeObj, recipe_num) => {
             "Content-Type": "multipart/form-data" 
         },
       }).then((res) => {
-        console.log("res.data >>> ", res.data);
         // 저장하면 홈으로 이동
         if(res.data === "saved") {
             if(confirm("저장되었습니다!")) {
@@ -236,43 +229,46 @@ const updateRecipe = async (recipeObj, recipe_num) => {
     }
   };
 
-// import path from "path";
-// console.log(__dirname);
+
 // 저장 버튼을 누를 시
-//import * as FormData from 'form_data';
 const formData = new FormData();
 const saveButton = document.querySelector('#save-button');
 
 saveButton.addEventListener('click', async () => {
-    console.log('click btn', saveButton);
         // recipe 제목을 저장
         const recipeTitle = document.querySelector('#recipe-title').value;
         const recipeNum = document.querySelector('#recipe-title').getAttribute('data-num');
-        console.log(recipeNum);
         // 주재료 저장
         const mainIng = document.querySelector('#main-ing-select select').value;
         // 주재료 상세설명 저장
-        const mainIngDetail = document.querySelector('#main-ing-detail textarea').value;
+        let mainIngDetail;
+        if (document.getElementById('#my-textarea')) {
+            mainIngDetail = document.querySelector('#main-ing-detail textarea').value;
+        } else {
+            mainIngDetail = '';
+        }
+        
+
         // string 형식으로 부재료들 구분하여 저장
         const subIngString = document.querySelector('#sub-ing-detail').value;
         // 대표 이미지 저장
         const mainImage = document.querySelector('#main-image').files[0];
-        //console.log(mainImage);
         // 레시피 내용 저장
         const recipeContents = document.querySelectorAll('.recipe-contents');
         let recipeRawHtml = "";
         let recipeSubImgs = [];
-        recipeContents.forEach((recipeContent) => {
+        recipeContents.forEach((recipeContent, index) => {
             const recipeStepNum = recipeContent.querySelector('label').innerText;
             const recipeContentText = recipeContent.querySelector('textarea').value;
             const recipeSubImg = recipeContent.querySelector('input').files[0];
-            // 조회 페이지에서 어떻게 렌더링할지 정해지면 raw html 수정하기!
-            //console.log(`TEST >>>> ${recipeStepNum}`, recipeSubImg);
-            recipeRawHtml += (recipeContentText + "$");
+            if(index != recipeContents.length-1) {
+                recipeRawHtml += (recipeContentText + "$");
+            } else {
+                recipeRawHtml += (recipeContentText);
+            }
             recipeSubImgs.push(recipeSubImg);
         })
 
-        console.log("TEST >>>>>>> ", recipeSubImgs[0]);
         const recipeObj = {
             recipeTitle, 
             mainIng, 
@@ -282,7 +278,6 @@ saveButton.addEventListener('click', async () => {
             recipeRawHtml,
             recipeSubImgs
         }
-        console.log(recipeObj.recipeTitle, recipeObj.mainIng, recipeObj.mainIngDetail, recipeObj.subIngString, recipeObj.mainImage);
         await updateRecipe(recipeObj, recipeNum);
 })
 

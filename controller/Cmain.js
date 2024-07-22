@@ -122,8 +122,6 @@ const main = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.render('index', { listsALl : null, isLogin : req.session.loggedin, image_path})
-        // res.status(500).send('Internal Server Error');
-
     }
 };
 

@@ -6,6 +6,7 @@ const uploadProfile = require('../middleware/uploadProfile');
 
 // get /users/register
 router.get('/register', getUsers);
+
 // post /users/register
 router.post('/register', uploadProfile.single('profile_img'), postUsers);
 

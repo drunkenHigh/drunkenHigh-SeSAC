@@ -2,7 +2,6 @@
 const { Recipes, Recipe_Img, Users, Likes } = require("../models/Mindex");
 
 // get /recipe/read?recipe_num=1 레시피 상세보기 페이지 
-// select * from where rcp_id=?
 exports.getRecipe = async (req, res) => {
   try {
     console.log("레시피 상세페이지 >> ", req.query);
@@ -75,7 +74,6 @@ exports.getRecipe = async (req, res) => {
 // 레시피 작성 버튼 클릭시 
 exports.getRecipeWrite = (req, res) => {
   if (!req.session.loggedin) {
-    //console.error("유저 정보가 없습니다. 로그인 해주세요.", user_session);
     res.redirect("/");
   } else {
     let user_session = req.session.user.user_num;
@@ -95,9 +93,7 @@ exports.postRecipeWrite = async (req, res) => {
     let user_num = req.session.user.user_num
     if (!isLogin) {
       console.error("유저 정보가 없습니다. 로그인 해주세요.");
-
     }
-    console.log("레시피 저장 버튼 클릭 postRecipe >> \n", req.body);
     
     const { title, content, main_ingredient, main_ing_detail,
       sub_ingredient_detail, mainImage } = req.body;
@@ -178,25 +174,20 @@ exports.getRecipeUpdate = async (req, res) => {
     plain: true, // 단일 객체로 반환
     nest: true // 중첩된 객체로 반환하도록 설정
   });
-  // console.log(">>>> ", recipe)
 
   const image_path = '/uploads/recipe';
   let imageUrls;
   let subImageUrls;
-  if (recipe['Recipe_Imgs'] == null) {
+  if (recipe['Recipe_Imgs']) {
     imageUrls = recipe['Recipe_Imgs'].map(img => img.image_url);
     subImageUrls = imageUrls.slice(1).map(url => `${image_path}/${url}`);
-  }else {
+  } else {
     imageUrls=['default_img.jpg'];
     subImageUrls = [''];
   }
  
-  const content_list = recipe.content.split('$').slice(0, -1);
+  const content_list = recipe.content.split('$');
 
-  console.log("content list > ", content_list);
-  console.log("main Image String >", `${image_path}/${imageUrls[0]}`);
-  console.log("sub Image list >", subImageUrls);
-  console.log("레시피 수정 페이지 getRecipeUpdate > ", recipe);
   res.render('recipeUpdate', {
     isLogin: req.session.loggedin,
     title: "레시피 수정페이지",
@@ -204,7 +195,6 @@ exports.getRecipeUpdate = async (req, res) => {
     main_img: `${image_path}/${imageUrls[0]}`, //: "imgPath",  //string   
 
     main_ingredient: recipe.main_ingredient, //: "vodka",  // string
-    // main_ing: recipe.main_ingredient, //: "vodka",  // string
     main_ing_detail: recipe.main_ing_detail, //: "ing detail",  // string
     sub_ing: recipe.sub_ingredient_detail, //: "sub ing",  // string
     recipe_content: content_list, //: ["step1", "step2"], // array
@@ -219,10 +209,8 @@ exports.patchRecipe = async (req, res) => {
   if (!isLogin) {
     console.error("유저 정보가 없습니다. 로그인 해주세요.");
   }
-  // console.log(`update >>> `, req.params);
-  // const recipe_num = req.params;
+  
 
-  console.log('입력', req.body);
   const { title, content, main_ingredient, main_ing_detail,
     sub_ingredient_detail, mainImage, recipe_num } = req.body;
   try {
@@ -238,7 +226,7 @@ exports.patchRecipe = async (req, res) => {
         where: { recipe_num },
       }
     );
-    var imgFileArr = req.files;
+    let imgFileArr = req.files;
     // filename 속성을 추출하는 함수
     const extractFilenames = (imgArr) => {
       const filenames = [];
@@ -278,7 +266,6 @@ exports.deleteRecipe = async (req, res) => {
       console.error("유저 정보가 없습니다. 로그인 해주세요.", user_session);
     }
     const { recipe_num } = req.query;
-    console.log("삭제할 레시피 번호 : ", req.query);
     const isDeleted = await Recipes.destroy({
       where: { recipe_num },
     });
