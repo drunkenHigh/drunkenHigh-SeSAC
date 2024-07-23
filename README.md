@@ -38,7 +38,7 @@
 6. users : 회원정보
 
 ````
-## 2. properties 분리
+## properties 분리
 
  1. .env
 	공통 설정
