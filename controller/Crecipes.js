@@ -246,9 +246,11 @@ exports.patchRecipe = async (req, res) => {
     const filenames = extractFilenames(imgFileArr);
     for (i = 0; i < filenames.length; i++) {
       const newImage = await Recipe_Img.update({
-        recipe_num: result.recipe_num,
+        //recipe_num: result.recipe_num,
         image_url: filenames[i],
         main_img: i == 0 ? 1 : 0
+      }, {
+        where: { recipe_num }
       });
     }
 
