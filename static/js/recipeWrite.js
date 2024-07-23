@@ -204,7 +204,7 @@ const writeRecipe = async (recipeObj) => {
         url: "/recipe/write",
         data : formData,
         headers: { 
-            //"Content-Type": "multipart/form-data" 
+            "Content-Type": "multipart/form-data" 
         },
       }).then((res) => {
         // 저장하면 홈으로 이동

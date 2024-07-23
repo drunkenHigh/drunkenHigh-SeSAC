@@ -25,7 +25,7 @@ router.get("/write/:recipe_num", controller.getRecipeUpdate);
 router.post("/write", mdware.upload, controller.postRecipeWrite);
 
 // patch 레시피 수정 페이지에서 "수정하기" 버튼 클릭시
-router.post("/update", mdware.upload, controller.patchRecipe);
+router.post("/update", mdware.uploadpatch, controller.patchRecipe);
 
 // delete /recipe/read?recipe_num= "삭제" 버튼 클릭시 
 router.delete("/read", controller.deleteRecipe);
