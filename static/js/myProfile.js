@@ -286,7 +286,7 @@ const profileDelete = async () => {
     .then((res) => {
         if (res.data) {
             alert('탈퇴 되었습니다!');
-            document.location.href = '/';
+            document.location.href = '/users/logout';
         }
     });
 };
