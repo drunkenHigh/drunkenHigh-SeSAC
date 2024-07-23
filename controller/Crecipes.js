@@ -203,9 +203,16 @@ exports.patchRecipe = async (req, res) => {
   if (!isLogin) {
     console.error("유저 정보가 없습니다. 로그인 해주세요.");
   }
-  const { title, content, main_ingredient, main_ing_detail,
-    sub_ingredient_detail, mainImage, recipe_num } = req.body;
-    
+  const {
+    title,
+    content,
+    main_ingredient,
+    main_ing_detail,
+    sub_ingredient_detail,
+    mainImage,
+    recipe_num,
+  } = req.body;
+  console.log("update req.body >> ", req.body);
   try {
     const result = await Recipes.update(
       {
@@ -221,7 +228,7 @@ exports.patchRecipe = async (req, res) => {
     );
     console.log("recipe db업데이트 실행됨.");
     var imgFileArr = req.files;
-    console.log("req.files >> " , req.files);
+    console.log("req.files >> ", req.files);
     // filename 속성을 추출하는 함수
     const extractFilenames = (imgArr) => {
       const filenames = [];
@@ -238,16 +245,33 @@ exports.patchRecipe = async (req, res) => {
     const filenames = extractFilenames(imgFileArr);
     console.log("filenames >>> ", filenames);
     for (i = 0; i < filenames.length; i++) {
-      let main_img=i+1;
-      console.log("i >> ", i,filenames[i]);
-      const newImage = await Recipe_Img.update({
-        image_url: filenames[i],
-      },
-      {
-        where: { recipe_num, main_img },
+      let main_img = i + 1;
+      const existingRecord = await Recipe_Img.findOne({
+        where: { recipe_num, main_img }
+      });
+      console.log("existingRecord > ",existingRecord);
+      //이미지 찾기
+      if (existingRecord) {
+        console.log("i >> ", i, filenames[i]);
+        const newImage = await Recipe_Img.update(
+          {
+            image_url: filenames[i],
+          },
+          {
+            where: { recipe_num, main_img },
+          }
+        );
+      }else{
+        const newImage = await Recipe_Img.create(
+          {
+            recipe_num:recipe_num,
+            image_url: filenames[i],
+            main_img: i + 1
+          }
+        );
+        console.log("기존에 값이 없으므로 추가햇음 > ",main_img,i);
       }
-    );
-    };
+    }
     res.send("saved");
   } catch (error) {
     console.error(error);
