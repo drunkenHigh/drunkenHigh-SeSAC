@@ -2,7 +2,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
 function actionBtn(){
     $('.ham-btn').click(function () {
         $(this).toggleClass('on')
-        $('.header__nav').fadeToggle(300)
+        $('.header__nav').toggleClass('on')
     })
 }
 

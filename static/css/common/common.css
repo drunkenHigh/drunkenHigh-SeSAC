@@ -189,7 +189,7 @@
 
 .header__nav {
     position: absolute;
-    right: 5%;
+    right: 0;
     top: 50%;
     transform: translateY(-50%);
     display: block;
@@ -457,7 +457,12 @@ main {
         border: 1px solid var(--darkColor);
         border-radius: 10px;
         transform: translateY(-10%);
-        display: none;
+        opacity: 0;
+    }
+    
+    .header__nav.on {
+        transition: opacity .4s;
+        opacity: 1;
     }
 
 
@@ -466,6 +471,11 @@ main {
         align-items: end;
         justify-content: center;
         gap: 10px 0;
+        display: none;
+    }
+
+    .header__nav.on ul {
+        display: flex;
     }
 
     .header__nav .header__submenu {
