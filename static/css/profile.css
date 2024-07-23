@@ -1,0 +1,61 @@
+@import url(./common/reset.css);
+@import url(./common/core.css);
+@import url(./common/common.css);
+
+.max-h-64 {
+    max-height: 16rem;
+}
+/*Quick overrides of the form input as using the CDN version*/
+/* Replace with your tailwind.css once created */
+.form-input,
+.form-textarea,
+.form-select,
+.form-multiselect {
+    background-color: #fff;
+}
+
+.container.flex {
+    justify-content: center;
+}
+
+.profile-title.flex {
+    color : var(--darkColor);
+    justify-content: center;
+    font-size: 26px;
+}
+
+#change-user-info, #save-change-info {
+    background-color: var(--darkColor);
+}
+
+#change-user-info:hover {
+    background-color: var(--mainColor);
+}
+
+.profile-imgbx {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.profile-imgbx .profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#change-profile-info input:focus, #change-profile-info textarea:focus {
+    border-color: var(--darkColor);
+}
+
+.form-input:focus, .form-textarea:focus {
+    box-shadow: none;
+}
+
+#recipe-contents button {
+    background-color: var(--darkColor);
+}
+#recipe-contents button:hover {
+    background-color: var(--mainColor);
+}

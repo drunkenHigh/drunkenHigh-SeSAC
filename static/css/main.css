@@ -1,0 +1,676 @@
+@import url(./common/reset.css);
+@import url(./common/core.css);
+@import url(./common/common.css);
+
+
+/**** 추천 레시피 배너 ****/
+.main__recommend {
+    padding : 60px 0;
+    margin-bottom: 100px;
+}
+
+.recommend-container {
+    position: relative;
+    width: 100%;
+    height: 650px;
+    overflow: hidden;
+}
+
+.recommend-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 322px;
+    height: 322px;
+}
+
+.recommend-title {
+    font-size: min(3vw, 36px);
+    font-weight: 900;
+    color : #fff;
+    margin-bottom: 20px;
+}
+
+.recommend-title .magic {
+    display: inline-block;
+    position: relative;
+}
+
+.recommend-title .magic-star {
+    --size : clamp(20px, 1.5vw, 30px);
+    animation: scale .7s ease forwards;
+    display: block;
+    height: var(--size);
+    width: var(--size);
+    position: absolute;
+    top : var(--star-top);
+    left : var(--star-left);
+}
+
+.recommend-title .magic-star > svg {
+    animation: rotate 1s linear infinite;
+    display: block;
+    overflow: 0.7;
+}
+
+.recommend-title .magic-star > svg > path {
+    fill : var(--darkColor);
+}   
+
+@keyframes scale {
+    from, to {
+      transform: scale(0);
+    }
+    
+    50% {
+      transform: scale(1);
+    }
+}
+  
+@keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    
+    to {
+      transform: rotate(180deg);
+    }
+}
+
+.recommend-title .title-text {
+    animation: backgroud-pan 3s linear infinite;
+    background: linear-gradient(to right, var(--darkColor2),var(--lightColor2), var(--mainColor), var(--darkColor), var(--darkColor2));
+    background-size: 200%;
+    background-position: 0% center;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    white-space: nowrap;
+}
+
+@keyframes backgroud-pan {
+    from {
+        background-position: 0% center;
+    } 
+    to {
+        background-position: -200% center;
+    }
+}
+
+.recommend-desc {
+    color : #555;
+    font-size: 20px;
+}
+
+.recommend-leftSwiper, .recommend-centerSwiper, .recommend-rightSwiper {
+    overflow: hidden;
+    user-select: none;
+    border-radius: 20px;
+}
+
+.recommend-leftSwiper{
+    width: 322px;
+    height: 276px;
+}
+
+.recommend-rightSwiper {
+    width: 330px;
+    height: 330px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.recommend-centerSwiper {
+    width: 570px;
+    height: 100%;
+    margin-right: 20px;
+    left: 50%;
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+.recommend-container .swiper-slide {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.recommend-container .swiper-slide a{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.recommend-container .swiper-slide .slide-bg {
+    position: absolute;
+    width: 100%;
+    height: 80px;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 20;
+}
+
+.recommend-container .swiper-slide .slide-subbg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+}
+
+.recommend-container .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+}
+
+.recommend-leftSwiper .swiper-slide img, .recommend-rightSwiper .swiper-slide img {
+
+}
+
+.recipe__likescounts {
+    position: absolute;
+    top: 5px;
+    right: 20px;
+    color : #fff;
+    font-size: 14px;
+}
+
+.recipe__likescounts .fa-heart {
+    color : red;
+}
+
+.recommend-container .swiper-slide p {
+    position: absolute;
+    color : #fff;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 26px;
+    right: 20px;
+    font-weight: bold;
+}
+
+.recommend-container .swiper-control {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20%;
+    display: flex;
+}
+
+.recommend-container .swiper-pagination.swiper-pagination-progressbar.swiper-pagination-horizontal {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    right: 0;
+    left: auto;
+    top: auto;
+    height: 3px;
+}
+
+.recommend-container .swiper-pagination-progressbar {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.recommend-container .swiper-pagination-progressbar .swiper-pagination-progressbar-fill  {
+    background: var(--darkColor);
+}
+
+.recommend-container .swiper-btnGroup {
+    position: absolute;
+    right: 7%;
+    bottom: 10px;
+    width: calc(27px * 4);
+    height: 44px;
+}
+
+.recommend-container .swiper-button-prev {
+    left: 0;
+    color : var(--darkColor);
+}
+
+.recommend-container .swiper-button-next {
+    right: 0;
+    color : var(--darkColor);
+}
+
+.recommend-container .swiper-button-next:after, .recommend-container .swiper-button-prev:after{
+    font-size: 24px;
+}
+
+/**** 작성하기 ****/
+.main__write {
+    position: relative;
+    height: 250px;
+    margin: 30px 0 50px;
+}
+
+.bg-wrap {
+    clip : rect(0, auto, auto, 0);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+}
+
+.bg {
+    position: fixed;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to top, var(--darkColor),var(--mainColor), var(--darkColor));
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+.write-bg {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.bubble {
+    position: relative;
+    border: 1.7px solid #fff;
+    border-radius: 50%;
+}
+
+.write-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding : 2vw;
+    text-align: center;
+}
+
+.write-content > div {
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.write-content > div span {
+    color : #fff;
+    font-weight: 900;
+    font-size: 24px;
+    text-shadow: var(--darkColor) -2px -2px 0px, 
+    var(--darkColor) 2px -2px 0px, 
+    var(--darkColor) -2px 2px 0px, 
+    var(--darkColor) 2px 2px 0px, 
+    var(--darkColor) -2px 0px 0px, 
+    var(--darkColor) 0px -2px 0px,
+    var(--darkColor) 2px 0px 0px,
+    var(--darkColor) 0px 2px 0px, 
+    var(--darkColor) 0px 2.3px 0px;
+}
+
+.write-content > div figure {
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    top: -50px;
+}
+
+.write-content > div img {
+    position: absolute;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    animation: moveRabbit 8s linear infinite alternate,
+               jumpRabbit 1s ease-in-out infinite;
+}
+
+@keyframes moveRabbit {
+    0% {
+        left: 0;
+        
+    }
+    50% {
+        left : 90%;
+    }
+    100%{
+        left: 0;
+    }
+}
+
+@keyframes jumpRabbit {
+    0% {
+        transform: rotate(0.025turn);
+    }
+    50% {
+        transform: rotate(-0.025turn);
+    }
+    100%{
+        transform: rotate(0.025turn);
+    }
+}
+
+.main-writebtn {
+    position: absolute;
+    display: block;
+    font-size: 18px;
+    border-radius: 10px;
+    border : 1px solid var(--darkColor);
+    padding : 5px 10px;
+    background-color: #fff;
+    transition: all .3s;
+    text-align: center;
+    width: 50%;
+    color : var(--darkColor);
+    font-weight: 900;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.main-writebtn:hover {
+    background-color: var(--darkColor);
+    color : #fff;
+}
+
+
+/**** 하이볼 리스트 ****/
+.list-title {
+    font-size: min(3.4vw, 36px);
+    font-weight: 900;
+    color : var(--darkColor2);
+    padding : 20px 0;
+}
+
+/* 카테고리 버튼 */
+.recipe-category {
+    padding-bottom: 60px;
+}
+
+.category-btn {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 60%;
+    margin: 0 auto;
+    gap: 0 20px;
+}
+
+.category-btn li {
+    width: 70px;
+}
+
+.category-btn li .btn-bx {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px 0;
+    cursor: pointer;
+}
+
+.category-btn li .category-title {
+    font-size: 12px;
+}
+
+.category-btn li figure {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: #000;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+}
+
+.category-btn li img {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    object-fit: cover;
+}
+
+.category-btn li:hover img {
+    animation: btnAction .3s ease-out forwards;
+}
+
+@keyframes btnAction {
+    0% {
+        transform: translate(-50%, -50%) rotate(-0.025turn);
+    } 
+    50% {
+        transform: translate(-50%, -50%) rotate(0.025turn);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(0turn);
+    }   
+}
+
+
+/* 레시피 목록 */
+.recipe-lists {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: min(2vw, 50px);
+    grid-row-gap: min(1.5vw, 50px);
+    width: 100%;
+}
+
+.recipe-lists figure {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.recipe-lists img {
+    width: 100%;
+    height: 100%;
+    transition: all .4s ease-in-out;
+    object-fit: cover;
+}
+
+.recipe-lists li:hover img {
+    transform: scale(1.1);
+}
+
+.recipe-lists .recipe__writer {
+    font-size: 16px;
+    color : #888;
+    margin: 20px 0 10px;
+}
+
+.recipe-lists .recipe__title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* 더보기 버튼 */
+.recipe-morebtn {
+    position: relative;
+    margin-top: 30px;
+    width: 100%;
+}
+
+.morebtn {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding : 10px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: var(--darkColor);
+    border: 1px solid var(--darkColor);
+    color : #fff;
+    transition: all .3s;
+    border-radius: 10px;
+}
+
+.morebtn:hover {
+    border: 1px solid var(--mainColor);
+    background-color: var(--mainColor);
+}
+
+/**** 미디어쿼리 ****/
+/* 1280px 이하 미디어쿼리 */
+@media screen and (max-width: 1280px) {
+    main {
+        overflow-x: hidden;
+    }
+
+    /* 추천 */
+    .recommend-container {
+        height: 500px;
+    }
+
+    .recommend-leftSwiper {
+        display: none;
+    }
+
+    .recommend-centerSwiper {
+        left: auto;
+        right: 60px;
+        width: 620px;
+        transform: translateX(0);
+    }
+
+    .recommend-rightSwiper {
+        display: none;
+    }
+
+    .recommend-container .swiper-control {
+        right: 680px;
+    }
+
+    .recommend-container .swiper-control {
+        right: auto;
+        left: 20px;
+    }
+
+    .recommend-text {
+        height: 200px;
+        bottom: auto;
+        top: 0;
+        right: auto;
+        left: 20px;
+    }
+
+    /* 전체 목록 */
+    .recipe-lists {
+        grid-template-columns: repeat(3, 1fr);
+        grid-column-gap: min(2vw, 50px);
+        grid-row-gap: min(1.5vw, 50px);
+        width: 90%;
+        margin: 0 auto;
+    }
+}
+
+/* 1024px 이하 미디어쿼리 */
+@media screen and (max-width: 1024px) {
+    /* 추천 */
+    .recommend-container {
+        height: 500px;
+    }
+    .recommend-centerSwiper {
+        right: 20px;
+        width: 570px;
+    }
+}
+/* 900px 이하 미디어쿼리 */
+@media screen and (max-width: 900px) {
+    /* 추천 */
+    .recommend-container {
+        height: 400px;
+        box-sizing: border-box;
+    }
+
+    .recommend-centerSwiper {
+        width: 80%;
+        left: 50%;
+        top: auto;
+        bottom: 0;
+        right: auto;
+        height: 350px;
+        transform: translateX(-50%);
+    }
+
+    .recommend-container .swiper-control {
+        display: none;
+    }
+
+    .recommend-text {
+        height: auto;
+        bottom: auto;
+        top: 0;
+        right: auto;
+        left: 50%;
+        width: auto;
+        transform: translateX(-50%);
+        z-index: 4;
+    }
+
+    .recommend-title {
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+
+    .recommend-desc {
+        display: none;
+    }
+
+    .write-content > div span {
+        font-size: 18px;
+    }
+
+    .main-writebtn {
+        font-size: 16px;
+        padding : 5px 7px;
+    }
+
+    .list-title {
+        font-size: 26px;
+    }
+    .category-btn {
+        width: 90%;
+    }
+    .recipe-lists {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+/* 640px 이하 미디어쿼리 */
+@media screen and (max-width: 640px) {
+    .main__recommend {
+        margin-bottom: 40px;
+    }
+    .write-content > div span {
+        font-size: 16px;
+    }
+
+    .main-writebtn {
+        font-size: 14px;
+        padding : 5px 7px;
+    }
+
+    .recipe-category {
+        padding-bottom: 30px;
+    }
+
+    .category-btn {
+        width: 80%;
+    }
+}

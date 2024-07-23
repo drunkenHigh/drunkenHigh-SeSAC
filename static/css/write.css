@@ -1,0 +1,59 @@
+@import url(./common/reset.css);
+@import url(./common/core.css);
+@import url(./common/common.css);
+
+.max-h-64 {
+    max-height: 16rem;
+}
+/*Quick overrides of the form input as using the CDN version*/
+.form-input,
+.form-textarea,
+.form-select,
+.form-multiselect {
+    background-color: #edf2f7;
+}
+
+.write-title {
+    color : var(--darkColor2);
+}
+
+.form-input:focus, .form-textarea:focus {
+    box-shadow: none;
+    border-color: var(--darkColor);
+}
+
+.form-select:focus {
+    box-shadow: none;
+    border-color: var(--darkColor);
+}
+
+#add-step, #save-button {
+    background-color: var(--darkColor);
+    border: 1px solid var(--darkColor);
+    transition: all .3s;
+}
+
+#delete-step, #refresh-button {
+    border: 1px solid var(--darkColor);
+    transition: all .3s;
+
+}
+
+#add-step:hover, #save-button:hover {
+    background-color: var(--mainColor);
+    border-color: var(--mainColor);
+}
+
+#delete-step:hover, #refresh-button:hover {
+    background-color: var(--darkColor);
+    color : #fff;
+
+}
+
+
+/* 1024 px 이하 미디어쿼리 */
+@media screen and (max-width: 1024px) {
+    .write-menu {
+        display: none;
+    }
+}

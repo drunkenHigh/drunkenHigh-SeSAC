@@ -1,0 +1,12 @@
+게시판 
+C :  req.body 값 db 에 저장하기 
+http://localhost:8888/recipe/write
+
+
+
+
+R : 레시피 상세보기 완료  
+http://localhost:8888/recipe?recipe_num=1
+
+U
+D

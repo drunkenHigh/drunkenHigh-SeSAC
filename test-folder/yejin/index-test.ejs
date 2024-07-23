@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+       const writeRecipe = async (recipeObj) => {
+    try {
+        const res = await axios({
+            method: 'post',
+            url: '/write',
+            data: {
+                "title": recipeObj.recipeTitle,
+                "content": "",
+                "main_ingredient": recipeObj.mainIng,
+                "main_ing_detail": recipeObj.mainIngDetail,
+                "sub_ingredient": recipeObj.subIngredient
+            }
+        })
+    } catch(err) {
+        console.error(err);
+    }
+}
+// 저장 버튼을 누를 시
+import * as FormData from 'form-data';
+const formData = new FormData();
+const saveButton = document.querySelector('#save-button');
+saveButton.addEventListener('click', () => {
+    // recipe 제목을 저장
+    const recipeTitle = document.querySelector('#recipe-title').value;
+    // 주재료 저장
+    const mainIng = document.querySelector('#main-ing-select select').value;
+    // 주재료 상세설명 저장
+    const mainIngDetail = document.querySelector('#main-ing-detail textarea').value;
+    // list 형식으로 부재료들 구분하여 저장
+    const subIngList = document.querySelector('#sub-ing-detail').value.split(',');
+    // 대표 이미지 저장
+    
+    const mainImage = document.querySelector('#main-image');
+    console.log(mainImage);
+    const recipeObj = {
+        recipeTitle, mainIng, mainIngDetail, subIngList
+    }
+    console.log(recipeObj.recipeTitle, recipeObj.mainIng, recipeObj.mainIngDetail, recipeObj.subIngList);
+
+    writeRecipe(recipeObj);
+})
+    </script>
+</head>
+<body>
+    <form action="/recipe/write" method="post">
+        게시글 <input type="text" name="title" placeholder="title"> <br>
+        메인재료 
+        <select name="mainIngredient" class="form-select block w-full focus:bg-white" required>
+            <option value="default">-</option>
+            <option value="vodka">보드카</option>
+            <option value="soju">소주</option>
+            <option value="whiskey">위스키</option>
+        </select>
+        <br>
+        <button type="submit">작성 완료</button>
+
+    </form>
+    <a href="/recipe/write"><button type="button">새 글 작성</button></a>
+    <%- include('./partials/header.ejs') %>
+    <main>
+        <section class="main__recommend">
+            <h2 class="recommend-title"></h2>
+            <div class="recommend-container">
+                <ul>
+                    <li>
+                        <a href="/recipes?recipe_id=">
+                            <figure>
+                                <img src="" alt="" class="recommed__img">
+                                <figcaption class="recommend__text">
+                                    <p class="receipe__title"></p>
+                                    <p class="receipe__writer"></p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <section class="main__list">
+            <nav class="recipe-category">
+                <ul>
+                    <li>
+                        <a href="/cat">
+                            <img src="/public/img/all.png" alt="카테고리 아이콘">
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="recipe-list__container">
+                <ul>
+                    <li>
+                        <a href="/recipes?recipe_num=">
+                            <figure>
+                                <img src="" alt="" class="recipe-list__img">
+                                <figcaption class="recipe-list__text">
+                                    <p class="receipe__title"></p>
+                                    <p class="receipe__writer"></p>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+    <%- include('./partials/footer.ejs') %>
+</body>
+</html>

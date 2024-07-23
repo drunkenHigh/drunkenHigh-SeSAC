@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('include/include', { title : 'DRUNKEN HIGH | 마이페이지'  })%>
+    <link rel="stylesheet" href="/public/css/profile.css" />
+</head>
+<body class="bg-white text-gray-900 tracking-wider leading-normal">
+    <%- include('./partials/header.ejs') %>
+    <%- include('./partials/login.ejs') %>
+
+    <main>
+    <!--Container-->
+    <div class="container w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-16">
+        <!--Section container-->
+        <section class="w-full lg:w-4/5">
+            <!--Title-->
+            <h1 class="flex items-center font-sans font-bold break-normal px-2 text-xl mt-12 lg:mt-0 md:text-2xl profile-title">
+				마이페이지
+			</h1>
+            <!--divider-->
+            <hr class="bg-gray-300 my-12">
+            <!--Title-->
+            <h2 id='profile-info' class="font-sans font-bold break-normal text-gray-700 px-2 pb-8 text-xl">회원 정보</h2>
+            <!--Card-->
+            <div class="p-8 mt-6 lg:mt-0 leading-normal rounded shadow bg-white font-bold">
+                <div class="md:flex mb-6">
+                    <div class="md:w-1/3">
+                        <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textfield">
+                            프로필 사진
+                        </label>
+                        <% if(profile_img){ %>
+                            <figure class="profile-imgbx">
+                                <img class="object-scale-down rounded-full max-h-full profile-img" src="/<%= profile_img %>" alt="profile image">
+                            </figure>
+                        <% } else {%>
+                            <figure class="profile-imgbx">
+                                <img class="object-scale-down rounded-full max-h-full profile-img" src="/public/img/user.jpg" alt="profile image">
+                            </figure>
+                        <% } %>
+                    </div>
+                    <div class="md:w-2/3">
+                        <!-- 이름 -->
+                        <div class="md:flex">
+                            <div class="md:w-1/3 py-2">
+                                <label class="inline font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textfield">
+                                    아이디
+                                </label>
+                            </div>
+                            <div class="md:w-2/3">
+                                <div id="user-id" class="py-2 text-sm text-gray-600"><%= user_id %></div>
+                            </div>
+                        </div>
+                        <!-- 닉네임 -->
+                        <div class="md:flex">
+                            <div class="md:w-1/3 py-2">
+                                <label class="inline font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textfield">
+                                    닉네임
+                                </label>
+                            </div>
+                            <div class="md:w-2/3">
+                                <div class="py-2 text-sm text-gray-600"><%= user_name %></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <!-- 회원정보 수정 버튼 -->
+                <div id="change-user-info-wrap" class="md:flex md:items-center">
+                    <div class="md:w-1/3"></div>
+                    <div class="md:w-2/3">
+                        <button id="change-user-info" class="shadow bg-[#D9601A] hover:bg-[#F29B30] focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button">
+                            회원정보 수정
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!--divider-->
+            <hr class="bg-gray-300 my-12">
+            <!--Title-->
+            <h2 class="font-sans font-bold break-normal text-gray-700 px-2 pb-8 text-xl">작성한 레시피 목록</h2>
+            <!--Card-->
+            <div id='recipe-contents' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+                    <% recipe_list.forEach((recipe, index) => { %>
+                        <div class="md:flex mb-6">
+                            <div class="md:w-1/3">
+                                <% if (recipe.main_img == "/public/img/default_img.jpg") { %>
+                                    <img onclick="location.href='/recipe/read?recipe_num=<%=recipe.recipe_num%>'" src="<%= recipe.main_img %>" alt="레시피이미지" class="recipe-list__img" />
+                                <% } else { %>
+                                    <img onclick="location.href='/recipe/read?recipe_num=<%=recipe.recipe_num%>'" src="<%= image_path%><%= recipe.main_img %>" alt="레시피이미지" class="recipe-list__img" />
+                                <% } %>
+                            </div>
+                            <div id="recipe-1" class="recipe-contents">
+                                <div class="md:block mb-6">
+                                    <h3 class="font-sans font-bold break-normal text-gray-700 px-2 pb-6 text-lg"><%= recipe.recipe_title %></h3>
+                                    <h3 class="font-sans font-bold break-normal text-gray-700 px-2 pb-0 text-sm">작성일자: <%= recipe.write_date %></h3>
+                                    <h3 class="font-sans font-bold break-normal text-gray-700 px-2 pb-0 text-sm">주재료: <%= recipe.main_ing %></h3>
+                                    <h3 class="font-sans font-bold break-normal text-gray-700 px-2 pb-0 text-sm">
+                                        <div class="flex">
+                                            <svg fill="red" class="" id="like" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="20px" height="20px"><path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/></svg>
+                                            <span class="px-2"><%= recipe.likes_count %></span>
+                                        </div>
+                                    </h3>
+                                    <button onclick="location.href='/recipe/write/<%=recipe.recipe_num%>'" id="save-button-<%= index %>" class="shadow bg-yellow-700 hover:bg-yellow-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded ml-4 mt-8" type="button">
+                                        수정
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                    <% }) %>
+                </form>
+
+            </div>
+            <!--/Card-->
+
+            <!--divider-->
+            <hr class="bg-gray-300 my-12">
+
+            <!--Title-->
+            <h2 class="font-sans font-bold break-normal text-gray-700 px-2 pb-8 text-xl">회원탈퇴</h2>
+
+            <!--Card-->
+            <div id='save-recipe' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+
+                <blockquote class="border-l-4 border-yellow-600 italic my-4 pl-8 md:pl-12">탈퇴하시면 작성하신 레시피가 전부 사라집니다.</blockquote>
+                <div class="md:flex mb-1">
+                    <div>
+                        <label class="inline-flex items-center">
+                            <input type="checkbox" class="form-checkbox text-indigo-600">
+                            <span class="ml-2">확인하였습니다</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="pt-8">
+                    <button id="delete-user-button" class="shadow bg-yellow-100 hover:bg-yellow-200 focus:shadow-outline focus:outline-none text-gray-700 font-bold py-2 px-4 rounded mr-4" type="button">
+                        회원탈퇴
+                    </button>
+                </div>
+
+            </div>
+            <!--/Card-->
+
+        </section>
+        <!--/Section container-->
+
+        <!--Back link -->
+        <div class="w-full lg:w-4/5 lg:ml-auto text-base md:text-sm text-gray-600 px-4 py-24 mb-12">
+          <span class="text-base text-yellow-600 font-bold">&#94;</span> <a href="#" class="text-base md:text-sm text-yellow-600 font-bold no-underline hover:underline">맨 위로</a>
+         </div>
+
+      </div>
+    </main>
+      <!--/container-->
+    <%- include('./partials/footer.ejs') %>
+    <script type="module" src="../public/js/myProfile.js"></script>
+</body>
+</html>
