@@ -37,8 +37,9 @@
 5. recipes : 레시피 상세
 6. users : 회원정보
 
-## 2. properties 분리
 ````
+## 2. properties 분리
+
  1. .env
 	공통 설정
 	보안을 요구하는 공통 설정
