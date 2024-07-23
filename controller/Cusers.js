@@ -237,8 +237,13 @@ exports.deleteMyprofile = async (req, res) => {
         const isDeleted = await Users.destroy({
             where: { user_id },
         });
-
         if (isDeleted) {
+            req.session.destroy(err => {
+                if (err) {
+                    console.error('세션 삭제 오류:', err);
+                    return res.status(500).json({ message: '세션 삭제 실패' });
+                }
+            });
             return res.send(true);
         } else {
             return res.send(false);
