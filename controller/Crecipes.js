@@ -30,9 +30,11 @@ exports.getRecipe = async (req, res) => {
 
   let imageUrls;
   let subImageUrls;
-
+  console.log("recipe >>>> ", recipe)
   if (recipe['Recipe_Imgs'].length > 0) {
     imageUrls = recipe['Recipe_Imgs'].map(img => img.image_url);
+    console.log("imageUrls >>> ", imageUrls);
+    console.log("imageUrls.slice(1) >>> ", imageUrls.slice(1));
     subImageUrls = imageUrls.slice(1).map(url => `${image_path}/${url}`);
   }else {
     imageUrls=['default_img.jpg'];
@@ -68,7 +70,6 @@ exports.getRecipe = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
-    // console.log('error');
   }
 };
 
@@ -89,16 +90,13 @@ exports.getRecipeWrite = (req, res) => {
 // post 레시피 작성 페이지에서 "저장" 버튼 클릭시
 exports.postRecipeWrite = async (req, res) => {
   try {
-
     let isLogin = req.session.loggedin
     let user_num = req.session.user.user_num
     if (!isLogin) {
       console.error("유저 정보가 없습니다. 로그인 해주세요.");
     }
-    
     const { title, content, main_ingredient, main_ing_detail,
       sub_ingredient_detail, mainImage } = req.body;
-
     // 레시피 데이터베이스에 저장
     const newRecipe = await Recipes.create({
       title,
@@ -108,16 +106,13 @@ exports.postRecipeWrite = async (req, res) => {
       main_ing_detail,
       sub_ingredient_detail
     });
-
     // recipe_num 을 받기 위한 조회
     const recipe = await Recipes.findOne({
       order: [['createdAt', 'DESC']],
       where: { user_num },
       attributes: ['recipe_num']
-
     });
     console.log("recipe >>>>>> ", recipe.recipe_num);
-
     var imgFileArr = req.files;
     // filename 속성을 추출하는 함수
     const extractFilenames = (imgArr) => {
@@ -129,10 +124,8 @@ exports.postRecipeWrite = async (req, res) => {
           });
         }
       }
-
       return filenames;
     };
-
     // 추출된 filename들
     const filenames = extractFilenames(imgFileArr);
     for (i = 0; i < filenames.length; i++) {
@@ -140,16 +133,16 @@ exports.postRecipeWrite = async (req, res) => {
       const newImage = await Recipe_Img.create({
         recipe_num: recipe.recipe_num,
         image_url: filenames[i],
-        main_img: i == 0 ? 1 : 0
+        main_img: i+1
       });
     }
     res.send("saved");
-
   } catch (error) {
     console.error("postRecipeWrite 오류발생:", error);
     res.status(500).send("레시피 작성버튼 클릭시 에러 발생! ");
   }
 };
+
 // get 레시피 수정 페이지
 exports.getRecipeUpdate = async (req, res) => {
   let isLogin = req.session.loggedin;
@@ -210,10 +203,9 @@ exports.patchRecipe = async (req, res) => {
   if (!isLogin) {
     console.error("유저 정보가 없습니다. 로그인 해주세요.");
   }
-  
-
   const { title, content, main_ingredient, main_ing_detail,
     sub_ingredient_detail, mainImage, recipe_num } = req.body;
+    
   try {
     const result = await Recipes.update(
       {
@@ -227,7 +219,9 @@ exports.patchRecipe = async (req, res) => {
         where: { recipe_num },
       }
     );
-    let imgFileArr = req.files;
+    console.log("recipe db업데이트 실행됨.");
+    var imgFileArr = req.files;
+    console.log("req.files >> " , req.files);
     // filename 속성을 추출하는 함수
     const extractFilenames = (imgArr) => {
       const filenames = [];
@@ -238,24 +232,23 @@ exports.patchRecipe = async (req, res) => {
           });
         }
       }
-
       return filenames;
     };
-
     // 추출된 filename들
     const filenames = extractFilenames(imgFileArr);
+    console.log("filenames >>> ", filenames);
     for (i = 0; i < filenames.length; i++) {
+      let main_img=i+1;
+      console.log("i >> ", i,filenames[i]);
       const newImage = await Recipe_Img.update({
-        //recipe_num: result.recipe_num,
         image_url: filenames[i],
-        main_img: i == 0 ? 1 : 0
-      }, {
-        where: { recipe_num }
-      });
-    }
-
-    res.send('saved')
-    
+      },
+      {
+        where: { recipe_num, main_img },
+      }
+    );
+    };
+    res.send("saved");
   } catch (error) {
     console.error(error);
   }
