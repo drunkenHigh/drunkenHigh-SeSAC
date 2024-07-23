@@ -11,28 +11,24 @@
 * 디자인 패턴: MVC 패턴
 
 
-## 데이터베이스 구조
-* Notion: https://tayham.notion.site/Drunken-High-43aa32be029240f2b68e1c74d4ab0768?pvs=4
-
-<img src="./README_img/excel_erd.png">
-<img src="./README_img/excel_erd(2).png">
-<img src="./README_img/erd.png">
-
-
-## 개발 환경 구축
-
-<img src="./README_img/개발환경.JPG">
-
-# drunkenHigh
-<img src="">
-
-
-## 팀원 역학 분담
+## 팀원 역할 분담
 
 <img src="./README_img/팀원 역할.JPG">
 
 
-## 1. 기능별 Package
+## 개발 환경 구축
+
+<img src="./README_img/개발환경.JPG" style="width: 100%">
+
+
+## 협업 툴
+* Notion: https://tayham.notion.site/Drunken-High-43aa32be029240f2b68e1c74d4ab0768?pvs=4
+
+# drunkenHigh
+<img src="" style="width: 100%">
+
+
+## 기능별 Package
 ```
 1. cookie : 쿠키
 2. like : 좋아요
@@ -52,3 +48,10 @@
 
 - 중요 정보는 .gitignore파일에 등록 됨
 - github에 등록되지 않음에 유의
+
+
+## 데이터베이스 구조
+
+<img src="./README_img/excel_erd.png" style="width: 100%">
+<img src="./README_img/excel_erd(2).png" style="width: 100%">
+<img src="./README_img/erd.png" style="width: 100%">
