@@ -224,11 +224,7 @@ saveButton.addEventListener('click', async () => {
         
         // 주재료 상세설명 저장
         let mainIngDetail;
-        if (document.getElementById('#my-textarea')) {
-            mainIngDetail = document.querySelector('#main-ing-detail textarea').value;
-        } else {
-            mainIngDetail = '';
-        }
+        mainIngDetail = document.querySelector('#main-ing-detail textarea').value;
         
 
         // string 형식으로 부재료들 구분하여 저장
