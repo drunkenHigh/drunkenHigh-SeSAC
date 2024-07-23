@@ -96,70 +96,70 @@ resetSubImageEvent();
 
 
 
-// // 단계 추가하기 버튼 누르면 입력폼 추가
-// const addStepButton = document.querySelector('#add-step');
-// const recipeStepForm = document.querySelector('#add-step-wrap');
-// let recipeStep = document.querySelector('#recipe-cont form').childElementCount - 1;
+// 단계 추가하기 버튼 누르면 입력폼 추가
+const addStepButton = document.querySelector('#add-step');
+const recipeStepForm = document.querySelector('#add-step-wrap');
+let recipeStep = document.querySelector('#recipe-cont form').childElementCount - 1;
 
-// addStepButton.addEventListener('click', () => {
-//     recipeStep++;
+addStepButton.addEventListener('click', () => {
+    recipeStep++;
     
-//     const addStepHtml = `<div id="step-${recipeStep}" class="recipe-contents">
-//                         <div class="md:flex mb-6">
-//                             <div class="md:w-1/3">
-//                                 <span class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textarea">
-//                                     Step ${recipeStep}
-//                                 </span>
-//                             </div>
-//                             <div class="md:w-2/3">
-//                                 <textarea class="form-textarea block w-full focus:bg-white" id="my-textarea" value="" rows="3"></textarea>
-//                                 <p class="py-2 text-sm text-gray-600">예시: 잭 다니엘스 테네시 허니</p>
-//                             </div>
-//                         </div>
-//                         <div class="md:flex mb-6">
-//                             <div class="md:w-1/3">
-//                                 <span class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textarea">
+    const addStepHtml = `<div id="step-${recipeStep}" class="recipe-contents">
+                        <div class="md:flex mb-6">
+                            <div class="md:w-1/3">
+                                <span class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textarea">
+                                    Step ${recipeStep}
+                                </span>
+                            </div>
+                            <div class="md:w-2/3">
+                                <textarea class="form-textarea block w-full focus:bg-white" id="my-textarea" value="" rows="3"></textarea>
+                                <p class="py-2 text-sm text-gray-600">예시: 잭 다니엘스 테네시 허니</p>
+                            </div>
+                        </div>
+                        <div class="md:flex mb-6">
+                            <div class="md:w-1/3">
+                                <span class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textarea">
                                     
-//                                 </span>
-//                             </div>
-//                             <div class="md:w-2/3">
-//                                 <!-- <input id="sub-image-${recipeStep}" type="file" accept="image/png image/jpg image/jpeg"/> -->
-//                                 <span class="block mb-2 text-sm font-medium " for="file_input">사진을 올려주세요</span>
-//                                 <div class="flex items-center justify-center w-full">
-//                                     <label for="sub-image-${recipeStep}" class="flex flex-col items-center justify-center w-full h-64 border-2 border-[#D9601A] border-dashed rounded-lg cursor-pointer bg-white hover:bg-white">
-//                                         <div id="sub-image-text-${recipeStep}" class="flex flex-col items-center justify-center">
-//                                             <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-//                                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-//                                             </svg>
-//                                             <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">클릭하여 업로드 해주세요</span></p>
-//                                             <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG or JPEG (MAX. 800x400px).</p>
-//                                         </div>
-//                                         <img class="hidden object-scale-down rounded-lg max-h-full p-5 hover:opacity-50" src="" alt="">
-//                                         <input class="sub-image" hidden name="sub_image_${recipeStep}" id="sub-image-${recipeStep}"  aria-describedby="file_input_help" type="file">
-//                                     </label>
-//                                 </div> 
-//                                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG, JPG or JPEG (MAX. 800x400px).</p>
-//                             </div>
-//                         </div>
-//                     </div>`;
-//     recipeStepForm.insertAdjacentHTML("beforebegin", addStepHtml);
-//     // 추가된 부재료 이미지에 이벤트 리스너 붙이기
-//     resetSubImageEvent();
-// })
+                                </span>
+                            </div>
+                            <div class="md:w-2/3">
+                                <!-- <input id="sub-image-${recipeStep}" type="file" accept="image/png image/jpg image/jpeg"/> -->
+                                <span class="block mb-2 text-sm font-medium " for="file_input">사진을 올려주세요</span>
+                                <div class="flex items-center justify-center w-full">
+                                    <label for="sub-image-${recipeStep}" class="flex flex-col items-center justify-center w-full h-64 border-2 border-[#D9601A] border-dashed rounded-lg cursor-pointer bg-white hover:bg-white">
+                                        <div id="sub-image-text-${recipeStep}" class="flex flex-col items-center justify-center">
+                                            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                            </svg>
+                                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">클릭하여 업로드 해주세요</span></p>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG or JPEG (MAX. 800x400px).</p>
+                                        </div>
+                                        <img class="hidden object-scale-down rounded-lg max-h-full p-5 hover:opacity-50" src="" alt="">
+                                        <input class="sub-image" hidden name="sub_image_${recipeStep}" id="sub-image-${recipeStep}"  aria-describedby="file_input_help" type="file">
+                                    </label>
+                                </div> 
+                                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG, JPG or JPEG (MAX. 800x400px).</p>
+                            </div>
+                        </div>
+                    </div>`;
+    recipeStepForm.insertAdjacentHTML("beforebegin", addStepHtml);
+    // 추가된 부재료 이미지에 이벤트 리스너 붙이기
+    resetSubImageEvent();
+})
 
-// // 단계 삭제하기 버튼 누르면 입력폼 단계 하나 삭제
-// const deleteStepButton = document.querySelector('#delete-step');
-// const recipeStepWrap = document.querySelector('#recipe-cont form');
-// deleteStepButton.addEventListener('click', () => {
-//     // Step Recipe 안에 있는 child element의 총 개수 -> initial: 2개 (step1, button wrap)
-//     const totalChildNum = recipeStepWrap.childElementCount;
-//     if (totalChildNum > 2) {
-//         recipeStep--;
-//         recipeStepWrap.children[totalChildNum - 2].remove();
-//     }
-//     // 지워진 부재료 이미지에 이벤트 리스너 빼기
-//     resetSubImageEvent();
-// })
+// 단계 삭제하기 버튼 누르면 입력폼 단계 하나 삭제
+const deleteStepButton = document.querySelector('#delete-step');
+const recipeStepWrap = document.querySelector('#recipe-cont form');
+deleteStepButton.addEventListener('click', () => {
+    // Step Recipe 안에 있는 child element의 총 개수 -> initial: 2개 (step1, button wrap)
+    const totalChildNum = recipeStepWrap.childElementCount;
+    if (totalChildNum > 2) {
+        recipeStep--;
+        recipeStepWrap.children[totalChildNum - 2].remove();
+    }
+    // 지워진 부재료 이미지에 이벤트 리스너 빼기
+    resetSubImageEvent();
+})
 
 // recipe_num 가져오기
 const url = new URL(window.location.href);
