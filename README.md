@@ -11,7 +11,6 @@
 * 디자인 패턴: MVC 패턴
 
 ## Developers
-<center>
 
 |FE | BE |
 | :---: | :---: |
