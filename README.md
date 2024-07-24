@@ -72,4 +72,6 @@
 
 <img src="./README_img/excel_erd.png" style="width: 100%">
 <img src="./README_img/excel_erd(2).png" style="width: 100%">
+
+## ERD
 <img src="./README_img/erd.png" style="width: 100%">
