@@ -62,7 +62,7 @@
 
 
 ## 주요 페이지
-```
+```html
 ### 메인 
 <img src="./README_img/main.JPG" style="width: 100%">
 
