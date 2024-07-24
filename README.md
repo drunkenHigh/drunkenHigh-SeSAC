@@ -46,6 +46,9 @@
 - 중요 정보는 .gitignore파일에 등록 됨
 - github에 등록되지 않음에 유의
 
+## 데이터베이스 ERD
+<img src="./README_img/erd.png" style="width: 100%">
+
 ## 메인 
 <img src="" style="width: 100%">
 
@@ -68,10 +71,6 @@
 
 
 
-## 데이터베이스 구조
 
-<img src="./README_img/excel_erd.png" style="width: 100%">
-<img src="./README_img/excel_erd(2).png" style="width: 100%">
 
-## ERD
-<img src="./README_img/erd.png" style="width: 100%">
+
