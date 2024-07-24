@@ -18,10 +18,8 @@
 |함태완|윤예슬|
 |함태완|안다은|
 
-
-
 ## Tech
-<img src="https://skillicons.dev/icons?i=html,css,bootstrap,js,nodejs,mysql,git,github&perline="/>
+<img src="https://skillicons.dev/icons?i=html,css,js,nodejs,mysql,git,github&perline="/>
 
 ## 팀원 역할 분담
 
