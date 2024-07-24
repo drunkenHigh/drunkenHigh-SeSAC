@@ -1,5 +1,6 @@
-# :seedling: drunkenHigh-SeSAC 1차 프로젝트
+# :seedling: SeSAC 1차 프로젝트 drunkenHigh 
 <br/>
+
 ## :tropical_drink: drunkenHigh
 
 
@@ -36,7 +37,8 @@
 ## :bulb: API 명세서 규칙
 * 링크: 
 
-## :open_file_folder: 프로젝트 구조
+## 📂 프로젝트 구조
+
 ```
 DRUNKENHIGH-SESAC
 │  .env
@@ -136,11 +138,11 @@ DRUNKENHIGH-SESAC
             footer.ejs
             header.ejs
             login.ejs
-```
 
+```
 <br>
 
-## 기능별 Package
+## :surfer: 기능별 Package
 ```
 1. cookie : 쿠키
 2. like : 좋아요
@@ -152,7 +154,7 @@ DRUNKENHIGH-SESAC
 
 <br>
 
-## properties 분리
+## :pushpin: properties 분리
 
  1. .env
 	공통 설정
@@ -164,7 +166,7 @@ DRUNKENHIGH-SESAC
 - 중요 정보는 .gitignore파일에 등록 됨
 - github에 등록되지 않음에 유의
 
-## :handbag: 데이터베이스 ERD
+## 📚 데이터베이스 ERD
 
 <img src="./README_img/ERD.JPG" style="width: 100%">
 
