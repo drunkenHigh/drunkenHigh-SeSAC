@@ -27,119 +27,47 @@
 ## :computer: Tech
 
 * Front-end: 
-* Back-end: 
-* DB: 
-* Tools: 
-* Deploy: 
-* 협업 툴: 
-* 디자인 패턴: MVC 패턴
+<img src="https://img.shields.io/badge/ejs-B4CA65?style=flat&logo=ejs&logoColor=white"/>  <img src="https://img.shields.io/badge/CSS-1572b6?style=flat&logo=css3&logoColor=white"/>  <img src="https://img.shields.io/badge/tailwind-06B6D4?style=flat&logo=tailwindcss&logoColor=white"/>   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=333333"/> <img src="https://img.shields.io/badge/Axios-5a29e4?style=flat&logo=axios&logoColor=white"/> <img src="https://img.shields.io/badge/jQuery-0769AD?style=flat&logo=jquery&logoColor=white"/> <img src="https://img.shields.io/badge/Swiper-6332F6?style=flat&logo=swiper&logoColor=white"/>    
 
-## :bulb: API 명세서 규칙
-* 링크: 
+* Back-end:
+<img src="https://img.shields.io/badge/Node.js-5fa04e?style=flat&logo=Node.js&logoColor=white"/>   <img src="https://img.shields.io/badge/Express.js-000000?style=flat&logo=Express&logoColor=white"/>   <img src="https://img.shields.io/badge/Sequlize-52b0e7?style=flat&logo=sequelize&logoColor=white"/>
+
+* DB: 
+<img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white"/>
+
+* Tools: 
+<img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=flat-square&logo=Visual Studio Code&logoColor=white"/>   <img src="https://img.shields.io/badge/MySQLWorkBench-4479A1?style=flat&logo=MySQL&logoColor=white"/>
+* Deploy: <img src="https://img.shields.io/badge/Naver Cloud Platform-03c75a?style=flat&logo=naver&logoColor=white"/>   <img src="https://img.shields.io/badge/Apache-d22128?style=flat&logo=apache&logoColor=white"/>   <img src="https://img.shields.io/badge/Ubuntu-E95420?style=flat&logo=ubuntu&logoColor=white"/>
+* 협업 툴: 
+<img src="https://img.shields.io/badge/Slack-4a154b?style=flat&logo=slack&logoColor=white"/>   <img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=notion&logoColor=white"/>
+
+<br>
+
+## :bulb: API 명세서 및 개발규칙정의서
+<details>
+<summary>API 명세서<summary>
+<div markdown="1">
+    <img src="./README_img/api명세서.png" style="width: 100%">
+</div>
+</details>
+<details>
+<summary>개발규칙정의서<summary>
+<div markdown="1">
+    <img src="./README_img/개발규칙.png" style="width: 100%">
+</div>
+</details>
+
+<br>
 
 ## 📂 프로젝트 구조
+<details>
+<summary>프로젝트 구조<summary>
+<div markdown="1">
+    디자인 패턴 : MVC 패턴 
+    <img src="./README_img/트리구조.png" style="width: 100%">
+</div>
+</details>
 
-```
-DRUNKENHIGH-SESAC
-│  .env
-│  .gitignore
-│  app.js
-│  package-lock.json
-│  package.json
-│  
-├─config
-│      config.js
-│      
-├─controller
-│      Ccookie.js
-│      Clikes.js
-│      Cmain.js
-│      Crecipes.js
-│      Crecipes_image.js
-│      Cusers.js
-│      
-├─middleware
-│      cookie.js
-│      encrypt.js
-│      uploadProfile.js
-│      uploadRecipeImg.js
-│      
-├─models
-│      Mindex.js
-│      Mlikes.js
-│      Mrecipe.js
-│      Mrecipe_img.js
-│      Muser.js
-│      
-├─routes
-│      Rindex.js
-│      Rrecipe.js
-│      Rusers.js
-│      
-├─static
-│  ├─css
-│  │  │  main.css
-│  │  │  profile.css
-│  │  │  register.css
-│  │  │  view.css
-│  │  │  write.css
-│  │  │  
-│  │  └─common
-│  │          common.css
-│  │          core.css
-│  │          reset.css
-│  │          
-│  ├─img
-│  │  │  all.png
-│  │  │  default_img.jpg
-│  │  │  etc.png
-│  │  │  mouse-icon.png
-│  │  │  rabbit-icon-sm.png
-│  │  │  rabbit-icon.png
-│  │  │  sake.png
-│  │  │  soju.png
-│  │  │  user.jpg
-│  │  │  vodka.png
-│  │  │  whiskey.png
-│  │          
-│  └─js
-│          common.js
-│          cookie.js
-│          login.js
-│          main.js
-│          myProfile.js
-│          recipeUpdate.js
-│          recipeView.js
-│          recipeWrite.js
-│          register.js
-│          register_data.js
-│          user.js
-│          
-├─uploads
-│  ├─profile
-│  │      
-│  └─recipe
-│          default_img.jpg
-│          
-└─views
-    │  404.ejs
-    │  index.ejs
-    │  myprofile.ejs
-    │  recipeUpdate.ejs
-    │  recipeView.ejs
-    │  recipeWrite.ejs
-    │  register.ejs
-    │  
-    ├─include
-    │      include.ejs
-    │      
-    └─partials
-            cookie.ejs
-            footer.ejs
-            header.ejs
-            login.ejs
-
-```
 <br>
 
 ## :surfer: 기능별 Package
