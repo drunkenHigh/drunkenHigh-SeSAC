@@ -31,9 +31,9 @@
 * DB: <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white"/>
 
 * Tools: 
-<img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=flat-square&logo=Visual Studio Code&logoColor=white"/>   <img src="https://img.shields.io/badge/MySQLWorkBench-4479A1?style=flat&logo=MySQL&logoColor=white"/>
+<img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=flat-square&logo=Visual Studio Code&logoColor=white"/>   <img src="https://img.shields.io/badge/MySQLWorkBench-4479A1?style=flat&logo=MySQL&logoColor=white"/>   <img src="https://img.shields.io/badge/Git-F05032?style=flat&logo=git&logoColor=white"/>   <img src="https://img.shields.io/badge/GitHub-181717style=flat&logo=github&logoColor=white"/>
 * Deploy: <img src="https://img.shields.io/badge/Naver Cloud Platform-03c75a?style=flat&logo=naver&logoColor=white"/>   <img src="https://img.shields.io/badge/Apache-d22128?style=flat&logo=apache&logoColor=white"/>   <img src="https://img.shields.io/badge/Ubuntu-E95420?style=flat&logo=ubuntu&logoColor=white"/>
-* 협업 툴: 
+* Communication: 
 <img src="https://img.shields.io/badge/Slack-4a154b?style=flat&logo=slack&logoColor=white"/>   <img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=notion&logoColor=white"/>
 
 <br>
