@@ -19,7 +19,7 @@
 |함태완|안다은|
 
 ## Tech
-<img src="https://skillicons.dev/icons?i=css,js,tailwind, nodejs,mysql,git,github&perline="/>
+<img src="https://skillicons.dev/icons?i=css,js,tailwind,nodejs,mysql,git,github&perline="/>
 
 ## 협업 툴
 * Notion: https://tayham.notion.site/Drunken-High-43aa32be029240f2b68e1c74d4ab0768?pvs=4
