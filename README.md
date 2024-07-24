@@ -32,8 +32,7 @@
 * Back-end:
 <img src="https://img.shields.io/badge/Node.js-5fa04e?style=flat&logo=Node.js&logoColor=white"/>   <img src="https://img.shields.io/badge/Express.js-000000?style=flat&logo=Express&logoColor=white"/>   <img src="https://img.shields.io/badge/Sequlize-52b0e7?style=flat&logo=sequelize&logoColor=white"/>
 
-* DB: 
-<img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white"/>
+* DB: <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white"/>
 
 * Tools: 
 <img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=flat-square&logo=Visual Studio Code&logoColor=white"/>   <img src="https://img.shields.io/badge/MySQLWorkBench-4479A1?style=flat&logo=MySQL&logoColor=white"/>
