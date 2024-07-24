@@ -10,6 +10,19 @@
 * 사용 기술 : jQuery, Axios, Tailwind, swiper
 * 디자인 패턴: MVC 패턴
 
+## Developers
+<center>
+
+|FE | BE |
+| :---: | :---: |
+|이다인|유예진|
+|함태완|윤예슬|
+|함태완|안다은|
+
+
+
+## Tech
+<img src="https://skillicons.dev/icons?i=html,css,bootstrap,js,nodejs,mysql,git,github&perline="/>
 
 ## 팀원 역할 분담
 
