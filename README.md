@@ -24,10 +24,6 @@
 ## 협업 툴
 * Notion: https://tayham.notion.site/Drunken-High-43aa32be029240f2b68e1c74d4ab0768?pvs=4
 
-# drunkenHigh
-<img src="" style="width: 100%">
-
-
 ## 기능별 Package
 ```
 1. cookie : 쿠키
@@ -49,6 +45,27 @@
 
 - 중요 정보는 .gitignore파일에 등록 됨
 - github에 등록되지 않음에 유의
+
+# 메인 
+<img src="" style="width: 100%">
+
+# 쿠키
+<img src="" style="width: 100%">
+
+# 로그인 
+<img src="" style="width: 100%">
+
+# 회원가입
+<img src="" style="width: 100%">
+
+# 레시피 작성 
+<img src="" style="width: 100%">
+
+# 내 정보
+<img src="" style="width: 100%">
+
+
+
 
 
 ## 데이터베이스 구조
