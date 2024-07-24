@@ -1,28 +1,26 @@
-# drunkenHigh-SeSAC 1차 프로젝트
-## drunkenHigh
+# :seedling: drunkenHigh-SeSAC 1차 프로젝트
+## :tropical_drink: drunkenHigh
 
 * 나만 알고 있던 꿀주 만드는 레시피를 공유하고 소통하는 웹 사이트
 * 기간 : 2024.07.05 ~ 2024.07.23
 * 주제 : 유저들이 자신만의 하이볼 레시피를 작성해서 공유할 수 있는 플랫폼
-
-
 * 개발툴: vscode, MySQLWorkbench
 * 개발 환경 : nodejs
 * 사용 언어 : MySQL, HTML, CSS, JavaScript, ejs, express
 * 사용 기술 : jQuery, Axios, Tailwind, swiper
 
 
-## Developers
+## :raising_hand: Developers
 
 |FE | BE |
 | :---: | :---: |
-|이다인|유예진|
-|함태완|함태완|
-|-|윤예슬|
-|-|안다은|
+|[이다인](https://github.com/DAIN302)|[유예진](https://github.com/yjyoo6831)|
+|[함태완](https://github.com/wani-ham)|[함태완](https://github.com/wani-ham)|
+|-|[윤예슬](https://github.com/errorose)|
+|-|[안다은](https://github.com/AHNDAEUN)|
 
 
-## Tech
+## :computer: Tech
 
 * Front-end: 
 * Back-end: 
@@ -32,8 +30,110 @@
 * 협업 툴: 
 * 디자인 패턴: MVC 패턴
 
-## API 명세서 규칙
+## :bulb: API 명세서 규칙
 * 링크: 
+
+## 프로젝트 구조
+```
+DRUNKENHIGH-SESAC
+│  .env
+│  .gitignore
+│  app.js
+│  package-lock.json
+│  package.json
+│  
+├─config
+│      config.js
+│      
+├─controller
+│      Ccookie.js
+│      Clikes.js
+│      Cmain.js
+│      Crecipes.js
+│      Crecipes_image.js
+│      Cusers.js
+│      
+├─middleware
+│      cookie.js
+│      encrypt.js
+│      uploadProfile.js
+│      uploadRecipeImg.js
+│      
+├─models
+│      Mindex.js
+│      Mlikes.js
+│      Mrecipe.js
+│      Mrecipe_img.js
+│      Muser.js
+│      
+├─routes
+│      Rindex.js
+│      Rrecipe.js
+│      Rusers.js
+│      
+├─static
+│  ├─css
+│  │  │  main.css
+│  │  │  profile.css
+│  │  │  register.css
+│  │  │  view.css
+│  │  │  write.css
+│  │  │  
+│  │  └─common
+│  │          common.css
+│  │          core.css
+│  │          reset.css
+│  │          
+│  ├─img
+│  │  │  all.png
+│  │  │  default_img.jpg
+│  │  │  etc.png
+│  │  │  mouse-icon.png
+│  │  │  rabbit-icon-sm.png
+│  │  │  rabbit-icon.png
+│  │  │  sake.png
+│  │  │  soju.png
+│  │  │  user.jpg
+│  │  │  vodka.png
+│  │  │  whiskey.png
+│  │          
+│  └─js
+│          common.js
+│          cookie.js
+│          login.js
+│          main.js
+│          myProfile.js
+│          recipeUpdate.js
+│          recipeView.js
+│          recipeWrite.js
+│          register.js
+│          register_data.js
+│          user.js
+│          
+├─uploads
+│  ├─profile
+│  │      
+│  └─recipe
+│          default_img.jpg
+│          
+└─views
+    │  404.ejs
+    │  index.ejs
+    │  myprofile.ejs
+    │  recipeUpdate.ejs
+    │  recipeView.ejs
+    │  recipeWrite.ejs
+    │  register.ejs
+    │  
+    ├─include
+    │      include.ejs
+    │      
+    └─partials
+            cookie.ejs
+            footer.ejs
+            header.ejs
+            login.ejs
+```
 
 ## 기능별 Package
 ```
@@ -57,11 +157,11 @@
 - 중요 정보는 .gitignore파일에 등록 됨
 - github에 등록되지 않음에 유의
 
-## 데이터베이스 ERD
+## :handbag: 데이터베이스 ERD
 <img src="./README_img/ERD.JPG" style="width: 100%">
 
 
-## 주요 페이지
+## :clipboard: 주요 페이지
 ```html
 ### 메인 
 <img src="./README_img/main.JPG" style="width: 100%">
