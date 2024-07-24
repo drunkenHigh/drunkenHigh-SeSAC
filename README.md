@@ -21,16 +21,6 @@
 ## Tech
 <img src="https://skillicons.dev/icons?i=html,css,js,nodejs,mysql,git,github&perline="/>
 
-## 팀원 역할 분담
-
-<img src="./README_img/팀원 역할.JPG">
-
-
-## 개발 환경 구축
-
-<img src="./README_img/개발환경.JPG" style="width: 100%">
-
-
 ## 협업 툴
 * Notion: https://tayham.notion.site/Drunken-High-43aa32be029240f2b68e1c74d4ab0768?pvs=4
 
