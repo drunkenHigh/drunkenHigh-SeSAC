@@ -6,10 +6,6 @@
 
 * 주제 : 유저들이 자신만의 하이볼 레시피를 작성해서 공유할 수 있는 플랫폼
 * 기간 : 2024.07.05 ~ 2024.07.23
-* 개발툴: vscode, MySQLWorkbench
-* 개발 환경 : nodejs
-* 사용 언어 : MySQL, HTML, CSS, JavaScript, ejs, express
-* 사용 기술 : jQuery, Axios, Tailwind, swiper
 
 <br>
 
@@ -43,30 +39,17 @@
 <br>
 
 ## :bulb: API 명세서 및 개발규칙정의서
-<details>
-<summary>API 명세서<summary>
-<div markdown="1">
-    <img src="./README_img/api명세서.png" style="width: 100%">
-</div>
-</details>
-<details>
-<summary>개발규칙정의서<summary>
-<div markdown="1">
-    <img src="./README_img/개발규칙.png" style="width: 100%">
-</div>
-</details>
+* API 명세서
+<img src="./README_img/api명세서.png" style="width: 100%">
+<br>
+* 개발규칙 정의서
+<img src="./README_img/개발규칙.png" style="width: 100%">
 
 <br>
 
 ## 📂 프로젝트 구조
-<details>
-<summary>프로젝트 구조<summary>
-<div markdown="1">
-    디자인 패턴 : MVC 패턴 
-    <img src="./README_img/트리구조.png" style="width: 100%">
-</div>
-</details>
-
+* 디자인 패턴 : MVC 패턴 
+<img src="./README_img/트리구조.png" style="width: 100%">
 <br>
 
 ## :surfer: 기능별 Package
