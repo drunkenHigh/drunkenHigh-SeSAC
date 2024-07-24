@@ -46,22 +46,22 @@
 - 중요 정보는 .gitignore파일에 등록 됨
 - github에 등록되지 않음에 유의
 
-# 메인 
+## 메인 
 <img src="" style="width: 100%">
 
-# 쿠키
+## 쿠키
 <img src="" style="width: 100%">
 
-# 로그인 
+## 로그인 
 <img src="" style="width: 100%">
 
-# 회원가입
+## 회원가입
 <img src="" style="width: 100%">
 
-# 레시피 작성 
+## 레시피 작성 
 <img src="" style="width: 100%">
 
-# 내 정보
+## 내 정보
 <img src="" style="width: 100%">
 
 
