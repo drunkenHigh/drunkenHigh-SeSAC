@@ -62,7 +62,7 @@
 
 
 ## 주요 페이지
-```html
+
 ### 메인 
 <img src="./README_img/main.JPG" style="width: 100%">
 
@@ -81,4 +81,3 @@
 ### 내 정보
 <img src="./README_img/mypage.JPG" style="width: 100%">
 
-```
