@@ -5,28 +5,33 @@
 * 기간 : 2024.07.05 ~ 2024.07.23
 * 주제 : 유저들이 자신만의 하이볼 레시피를 작성해서 공유할 수 있는 플랫폼
 * 개발툴: vscode, MySQLWorkbench
-* 개발 환경 : nodejs, sequelize
+* 개발 환경 : nodejs
 * 사용 언어 : MySQL, HTML, CSS, JavaScript, ejs, express
 * 사용 기술 : jQuery, Axios, Tailwind, swiper
 * 디자인 패턴: MVC 패턴
 
+## Developers
 
-## 팀원 역할 분담
+|FE | BE |
+| :---: | :---: |
+|이다인|유예진|
+|함태완|윤예슬|
+|함태완|안다은|
 
-<img src="./README_img/팀원 역할.JPG">
+## Tech
 
+* Front-end: https://img.shields.io/badge/HTML-E34F26?style=flat&logo=html5&logoColor=white
+* Back-end
+* DB
+* Tools
+* Deploy
+* 협업 툴
 
-## 개발 환경 구축
-
-<img src="./README_img/개발환경.JPG" style="width: 100%">
-
+  
+<img src="https://skillicons.dev/icons?i=css,js,tailwind,nodejs,mysql,git,github&perline="/>
 
 ## 협업 툴
 * Notion: https://tayham.notion.site/Drunken-High-43aa32be029240f2b68e1c74d4ab0768?pvs=4
-
-# drunkenHigh
-<img src="" style="width: 100%">
-
 
 ## 기능별 Package
 ```
@@ -50,9 +55,23 @@
 - 중요 정보는 .gitignore파일에 등록 됨
 - github에 등록되지 않음에 유의
 
-
-## 데이터베이스 구조
-
-<img src="./README_img/excel_erd.png" style="width: 100%">
-<img src="./README_img/excel_erd(2).png" style="width: 100%">
+## 데이터베이스 ERD
 <img src="./README_img/erd.png" style="width: 100%">
+
+## 메인 
+<img src="" style="width: 100%">
+
+## 쿠키
+<img src="" style="width: 100%">
+
+## 로그인 
+<img src="" style="width: 100%">
+
+## 회원가입
+<img src="" style="width: 100%">
+
+## 레시피 작성 
+<img src="" style="width: 100%">
+
+## 내 정보
+<img src="" style="width: 100%">
