@@ -12,6 +12,28 @@ const validator = require('validator');
 
 const image_path = '/uploads/recipe/';
 
+// kakao api
+const kakaoApi= {
+  
+    KAKAO_CLIENT_ID : process.env.KAKAO_CLIENT_ID,
+  SESSION_SECRET : process.env.SESSION_SECRET,
+  REDIRECT_URI : process.env.REDIRECT_URI
+  }
+
+exports.getKakao = async (req, res) => {
+   
+    try {
+
+        const kakaoLoginURL = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoApi.KAKAO_CLIENT_ID}&redirect_uri=${kakaoApi.REDIRECT_URI}&response_type=code`;
+        res.redirect(kakaoLoginURL);
+
+    } catch (error) {
+
+        res.status(500).send('Internal Server Error');
+
+    }
+}
+
 exports.getLogin = async (req, res) => {
     res.send('login')
 }

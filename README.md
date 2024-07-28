@@ -44,7 +44,7 @@
 	보안을 요구하는 공통 설정
  2. app.js
 	개발시 필요한 설정
-	DB연결등 보안을 요구하는 개별 설정
+	DB연결등 보안을 요구하는 개별 설정 
 
 - 중요 정보는 .gitignore파일에 등록 됨
 - github에 등록되지 않음에 유의
@@ -54,4 +54,4 @@
 
 <img src="./README_img/excel_erd.png" style="width: 100%">
 <img src="./README_img/excel_erd(2).png" style="width: 100%">
-<img src="./README_img/erd.png" style="width: 100%">
+<img src="./README_img/erd.png" style="width: 100%"> 

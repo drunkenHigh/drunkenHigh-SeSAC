@@ -1,5 +1,5 @@
 const express = require('express');
-const {getUmain,getUsers, postUsers, getLogin, postLogin,getLogout, postChkId, postChkName, getMyprofile, deleteMyprofile, patchMyprofile} = require('../controller/Cusers');
+const {getKakao, getUsers, postUsers, getLogin, postLogin,getLogout, postChkId, postChkName, getMyprofile, deleteMyprofile, patchMyprofile} = require('../controller/Cusers');
 const router = express.Router();
 const uploadProfile = require('../middleware/uploadProfile');
 
@@ -9,6 +9,9 @@ router.get('/register', getUsers);
 
 // post /users/register
 router.post('/register', uploadProfile.single('profile_img'), postUsers);
+
+//kakao
+router.get('/kakao' , getKakao)
 
 // get /users/login
 router.get('/login', getLogin);
